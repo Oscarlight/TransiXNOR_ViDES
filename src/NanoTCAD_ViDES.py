@@ -1630,8 +1630,8 @@ class grid2D:
             eyg=intersect1d(setxor1d(yg,uyC),yg);
 
         if (npC!=0):
-            x=unique(concatenate((uxC,xg),0));
-            y=unique(concatenate((uyC,yg),0));
+            x=unique(concatenate((uxC,xg),1));
+            y=unique(concatenate((uyC,yg),1));
         else:
             x=xg;
             y=yg;
@@ -1711,8 +1711,8 @@ class grid2D:
         #unsorted positions
         
         if (npC!=0):
-            xtemp=unique(concatenate((uxC,xg),0));
-            ytemp=unique(concatenate((uyC,yg),0));
+            xtemp=unique(concatenate((uxC,xg),1));
+            ytemp=unique(concatenate((uyC,yg),1));
 
             if (rank == 0): writeout("I work on the swap array");
             NpC=size(xC);
