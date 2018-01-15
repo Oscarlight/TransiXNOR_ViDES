@@ -10,7 +10,7 @@
 #include <time.h>
 static PyObject* py_H_charge_T(PyObject* self, PyObject* args)
 {
-
+  bool VERBAL=false;
   time_t t1, t2;
   int i, j, k, ix, ie, NE, n, Nc, nx, rows, columns, orbitals,rank,NUM,bandsflag,print_Hamiltonian;
   complex ***DIAG, ***UPDIAG, ***LOWDIAG;
@@ -42,43 +42,43 @@ static PyObject* py_H_charge_T(PyObject* self, PyObject* args)
   temp_obj=PyObject_GetAttrString(obj,"rank");
   rank=(int)PyInt_AsLong(temp_obj);
   
-  if (!rank) printf("*****************************************\n");
-  if (!rank) printf("*** Computing NEGF in HAMILTONIAN *******\n"); 
-  if (!rank) printf("*****************************************\n\n");
+  if (!rank && VERBAL) printf("*****************************************\n");
+  if (!rank && VERBAL) printf("*** Computing NEGF in HAMILTONIAN *******\n"); 
+  if (!rank && VERBAL) printf("*****************************************\n\n");
 
 
   temp_obj=PyObject_GetAttrString(obj,"n");
   n=(int)PyInt_AsLong(temp_obj);
-  if (!rank) printf("n # atoms in a slice = %d \n",n);
+  if (!rank && VERBAL) printf("n # atoms in a slice = %d \n",n);
   temp_obj=PyObject_GetAttrString(obj,"Nc");
   Nc=(int)PyInt_AsLong(temp_obj);
-  if (!rank) printf("Number of slices = %d \n",Nc);
+  if (!rank && VERBAL) printf("Number of slices = %d \n",Nc);
   temp_obj=PyObject_GetAttrString(obj,"Eupper");
   Eupper=(double)PyFloat_AsDouble(temp_obj);
-  if (!rank) printf("Upper Energy defined by the user = %lg \n",Eupper);
+  if (!rank && VERBAL) printf("Upper Energy defined by the user = %lg \n",Eupper);
   temp_obj=PyObject_GetAttrString(obj,"Elower");
   Elower=(double)PyFloat_AsDouble(temp_obj);
-  if (!rank) printf("Lower Energy defined by the user = %lg \n",Elower);
+  if (!rank && VERBAL) printf("Lower Energy defined by the user = %lg \n",Elower);
   temp_obj=PyObject_GetAttrString(obj,"eta");
   eta=(double)PyFloat_AsDouble(temp_obj);
-  if (!rank) printf("Eta = %lg \n",eta);
+  if (!rank && VERBAL) printf("Eta = %lg \n",eta);
   temp_obj=PyObject_GetAttrString(obj,"dE");
   dE=(double)PyFloat_AsDouble(temp_obj);
-  if (!rank) printf("Delta Energy = %lg \n",dE);
+  if (!rank && VERBAL) printf("Delta Energy = %lg \n",dE);
   temp_obj=PyObject_GetAttrString(obj,"Temp");
   Temperature=(double)PyFloat_AsDouble(temp_obj);
   vt=kboltz*Temperature/q;
-  if (!rank) printf("Vt = %lg \n",vt);
-  if (!rank) printf("Temperature = %lg \n",Temperature);
+  if (!rank && VERBAL) printf("Vt = %lg \n",vt);
+  if (!rank && VERBAL) printf("Temperature = %lg \n",Temperature);
   temp_obj=PyObject_GetAttrString(obj,"mu1");
   mu1=(double)PyFloat_AsDouble(temp_obj);
-  if (!rank) printf("Electrochemical potential of the source = %lg \n",mu1);
+  if (!rank && VERBAL) printf("Electrochemical potential of the source = %lg \n",mu1);
   temp_obj=PyObject_GetAttrString(obj,"mu2");
   mu2=(double)PyFloat_AsDouble(temp_obj);
-  if (!rank) printf("Electrochemical potential of the drain = %lg \n",mu2);
+  if (!rank && VERBAL) printf("Electrochemical potential of the drain = %lg \n",mu2);
   temp_obj=PyObject_GetAttrString(obj,"Egap");
   Egap=(double)PyFloat_AsDouble(temp_obj);
-  if (!rank) printf("Egap of the material = %lg \n",Egap);
+  if (!rank && VERBAL) printf("Egap of the material = %lg \n",Egap);
   
   if (PyObject_HasAttrString(obj,"Ham"))
     {
@@ -127,18 +127,18 @@ static PyObject* py_H_charge_T(PyObject* self, PyObject* args)
   rows = hamiltonian->dimensions[0];
   columns = hamiltonian->dimensions[1];
 
-  if (!rank) printf("Rows in the list= %i\n", rows);  
-  if (!rank) printf("Columns in the list= %i\n", columns);
+  if (!rank && VERBAL) printf("Rows in the list= %i\n", rows);  
+  if (!rank && VERBAL) printf("Columns in the list= %i\n", columns);
 
 
   orb =  (double *)(hamiltonian->data);
   orbitals = (int)(*orb);
-  if (!rank) printf("# orbitals = %i \n", orbitals);
-  if (!rank) printf("# dimension before = %i \n", n);
+  if (!rank && VERBAL) printf("# orbitals = %i \n", orbitals);
+  if (!rank && VERBAL) printf("# dimension before = %i \n", n);
 
   NUM = n*orbitals;
 
-  if (!rank) printf("# dimension after = %i \n", NUM);
+  if (!rank && VERBAL) printf("# dimension after = %i \n", NUM);
 
   
   
@@ -182,15 +182,15 @@ static PyObject* py_H_charge_T(PyObject* self, PyObject* args)
   Emin=min((mu1),Emin);
   Emax=max(Emax,(mu2));
   Emax=max((mu1),Emax);
-  if (!rank) printf("Emin =%lg, Emax =%lg, Egap = %lg, vt = %lg \n",Emin,Emax,Egap,vt);
+  if (!rank && VERBAL) printf("Emin =%lg, Emax =%lg, Egap = %lg, vt = %lg \n",Emin,Emax,Egap,vt);
   if (Eupper>900)
     Eupper=Emax+(Egap)*0.5+10*(vt);
   if (Elower<-900)
     Elower=Emin-(Egap)*0.5-10*(vt);
   
-  if (!rank) printf("Eupper = %lg \n",Eupper);
-  if (!rank) printf("Elower = %lg \n",Elower);
-  if (!rank) printf("Current computed energy \n ");
+  if (!rank && VERBAL) printf("Eupper = %lg \n",Eupper);
+  if (!rank && VERBAL) printf("Elower = %lg \n",Elower);
+  if (!rank && VERBAL) printf("Current computed energy \n ");
   
  
 /*
@@ -484,9 +484,9 @@ static PyObject* py_H_charge_T(PyObject* self, PyObject* args)
 
   }
 
-  if (!rank) printf("\n\n*****************************************\n");
-  if (!rank) printf("****** END OF NEGF in HAMILTONIAN *******\n"); 
-  if (!rank) printf("*****************************************\n\n");
+  if (!rank && VERBAL) printf("\n\n*****************************************\n");
+  if (!rank && VERBAL) printf("****** END OF NEGF in HAMILTONIAN *******\n"); 
+  if (!rank && VERBAL) printf("*****************************************\n\n");
 
   //  (void) time(&t2); 
   //  printf("time LDOS on rank %d = %d secs \n", rank,(int) t2-t1);
