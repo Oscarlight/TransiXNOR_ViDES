@@ -21,7 +21,7 @@ writeout("                     Copyright (C) 2004-2016      \n")
 writeout("-------------------------------------------------------------------\n")
 writeout("\n")
 
-NEmax=5e3;
+NEmax=int(5e3);
 DIGIT_PRECISION=20;
 max_number_of_cores_on_a_server=8;
 
@@ -1623,15 +1623,15 @@ class grid2D:
             #find the unique values for xC,yC and zC
             uxC=unique(xC);
             uyC=unique(yC);
-            
+           
             # I find the only the additional values which are in xg and not in uxC
             # the same for the other axis
             exg=intersect1d(setxor1d(xg,uxC),xg);
             eyg=intersect1d(setxor1d(yg,uyC),yg);
 
         if (npC!=0):
-            x=unique(concatenate((uxC,xg),1));
-            y=unique(concatenate((uyC,yg),1));
+            x=unique(concatenate((uxC,xg),0));
+            y=unique(concatenate((uyC,yg),0));
         else:
             x=xg;
             y=yg;
@@ -1711,8 +1711,8 @@ class grid2D:
         #unsorted positions
         
         if (npC!=0):
-            xtemp=unique(concatenate((uxC,xg),1));
-            ytemp=unique(concatenate((uyC,yg),1));
+            xtemp=unique(concatenate((uxC,xg),0));
+            ytemp=unique(concatenate((uyC,yg),0));
 
             if (rank == 0): writeout("I work on the swap array");
             NpC=size(xC);

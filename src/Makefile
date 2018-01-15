@@ -14,8 +14,8 @@ endif
 NOMAIN  =
 CCMPI   =       mpicc
 FFMPI   =       mpif77
-INCPY	=	/Users/Mingda/anaconda3/envs/vides/include/python3.5m
-INCNPY	= 	/Users/Mingda/anaconda3/envs/vides/lib/python3.5/site-packages/numpy/core/include/numpy
+INCPY	=	/home/oscar/anaconda3/envs/vides36/include/python3.6m
+INCNPY	= 	/home/oscar/anaconda3/envs/vides36/lib/python3.6/site-packages/numpy/core/include/numpy
 
 OBJECTS =	nrutil.o nonuniformgridmod.o complass.o cmatrix.o cvectorm.o max.o create_updiag.o create_lowdiag.o cfree_cmatrix.o cfree_cvectorm.o min.o selfanalitical.o selfschottky.o LDOS.o create_beta1.o create_beta2mode.o create_beta2transpmode.o VAVdaga.o ccmul.o ccadd.o ccsub.o cdmul.o ccsqrt.o ccdiv.o cIm.o cRe.o cmatsub.o rgfblock.o spectralfun.o cfree_ctensor4.o transmission.o cmatdaga.o Fermi_Dirac.o csub.o csum.o ctensor4.o cmatinv.o cmatmul.o cmatsum.o cdabs.o cmatrixm.o ccvector.o cfree_ccvector.o cmatmul3.o cmatRe.o create_beta2.o create_beta2transp.o NanoTCAD_ViDESmod.o LDOSmode.o create_updiagmode.o create_lowdiagmode.o selfanaliticalmode.o VdagaAV.o energysort.o spectralfunmode.o dsort.f create_updiagGNR.o create_lowdiagGNR.o selfGNR.o gappo.o create_beta1GNR.o create_beta2GNR.o create_beta2transpGNR.o Gzerozero.o cmatnorm2diff.o  nanotube.o create_J.o ffunpoisson.o preparej.o Jbuild.o domn.o abbs.o indice.o norma2.o destroy_J.o stampaout.o graphenedown.o
 
@@ -41,10 +41,10 @@ $(OBJECTS) :
 
 ifeq ($(GOTOBLAS),1)
 NanoTCAD_ViDESmod   : $(OBJECTS) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) NanoTCAD_ViDESmod.o
-	$(FF) $(CFLAGS) -shared -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) CoreFoundation -lgoto2 -lgfortran -lpthread
+	$(FF) $(CFLAGS) -shared -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) -lm -lgoto2 -lgfortran -lpthread
 else
 NanoTCAD_ViDESmod   : $(OBJECTS) $(OBJECTS_BLAS_LAPACK) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4)  NanoTCAD_ViDESmod.o
-	$(FF) $(CFLAGS) -shared -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_BLAS_LAPACK) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) CoreFoundation 
+	$(FF) $(CFLAGS) -shared -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_BLAS_LAPACK) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) -lm 
 endif
 
 comp  :
@@ -78,14 +78,14 @@ else
 endif
 
 install : NanoTCAD_ViDESmod
-	cp NanoTCAD_ViDES.py /Users/Mingda/anaconda3/envs/vides/lib/python3.5
-	cp NanoTCAD_ViDESmod.so /Users/Mingda/anaconda3/envs/vides/lib/python3.5
-	cp section.py /Users/Mingda/anaconda3/envs/vides/lib/python3.5
+	cp NanoTCAD_ViDES.py /home/oscar/anaconda3/envs/vides36/lib/python3.6
+	cp NanoTCAD_ViDESmod.so /home/oscar/anaconda3/envs/vides36/lib/python3.6
+	cp section.py /home/oscar/anaconda3/envs/vides36/lib/python3.6
 
 uninstall : NanoTCAD_ViDESmod
-	  rm /Users/Mingda/anaconda3/envs/vides/lib/python3.5/NanoTCAD_ViDES.py
-	  rm /Users/Mingda/anaconda3/envs/vides/lib/python3.5/NanoTCAD_ViDESmod.so
-	  rm /Users/Mingda/anaconda3/envs/vides/lib/python3.5/section.py
+	  rm /home/oscar/anaconda3/envs/vides36/lib/python3.6/NanoTCAD_ViDES.py
+	  rm /home/oscar/anaconda3/envs/vides36/lib/python3.6/NanoTCAD_ViDESmod.so
+	  rm /home/oscar/anaconda3/envs/vides36/lib/python3.6/section.py
 
 test : 
 	cp NanoTCAD_ViDES.py ../test
