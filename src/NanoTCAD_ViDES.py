@@ -1878,7 +1878,7 @@ class gate:
     def __init__(self,*args):
         self.geometry="hex";
         self.Ef=0;
-        self.wf=4.1;
+        self.wf=4.1;    
         if (args[0]=="hex"):
             if (len(args)>5):
                 self.xmin=args[1];
