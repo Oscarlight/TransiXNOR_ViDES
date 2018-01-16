@@ -21,6 +21,7 @@ writeout("                     Copyright (C) 2004-2016      \n")
 writeout("-------------------------------------------------------------------\n")
 writeout("\n")
 
+VERBAL=False
 NEmax=int(5e3);
 DIGIT_PRECISION=20;
 max_number_of_cores_on_a_server=8;
@@ -715,12 +716,13 @@ class graphene:
             X,Y=meshgrid(EE,kvect);
             Z=zeros((size(EE),size(kvect)))
         while (k<=(self.kmax+self.dk*0.5)):
-            if (self.rank==0): writeout("----------------------------------")
-            string="    kx range: [%s,%s] " %(self.kmin,self.kmax);
-            if (self.rank==0): writeout(string) 
-            string="    iteration %s " %i;
-            if (self.rank==0): writeout(string);
-            if (self.rank==0): writeout("----------------------------------")
+            if (self.rank==0 and VERBAL): 
+                writeout("----------------------------------")
+                string="    kx range: [%s,%s] " %(self.kmin,self.kmax);
+                writeout(string) 
+                string="    iteration %s " %i;
+                writeout(string);
+                writeout("----------------------------------")
             flaggo=0;
             kk=1;
             # I fill the Hamiltonian for the actual wavevector k in the cycle
