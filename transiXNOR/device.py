@@ -49,8 +49,8 @@ dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 # solve_init(grid,p,FLAKE);
 
 Vgmin=0.0;
-Vgmax=5.0;
-Vgstep=1.0;
+Vgmax=1.0;
+Vgstep=0.2;
 
 Np=int(abs(Vgmin-Vgmax)/Vgstep)+1;
 vg=zeros(Np);
@@ -60,7 +60,8 @@ p.underel=0.1;
 counter=0;
 Vgs=Vgmin;
 FLAKE.mu1=-0.0
-FLAKE.mu2=-0.0
+# Vds = mu1 - mu2
+FLAKE.mu2=-1.0
 
 while (Vgs<=Vgmax):
     bottom_gate.Ef=-Vgs; set_gate(p,bottom_gate)
