@@ -1401,14 +1401,13 @@ class grid3D:
             
             # I find the only the additional values which are in xg and not in uxC
             # the same for the other axis
-            exg=intersect1d(setxor1d(xg,uxC),xg);
-            eyg=intersect1d(setxor1d(yg,uyC),yg);
-            ezg=intersect1d(setxor1d(zg,uzC),zg);
+            # exg=intersect1d(setxor1d(xg,uxC),xg);
+            # eyg=intersect1d(setxor1d(yg,uyC),yg);
+            # ezg=intersect1d(setxor1d(zg,uzC),zg);
 
-        if (npC!=0):
-            x=unique(concatenate((uxC,xg),1));
-            y=unique(concatenate((uyC,yg),1));
-            z=unique(concatenate((uzC,zg),1));
+            x=unique(concatenate((uxC,xg),0));
+            y=unique(concatenate((uyC,yg),0));
+            z=unique(concatenate((uzC,zg),0));
         else:
             x=xg;
             y=yg;
@@ -1550,9 +1549,9 @@ class grid3D:
         #unsorted positions
         
         if (npC!=0):
-            xtemp=unique(concatenate((uxC,xg),1));
-            ytemp=unique(concatenate((uyC,yg),1));
-            ztemp=unique(concatenate((uzC,zg),1));
+            xtemp=unique(concatenate((uxC,xg),0));
+            ytemp=unique(concatenate((uyC,yg),0));
+            ztemp=unique(concatenate((uzC,zg),0));
 
             if (rank == 0): writeout("I work on the swap array");
             NpC=size(xC);
@@ -1626,12 +1625,11 @@ class grid2D:
            
             # I find the only the additional values which are in xg and not in uxC
             # the same for the other axis
-            exg=intersect1d(setxor1d(xg,uxC),xg);
-            eyg=intersect1d(setxor1d(yg,uyC),yg);
+            # exg=intersect1d(setxor1d(xg,uxC),xg);
+            # eyg=intersect1d(setxor1d(yg,uyC),yg);
 
-        if (npC!=0):
-            x=unique(concatenate((uxC,xg),1));
-            y=unique(concatenate((uyC,yg),1));
+            x=unique(concatenate((uxC,xg),0));
+            y=unique(concatenate((uyC,yg),0));
         else:
             x=xg;
             y=yg;
@@ -1711,8 +1709,8 @@ class grid2D:
         #unsorted positions
         
         if (npC!=0):
-            xtemp=unique(concatenate((uxC,xg),1));
-            ytemp=unique(concatenate((uyC,yg),1));
+            xtemp=unique(concatenate((uxC,xg),0));
+            ytemp=unique(concatenate((uyC,yg),0));
 
             if (rank == 0): writeout("I work on the swap array");
             NpC=size(xC);
@@ -1774,10 +1772,9 @@ class grid1D:
             uxC=unique(xC);
             
             # I find the only the additional values which are in xg and not in uxC
-            exg=intersect1d(setxor1d(xg,uxC),xg);
+            # exg=intersect1d(setxor1d(xg,uxC),xg);
 
-        if (npC!=0):
-            x=unique(concatenate((uxC,xg),1));
+            x=unique(concatenate((uxC,xg),0));
         else:
             x=xg;
 
@@ -1812,7 +1809,7 @@ class grid1D:
         #vectors as a function of the index
         
         if (npC!=0):
-            xtemp=unique(concatenate((uxC,xg),1));
+            xtemp=unique(concatenate((uxC,xg),0));
 
             if (rank == 0): print("I work on the swap array");
             NpC=size(xC);
