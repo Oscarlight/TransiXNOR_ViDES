@@ -39,8 +39,8 @@ class TMD:
         #in the Hamiltonian, since the minimum is in Kf,
         #so by itself degeneracy is 2 as in graphene
         #if you specify deg=2, then total degeneracy is 4
-        me=0.572;
-        mh=0.659
+        self.me=0.572;
+        self.mh=0.659
         self.Egap=1.78
         self.deg=1;
         self.n=1;
@@ -59,9 +59,9 @@ class TMD:
         self.dE=1e-3;
         self.thop=-2.59;
         if (n_or_p=="n"):
-            self.thopBN=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*me))*hbar/q;
+            self.thopBN=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.me))*hbar/q;
         else:
-            self.thopBN=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*mh))*hbar/q;
+            self.thopBN=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mh))*hbar/q;
         self.eta=1e-5;
         self.mu1=0.0;
         self.mu2=0.0;
