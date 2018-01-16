@@ -43,7 +43,7 @@ fraction_drain=0.01
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
-#solve_init(grid,p,FLAKE);
+solve_init(grid,p,FLAKE);
 
 Vgmin=0.0;
 Vgmax=1.0;

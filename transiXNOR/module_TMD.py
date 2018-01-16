@@ -31,6 +31,7 @@
 
 
 from NanoTCAD_ViDES import *
+VERBAL=False
 class TMD:
     
     def __init__(self,L,n_or_p):
@@ -123,10 +124,11 @@ class TMD:
             X,Y=meshgrid(EE,kvect);
             Z=zeros((size(EE),size(kvect)))
         while (k<=(self.kmax+self.dk*0.5)):
-            if (self.rank==0): print("----------------------------------")
-            if (self.rank==0): print(("    kx range: [%s,%s] ") %(self.kmin,self.kmax));
-            if (self.rank==0): print(("    iteration %s ") %i);
-            if (self.rank==0): print("----------------------------------")
+            if (self.rank==0 and VERBAL): 
+                print("----------------------------------")
+                print(("    kx range: [%s,%s] ") %(self.kmin,self.kmax));
+                print(("    iteration %s ") %i);
+                print("----------------------------------")
             flaggo=0;
             kk=1;
             # I fill the Hamiltonian for the actual wavevector k in the cycle
