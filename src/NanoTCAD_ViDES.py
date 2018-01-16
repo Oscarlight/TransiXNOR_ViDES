@@ -716,13 +716,13 @@ class graphene:
             X,Y=meshgrid(EE,kvect);
             Z=zeros((size(EE),size(kvect)))
         while (k<=(self.kmax+self.dk*0.5)):
-            # if (self.rank==0 and VERBAL): 
-            #     writeout("----------------------------------")
-            #     string="    kx range: [%s,%s] " %(self.kmin,self.kmax);
-            #     writeout(string) 
-            #     string="    iteration %s " %i;
-            #     writeout(string);
-            #     writeout("----------------------------------")
+            if (self.rank==0 and VERBAL): 
+                writeout("----------------------------------")
+                string="    kx range: [%s,%s] " %(self.kmin,self.kmax);
+                writeout(string) 
+                string="    iteration %s " %i;
+                writeout(string);
+                writeout("----------------------------------")
             flaggo=0;
             kk=1;
             # I fill the Hamiltonian for the actual wavevector k in the cycle
@@ -871,12 +871,13 @@ class bilayer_graphene:
             X,Y=meshgrid(EE,kvect);
             Z=zeros((size(EE),size(kvect)))
         while (k<=(self.kmax+self.dk*0.5)):
-            if (self.rank==0): writeout("----------------------------------")
-            string="    kx range: [%s,%s] " %(self.kmin,self.kmax);
-            if (self.rank==0): writeout(string);
-            string="    k: %s " %k;
-            if (self.rank==0): writeout(string);
-            if (self.rank==0): writeout("----------------------------------")
+            if (self.rank==0 and VERBAL): 
+                writeout("----------------------------------")
+                string="    kx range: [%s,%s] " %(self.kmin,self.kmax);
+                writeout(string);
+                string="    k: %s " %k;
+                writeout(string);
+                writeout("----------------------------------")
 
             # -------------------------------------------------
             # BEGINNING OF THE HAMILTONIAN DEFINITION
