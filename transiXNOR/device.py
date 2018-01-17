@@ -36,12 +36,10 @@ bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
 
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
- 
-
-fraction_source=0.01
+fraction_source=-0.01
 fraction_drain=0.01
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
-dope_reservoir(grid,n,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
+dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
 # solve_init(grid,p,FLAKE);
 
