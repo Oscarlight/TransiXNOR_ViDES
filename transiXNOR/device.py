@@ -6,7 +6,8 @@ rank = 0
   
 # I create the grid
 xg=nonuniformgrid(array([-2.0,1,0,0.05,2.0,1]))
-
+print(xg)
+quit()
 FLAKE=TMD(30.0,"n");
 
 acc=FLAKE.acc;
