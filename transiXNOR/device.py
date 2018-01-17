@@ -8,9 +8,6 @@ rank = 0
 xg=nonuniformgrid(array([-2.0,1,0,0.05,2.0,1]))
 
 FLAKE=TMD(30.0,"n");
-FLAKE.me=0.6
-FLAKE.mh=0.71
-FLAKE.Egap=1.13
 
 acc=FLAKE.acc;
 kF=2*pi/(3*sqrt(3)*acc);
@@ -44,13 +41,13 @@ p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 fraction_source=0.01
 fraction_drain=0.01
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
-dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
+dope_reservoir(grid,n,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
 # solve_init(grid,p,FLAKE);
 
 Vgmin=0.0;
 Vgmax=1.0;
-Vgstep=0.2;
+Vgstep=0.1;
 
 Np=int(abs(Vgmin-Vgmax)/Vgstep)+1;
 vg=zeros(Np);

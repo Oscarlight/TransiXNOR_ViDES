@@ -39,9 +39,9 @@ class TMD:
         #in the Hamiltonian, since the minimum is in Kf,
         #so by itself degeneracy is 2 as in graphene
         #if you specify deg=2, then total degeneracy is 4
-        self.me=0.572;
-        self.mh=0.659
-        self.Egap=1.78
+        self.me=0.5
+        self.mh=0.5
+        self.Egap=1.1
         self.deg=1;
         self.n=1;
         ymin=-20;
@@ -75,8 +75,9 @@ class TMD:
         self.T2D="no"
         self.ymin=ymin;
         self.ymax=ymax;
-        self.BC_MX2=0.2;
-        self.BV_MX2=0.2-self.Egap;
+        # Related to electron affinity
+        self.BC_MX2=0.0;
+        self.BV_MX2=0.0-self.Egap;
         self.atoms_coordinates();
     def atoms_coordinates(self):
         GNR_atoms_coordinates(self);
