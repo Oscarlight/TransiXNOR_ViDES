@@ -68,7 +68,7 @@ savetxt("er.out", p.eps)
 savetxt("fixed_charge.out", p.fixed_charge)
 
 # ------------------------------------------#
-p.underel=0.1; # ?????
+p.underel=0.0; # ?????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
