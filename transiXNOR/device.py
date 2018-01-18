@@ -6,7 +6,7 @@ import pickle
 
 rank = 0
 OVERWRITE=True
-model_path = './D2'
+model_path = './D3'
 if not os.path.exists(model_path):
     os.makedirs(model_path)
     os.makedirs(model_path + '/data')
@@ -34,10 +34,11 @@ xg=nonuniformgrid(
 semi = {
     'me': 0.124,
     'mh': 2.23,
-    # 'mh': 0.124,
     'Eg': 0.252,
     'acc': 0.2,  # ?????????
-    'relative_EA' : 0.10 # !!!
+    'relative_EA': 0.10,      # !!!
+    'fraction_source': 0.002, # !!!
+    'fraction_drain': -0.001, # !!!
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -55,15 +56,19 @@ grid=grid2D(xg,FLAKE.y,FLAKE.x,FLAKE.y);
 
 with open(model_path+"/material.p", "wb") as f:
     pickle.dump(semi,f)
+
 savetxt(model_path+"/gridx.out",grid.gridx)
 savetxt(model_path+"/gridy.out",grid.gridy)
 
 # I take care of the solid
+Cox = 25/1.1; # 1.1 nm HfO2 for er=25
+Csemi = 100/0.7;
+er_equ = Cox * Csemi / (Cox + Csemi)
 Oxide1=region("hex",grid.xmin,0,grid.ymin,grid.ymax)
-Oxide1.eps=3.9*1/0.4; # !!!
+Oxide1.eps=er_equ; # !!!
 
 Oxide2=region("hex",0,grid.xmax,grid.ymin,grid.ymax)
-Oxide2.eps=3.9*1/0.4; # !!!
+Oxide2.eps=er_equ; # !!!
 
 top_gate=gate("hex",grid.xmax,grid.xmax,10.0,20.0);
 bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
@@ -72,16 +77,18 @@ bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
 # molar fraction
-fraction_source=0.003 # p-doped !!!
-fraction_drain=-0.001 # n-doped !!!
-dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
-dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
+dope_reservoir(grid,p,FLAKE,
+    semi['fraction_source'],
+    array([-1,1,grid.ymin,10.0]));
+dope_reservoir(grid,p,FLAKE,
+    semi['fraction_drain'],
+    array([-1,1,20.0,grid.ymax]));
 
 savetxt(model_path+"/er.out", p.eps)
 savetxt(model_path+"/fixed_charge.out", p.fixed_charge)
 
 # ------------------------------------------#
-p.underel=0.01; # ?????
+p.underel=0.01; # ?????????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
