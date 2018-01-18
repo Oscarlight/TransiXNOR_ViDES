@@ -78,7 +78,7 @@ Vbgmin=0.0;
 VbgN=1;
 
 Vdsmax=0.3;
-Vdsmin=0.0;
+Vdsmin=0.3;
 VdsN=1;
 
 vds_cur = []
