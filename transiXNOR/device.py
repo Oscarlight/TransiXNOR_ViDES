@@ -70,12 +70,12 @@ savetxt("fixed_charge.out", p.fixed_charge)
 # ------------------------------------------#
 p.underel=0.1; # ?????
 
-Vtgmax=0.0;
+Vtgmax=0.2;
 Vtgmin=0.2;
 VtgN=2;
 
-Vbgmax=0.0;
-Vbgmin=0.0;
+Vbgmax=0.2;
+Vbgmin=0.2;
 VbgN=1;
 
 Vdsmax=0.2;
