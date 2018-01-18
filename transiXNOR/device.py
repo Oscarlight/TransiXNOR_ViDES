@@ -9,9 +9,9 @@ rank = 0
 # from -2.0 to 0: mesh size from 1 to 0.05
 # from 0 to 2.0: mesh size from 0.05 to 1
 xg=nonuniformgrid(
-    array([-2.0,1,
-              0,0.5,
-            2.0,1]))
+    array([-0.5,0.2,
+              0,0.1,
+            0.5,0.2]))
 ## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
 # semi = {
 #     'me': 0.65,
@@ -25,7 +25,7 @@ semi = {
     'me': 0.124,
     'mh': 2.23,
     'Eg': 0.252,
-    'acc': 0.3,
+    'acc': 0.3,  # ?????????
     'relative_EA' : 0.0
 }
 FLAKE=TMD(semi,30.0,"n");
