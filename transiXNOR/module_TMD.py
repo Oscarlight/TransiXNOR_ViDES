@@ -32,26 +32,26 @@
 
 from NanoTCAD_ViDES import *
 VERBAL=False
-class TMD:
-    
-    def __init__(self,L,n_or_p):
+
+class TMD: 
+    def __init__(self,semi,L,n_or_p):
         #degeneracy of 2 is already taken into account
         #in the Hamiltonian, since the minimum is in Kf,
         #so by itself degeneracy is 2 as in graphene
         #if you specify deg=2, then total degeneracy is 4
-        self.me=0.5
-        self.mh=0.5
-        self.Egap=1.1
+        self.me=semi['me']; # electron effective mass
+        self.mh=semi['mh']; # hole effective mass
+        self.Egap=semi['Eg']; # bandgap
+        self.acc=semi['acc']; # 0.2
         self.deg=1;
         self.n=1;
         ymin=-20;
         ymax=L+20;
-        self.acc=0.2;
         self.Nc=int(4*(floor((floor(L/self.acc)-1)/3)));
-        self.Phi=zeros(self.Nc);
-        self.Ei=zeros(self.Nc);
-        self.Eupper=1000.0;
-        self.Elower=-1000.0;
+        self.Phi=zeros(self.Nc); # electrostatic potential 
+        self.Ei=zeros(self.Nc);  # mid-gap potential
+        self.Eupper=1000.0;  # upper limit for the energy
+        self.Elower=-1000.0; # lower limit for the energy
         self.delta=sqrt(3)*self.acc;
         self.kmax=pi/self.delta;
         self.kmin=0;
@@ -76,8 +76,8 @@ class TMD:
         self.ymin=ymin;
         self.ymax=ymax;
         # Related to electron affinity
-        self.BC_MX2=0.0;
-        self.BV_MX2=0.0-self.Egap;
+        self.BC_MX2=0.2;
+        self.BV_MX2=0.2-self.Egap;
         self.atoms_coordinates();
     def atoms_coordinates(self):
         GNR_atoms_coordinates(self);

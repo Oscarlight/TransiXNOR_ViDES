@@ -33,6 +33,8 @@
 
 #include "solvePoisson2D.h"
 #include <time.h>
+#define VERBAL 0
+
 static PyObject* py_solvePoisson2D(PyObject* self, PyObject* args)
 {
   int i,j,k,ix,ciclom,ciclomm,ciclo,iterazione,Np,gumgum,neq,*temporaryint,rank,*IERR;
@@ -55,10 +57,9 @@ static PyObject* py_solvePoisson2D(PyObject* self, PyObject* args)
   device_mapping d;
   physical_quantities p;
   double tolldomn,normapoisson,vt;
-
-  setvbuf(stdout,(char *) NULL,_IONBF,1);
   
-
+  setvbuf(stdout,(char *) NULL,_IONBF,1);
+ 
   //************************************************************************
   // I read the data from python class
   //************************************************************************
@@ -171,9 +172,9 @@ static PyObject* py_solvePoisson2D(PyObject* self, PyObject* args)
   temp_obj=PyObject_GetAttrString(interface,"rank");
   rank=(int)PyInt_AsLong(temp_obj);
 
-  if (!rank) printf("*********************************\n");
-  if (!rank) printf("******* Solving POISSON 2D ******\n"); 
-  if (!rank) printf("*********************************\n\n");
+  if (!rank && VERBAL) printf("*********************************\n");
+  if (!rank && VERBAL) printf("******* Solving POISSON 2D ******\n"); 
+  if (!rank && VERBAL) printf("*********************************\n\n");
 
 
   // Initialization of the variables needed for the solution of the system
@@ -215,7 +216,7 @@ static PyObject* py_solvePoisson2D(PyObject* self, PyObject* args)
 
   p.Phiold=dvector(0,Np-1);
 
-  if (!rank)
+  if (!rank && VERBAL)
     printf("Initialization ...... \n");
   // vector initialization
   for (i=0;i<NELT;i++)
@@ -291,7 +292,7 @@ static PyObject* py_solvePoisson2D(PyObject* self, PyObject* args)
       }
       while((ciclo<5)&&(*IERR==2));
       normavp=norma2(XLIN,Np);
-      if (!rank)
+      if (!rank && VERBAL)
         {
 	  printf("NR internal iteration  %d ; norm = %lg \n",
 		 iterazione,normavp);
@@ -309,13 +310,13 @@ static PyObject* py_solvePoisson2D(PyObject* self, PyObject* args)
 	  {
 	    ffunpoisson2D(p,d,B);
 	    normab=norma2(B,Np);
-            if (!rank)
+            if (!rank && VERBAL)
 	      printf("Residual = %lg \n",normab);
 	    if (normab>normabold)
 	      {
 		for (i=0;i<Np;i++)
 		  p.Phi[i]-=XLIN[i]*(1-sottoril)/pow(2,ciclom);
-                if (!rank)
+                if (!rank && VERBAL)
 		  printf("residuo = %lg \n",normab);
 	      }
 	    ciclom++;
