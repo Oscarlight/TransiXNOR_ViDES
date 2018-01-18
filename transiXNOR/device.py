@@ -12,11 +12,19 @@ xg=nonuniformgrid(
     array([-2.0,1,
               0,0.5,
             2.0,1]))
+## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
+# semi = {
+#     'me': 0.65,
+#     'mh': 0.64,
+#     'Eg': 0.93,
+#     'acc': 0.36,
+# }
+## Bi2Se3 (Qin's Paper)
 semi = {
-    'me': 0.65,
-    'mh': 0.64,
-    'Eg': 0.93,
-    'acc': 0.36,
+    'me': 0.124,
+    'mh': 2.23,
+    'Eg': 0.252,
+    'acc': 0.3,
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -68,7 +76,7 @@ counter=0;
 Vgs=Vgmin;
 FLAKE.mu1=0.0
 # Vds = mu2 - mu1
-FLAKE.mu2=0.7
+FLAKE.mu2=0.3
 
 savetxt("er.out", p.eps)
 savetxt("fixed_charge.out", p.fixed_charge)
