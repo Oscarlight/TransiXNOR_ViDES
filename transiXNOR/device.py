@@ -17,6 +17,7 @@ semi = {
     'mh': 0.64,
     'Eg': 0.93,
     'acc': 0.36,
+    'relative_EA' : 0.2
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -48,8 +49,8 @@ bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
 # molar fraction
-fraction_source=0.007 # p-doped
-fraction_drain=-0.007 # n-doped
+fraction_source=0.006 # p-doped
+fraction_drain=-0.006 # n-doped
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
@@ -68,7 +69,7 @@ counter=0;
 Vgs=Vgmin;
 FLAKE.mu1=0.0
 # Vds = mu2 - mu1
-FLAKE.mu2=0.7
+FLAKE.mu2=0.6
 
 savetxt("er.out", p.eps)
 savetxt("fixed_charge.out", p.fixed_charge)
