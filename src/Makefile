@@ -5,11 +5,11 @@ endif
 CC      =       gcc
 FF      =       gfortran
 ifeq ($(GOTOBLAS),1)
-CFLAGS  =       -fPIC -O3 -llapack 
-FFLAGS  =       -fPIC -O3 -llapack 
+CFLAGS  =       -fPIC -llapack 
+FFLAGS  =       -fPIC -llapack 
 else
-CFLAGS  =       -fPIC -O3
-FFLAGS  =       -fPIC -O3
+CFLAGS  =       -fPIC 
+FFLAGS  =       -fPIC 
 endif
 NOMAIN  =
 CCMPI   =       mpicc
