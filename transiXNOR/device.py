@@ -72,15 +72,15 @@ p.underel=0.01; # ?????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
-VtgN=2;
+VtgN=11;
 
 Vbgmax=0.2;
 Vbgmin=0.0;
-VbgN=2;
+VbgN=11;
 
 Vdsmax=0.2;
 Vdsmin=0.2;
-VdsN=1;
+VdsN=11;
 
 vds_cur = []
 for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
@@ -95,7 +95,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
             top_gate.Ef=vtg; 
             set_gate(p,top_gate)
             p.normpoisson=1e-1;
-            p.normd=1e-2; # 5e-3;
+            p.normd=5e-3; # 5e-3;
             solve_self_consistent(grid,p,FLAKE);
             vtg_cur.append(FLAKE.current());
             # I save the output files
