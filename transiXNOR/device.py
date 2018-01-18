@@ -27,7 +27,7 @@ semi = {
     # 'mh': 0.124,
     'Eg': 0.252,
     'acc': 0.3,  # ?????????
-    'relative_EA' : 0.1
+    'relative_EA' : 0.2
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -68,7 +68,7 @@ savetxt("er.out", p.eps)
 savetxt("fixed_charge.out", p.fixed_charge)
 
 # ------------------------------------------#
-p.underel=0.001; # ?????
+p.underel=0.01; # ?????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
