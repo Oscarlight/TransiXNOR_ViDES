@@ -63,44 +63,48 @@ fraction_drain=-0.001 # n-doped
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
-# solve_init(grid,p,FLAKE);
-
-Vgmin=0.0;
-Vgmax=0.0;
-Vgstep=0.05;
-
-Np=int(abs(Vgmin-Vgmax)/Vgstep)+1;
-vg=zeros(Np);
-current=zeros(Np);
-p.underel=0.1;
-
-counter=0;
-Vgs=Vgmin;
-FLAKE.mu1=0.0
-# Vds = mu2 - mu1
-FLAKE.mu2=0.3
-
-
 savetxt("er.out", p.eps)
 savetxt("fixed_charge.out", p.fixed_charge)
 
-while (Vgs<=Vgmax):
-    bottom_gate.Ef=Vgs 
-    set_gate(p,bottom_gate)
-    top_gate.Ef=Vgs; 
-    set_gate(p,top_gate)
-    p.normpoisson=1e-1;
-    p.normd=5e-2; # 5e-3;
-    solve_self_consistent(grid,p,FLAKE);
-    vg[counter]=Vgs;
-    current[counter]=FLAKE.current();
-    # I save the output files
-    if (rank==0):
-        savetxt("./datiout/Phi%s.out" %Vgs,
-            p.Phi)
-        savetxt("./datiout/ncar%s.out" %Vgs,p.free_charge);
-        savetxt("./datiout/T%s.out" %Vgs,
-            transpose([FLAKE.E,FLAKE.T]));
-    counter=counter+1;
-    Vgs=Vgs+Vgstep;
-savetxt("./datiout/idvgs.out",transpose([vg,current]));
+# ------------------------------------------#
+p.underel=0.1; # ?????
+
+Vtgmax=0.0;
+Vtgmin=0.3;
+VtgN=2;
+
+Vbgmax=0.0;
+Vbgmin=0.0;
+VbgN=1;
+
+Vdsmax=0.3;
+Vdsmin=0.0;
+VdsN=1;
+
+vds_cur = []
+for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
+    FLAKE.mu1=0.0
+    FLAKE.mu2=vds
+    vbg_cur = []
+    for vbg in np.linspace(Vbgmin, Vbgmax, VbgN):
+        vtg_cur = []
+        for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
+            bottom_gate.Ef=vbg 
+            set_gate(p,bottom_gate)
+            top_gate.Ef=vtg; 
+            set_gate(p,top_gate)
+            p.normpoisson=1e-1;
+            p.normd=5e-2; # 5e-3;
+            solve_self_consistent(grid,p,FLAKE);
+            vtg_cur.append(FLAKE.current());
+            # I save the output files
+            if (rank==0):
+                savetxt("./datiout/phi_%s_%s_%s.out" % (vds, vbg, vtg),
+                    p.Phi)
+                savetxt("./datiout/ncar_%s_%s_%s.out" % (vds, vbg, vtg),
+                    p.free_charge);
+                savetxt("./datiout/T_%s_%s_%s.out" % (vds, vbg, vtg),
+                    transpose([FLAKE.E,FLAKE.T]));
+        vbg_cur.append(vtg_cur)
+    vds_cur.append(vbg_cur)
+np.save('current.npy', np.array(vds_cur))
