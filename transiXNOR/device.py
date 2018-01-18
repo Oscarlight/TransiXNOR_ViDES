@@ -23,7 +23,8 @@ xg=nonuniformgrid(
 ## Bi2Se3 (Qin's Paper)
 semi = {
     'me': 0.124,
-    'mh': 2.23,
+    # 'mh': 2.23,
+    'mh': 0.124,
     'Eg': 0.252,
     'acc': 0.3,  # ?????????
     'relative_EA' : 0.0
