@@ -72,15 +72,15 @@ p.underel=0.01; # ?????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
-VtgN=11;
+VtgN=2;
 
 Vbgmax=0.2;
 Vbgmin=0.0;
-VbgN=11;
+VbgN=2;
 
 Vdsmax=0.2;
-Vdsmin=0.0;
-VdsN=11;
+Vdsmin=0.2;
+VdsN=1;
 
 vds_cur = []
 for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
