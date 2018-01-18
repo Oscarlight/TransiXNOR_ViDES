@@ -1,13 +1,23 @@
 from NanoTCAD_ViDES import * 
-import sys 
+import sys
+import os
 from module_TMD import *
+import pickle
 
 rank = 0
-  
+OVERWRITE=True
+model_path = './D2'
+if not os.path.exists(model_path):
+    os.makedirs(model_path)
+    os.makedirs(model_path + '/data')
+elif(not OVERWRITE):
+    print("model path: %s exists. Quit!" % model_path)
+    quit()
 # I create the grid
 # gate direction mesh from -2.0 to 2.0
 # from -2.0 to 0: mesh size from 1 to 0.05
 # from 0 to 2.0: mesh size from 0.05 to 1
+# TODO: It seems certain grid can lead to segmentation faults.
 xg=nonuniformgrid(
     array([-1.0,0.5,
               0,0.1,
@@ -26,8 +36,8 @@ semi = {
     'mh': 2.23,
     # 'mh': 0.124,
     'Eg': 0.252,
-    'acc': 0.3,  # ?????????
-    'relative_EA' : 0.11 # !!!
+    'acc': 0.2,  # ?????????
+    'relative_EA' : 0.10 # !!!
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -42,8 +52,11 @@ FLAKE.dk=dk;
 
 FLAKE.dE=0.001
 grid=grid2D(xg,FLAKE.y,FLAKE.x,FLAKE.y);
-savetxt("gridx.out",grid.gridx)
-savetxt("gridy.out",grid.gridy)
+
+with open(model_path+"/material.p", "wb") as f:
+    pickle.dump(semi,f)
+savetxt(model_path+"/gridx.out",grid.gridx)
+savetxt(model_path+"/gridy.out",grid.gridy)
 
 # I take care of the solid
 Oxide1=region("hex",grid.xmin,0,grid.ymin,grid.ymax)
@@ -59,28 +72,28 @@ bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
 # molar fraction
-fraction_source=0.005 # p-doped !!!
-fraction_drain=-0.002 # n-doped !!!
+fraction_source=0.003 # p-doped !!!
+fraction_drain=-0.001 # n-doped !!!
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
-savetxt("er.out", p.eps)
-savetxt("fixed_charge.out", p.fixed_charge)
+savetxt(model_path+"/er.out", p.eps)
+savetxt(model_path+"/fixed_charge.out", p.fixed_charge)
 
 # ------------------------------------------#
 p.underel=0.01; # ?????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
-VtgN=11;
+VtgN=2;
 
 Vbgmax=0.2;
 Vbgmin=0.0;
-VbgN=11;
+VbgN=2;
 
 Vdsmax=0.2;
-Vdsmin=0.0;
-VdsN=11;
+Vdsmin=0.2;
+VdsN=1;
 
 vds_cur = []
 for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
@@ -90,6 +103,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
     for vbg in np.linspace(Vbgmin, Vbgmax, VbgN):
         vtg_cur = []
         for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
+            print('>>> Vds=%s, Vbg=%s, Vtg=%s' % (vds, vbg, vtg))
             bottom_gate.Ef=vbg 
             set_gate(p,bottom_gate)
             top_gate.Ef=vtg; 
@@ -100,12 +114,13 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
             vtg_cur.append(FLAKE.current());
             # I save the output files
             if (rank==0):
-                savetxt("./datiout/phi_%s_%s_%s.out" % (vds, vbg, vtg),
+                savetxt(model_path+"/data/phi_%s_%s_%s.out" % (vds, vbg, vtg),
                     p.Phi)
-                savetxt("./datiout/ncar_%s_%s_%s.out" % (vds, vbg, vtg),
+                savetxt(model_path+"/data/ncar_%s_%s_%s.out" % (vds, vbg, vtg),
                     p.free_charge);
-                savetxt("./datiout/T_%s_%s_%s.out" % (vds, vbg, vtg),
+                savetxt(model_path+"/data/T_%s_%s_%s.out" % (vds, vbg, vtg),
                     transpose([FLAKE.E,FLAKE.T]));
         vbg_cur.append(vtg_cur)
     vds_cur.append(vbg_cur)
-np.save('current.npy', np.array(vds_cur))
+
+np.save(model_path+'/current.npy', np.array(vds_cur))
