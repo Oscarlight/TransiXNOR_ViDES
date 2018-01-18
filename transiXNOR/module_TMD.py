@@ -43,6 +43,7 @@ class TMD:
         self.mh=semi['mh']; # hole effective mass
         self.Egap=semi['Eg']; # bandgap
         self.acc=semi['acc']; # 0.2
+        self.BC_MX2=semi['relative_EA'];
         self.deg=1;
         self.n=1;
         ymin=-20;
@@ -76,8 +77,7 @@ class TMD:
         self.ymin=ymin;
         self.ymax=ymax;
         # Related to electron affinity
-        self.BC_MX2=0.2;
-        self.BV_MX2=0.2-self.Egap;
+        self.BV_MX2=self.BC_MX2-self.Egap;
         self.atoms_coordinates();
     def atoms_coordinates(self):
         GNR_atoms_coordinates(self);
