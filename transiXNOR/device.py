@@ -9,9 +9,9 @@ rank = 0
 # from -2.0 to 0: mesh size from 1 to 0.05
 # from 0 to 2.0: mesh size from 0.05 to 1
 xg=nonuniformgrid(
-    array([-1.0,0.5,
+    array([-0.5,0.5,
               0,0.1,
-            1.0,0.5]))
+            0.5,0.5]))
 ## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
 # semi = {
 #     'me': 0.65,
@@ -27,7 +27,7 @@ semi = {
     # 'mh': 0.124,
     'Eg': 0.252,
     'acc': 0.3,  # ?????????
-    'relative_EA' : 0.2
+    'relative_EA' : 0.15
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -70,11 +70,11 @@ savetxt("fixed_charge.out", p.fixed_charge)
 # ------------------------------------------#
 p.underel=0.01; # ?????
 
-Vtgmax=0.2;
-Vtgmin=0.0;
+Vtgmax=0.0;
+Vtgmin=0.2;
 VtgN=2;
 
-Vbgmax=0.2;
+Vbgmax=0.0;
 Vbgmin=0.2;
 VbgN=1;
 
