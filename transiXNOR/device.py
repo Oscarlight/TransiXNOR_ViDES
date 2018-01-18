@@ -3,10 +3,19 @@ import sys
 import os
 from module_TMD import *
 import pickle
+from math import sqrt
+import argparse
 
 rank = 0
 OVERWRITE=True
 model_path = './D3'
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--vdsmin", default=0.2, type=float)
+parser.add_argument("--vdsmax", default=0.2, type=float)
+parser.add_argument("--vdsN",   default=1,   type=int)
+args = parser.parse_args()
+
 if not os.path.exists(model_path):
     os.makedirs(model_path)
     os.makedirs(model_path + '/data')
@@ -35,10 +44,13 @@ semi = {
     'me': 0.124,
     'mh': 2.23,
     'Eg': 0.252,
-    'acc': 0.2,  # ?????????
-    'relative_EA': 0.10,      # !!!
-    'fraction_source': 0.002, # !!!
-    'fraction_drain': -0.001, # !!!
+    'acc': 0.414/sqrt(3), # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
+     # e.g. 0.2 in MoS2: the distance between
+     # Mo and S, the lattice constant = acc * sqrt(3)
+    'relative_EA': 0.09,      # relative to workfunction of Gr, 
+                              # e.g. 0.2 for MoS2
+    'fraction_source': 0.004, # p-dope
+    'fraction_drain': -0.0015, # n-dope
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -92,15 +104,15 @@ p.underel=0.01; # ?????????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
-VtgN=2;
+VtgN=21;
 
 Vbgmax=0.2;
 Vbgmin=0.0;
-VbgN=2;
+VbgN=21;
 
-Vdsmax=0.2;
-Vdsmin=0.2;
-VdsN=1;
+Vdsmax=args.vdsmax;
+Vdsmin=args.vdsmin;
+VdsN=args.vdsN;
 
 vds_cur = []
 for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
@@ -116,18 +128,19 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
             top_gate.Ef=vtg; 
             set_gate(p,top_gate)
             p.normpoisson=1e-1;
-            p.normd=5e-3; # 5e-3;
+            p.normd=2e-3; # 5e-3;
             solve_self_consistent(grid,p,FLAKE);
             vtg_cur.append(FLAKE.current());
             # I save the output files
             if (rank==0):
-                savetxt(model_path+"/data/phi_%s_%s_%s.out" % (vds, vbg, vtg),
+                np.save(model_path+"/data/phi_%s_%s_%s" % (vds, vbg, vtg),
                     p.Phi)
-                savetxt(model_path+"/data/ncar_%s_%s_%s.out" % (vds, vbg, vtg),
+                np.save(model_path+"/data/ncar_%s_%s_%s" % (vds, vbg, vtg),
                     p.free_charge);
-                savetxt(model_path+"/data/T_%s_%s_%s.out" % (vds, vbg, vtg),
+                np.save(model_path+"/data/T_%s_%s_%s" % (vds, vbg, vtg),
                     transpose([FLAKE.E,FLAKE.T]));
         vbg_cur.append(vtg_cur)
     vds_cur.append(vbg_cur)
 
-np.save(model_path+'/current.npy', np.array(vds_cur))
+np.save(model_path+'/current_%s'%int(Vdsmin*100), 
+    np.array(vds_cur))
