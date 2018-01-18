@@ -58,8 +58,8 @@ bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
 # molar fraction
-fraction_source=0.006 # p-doped
-fraction_drain=-0.006 # n-doped
+fraction_source=0.001 # p-doped
+fraction_drain=-0.001 # n-doped
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
