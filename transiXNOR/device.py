@@ -27,7 +27,7 @@ semi = {
     # 'mh': 0.124,
     'Eg': 0.252,
     'acc': 0.3,  # ?????????
-    'relative_EA' : 0.12 # !!!
+    'relative_EA' : 0.11 # !!!
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -72,15 +72,15 @@ p.underel=0.01; # ?????
 
 Vtgmax=0.2;
 Vtgmin=0.0;
-VtgN=2;
+VtgN=11;
 
-Vbgmax=0.0;
-Vbgmin=0.2;
-VbgN=2;
+Vbgmax=0.2;
+Vbgmin=0.0;
+VbgN=11;
 
 Vdsmax=0.2;
-Vdsmin=0.2;
-VdsN=1;
+Vdsmin=0.0;
+VdsN=11;
 
 vds_cur = []
 for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
