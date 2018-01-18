@@ -60,7 +60,7 @@ p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
 # molar fraction
 fraction_source=0.005 # p-doped
-fraction_drain=-0.005 # n-doped
+fraction_drain=-0.002 # n-doped
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
