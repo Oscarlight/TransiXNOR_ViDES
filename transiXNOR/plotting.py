@@ -9,7 +9,7 @@ gridx = np.genfromtxt('gridx.out')
 Nx = gridx.shape[0]
 gridy = np.genfromtxt("gridy.out")
 
-Vds=0.3; Vbg=0.0; Vtg=0.0
+Vds=0.2; Vbg=0.2; Vtg=0.0
 ## fixed charge
 if (PLOT_FIXED_CHARGE):
 	fn_fixed_charge = 'fixed_charge.out'
@@ -43,3 +43,6 @@ if (PLOT_CHARGE):
 	charge_density = np.reshape(charge_density, (-1, Nx))
 	plt.semilogy(gridy, np.abs(charge_density[:,Nx/2]))
 	plt.show()
+
+cur = np.load('current.npy')
+print(cur)
