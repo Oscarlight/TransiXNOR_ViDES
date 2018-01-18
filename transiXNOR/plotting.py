@@ -1,10 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
+PLOT_FIXED_CHARGE = True
 PLOT_BAND = True
 PLOT_TRAN = False
 PLOT_CHARGE = True
 gridx = np.genfromtxt('gridx.out')
 gridy = np.genfromtxt("gridy.out")
+## fixed charge
+if (PLOT_FIXED_CHARGE):
+	fn_fixed_charge = 'fixed_charge.out'
+	fixed_charge = np.genfromtxt(fn_fixed_charge)
+	fixed_charge = np.reshape(fixed_charge, (-1, 11))
+	print(fixed_charge.shape)
+	plt.plot(gridy, fixed_charge[:,5])
+	plt.show()
+	
 ## band diagram
 if (PLOT_BAND):
 	fn_band_diag = 'datiout/Phi0.0.out'
