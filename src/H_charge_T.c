@@ -8,9 +8,10 @@
 
 #include "H_charge_T.h"
 #include <time.h>
+#define VERBAL 0
+
 static PyObject* py_H_charge_T(PyObject* self, PyObject* args)
 {
-  int VERBAL=0;
   time_t t1, t2;
   int i, j, k, ix, ie, NE, n, Nc, nx, rows, columns, orbitals,rank,NUM,bandsflag,print_Hamiltonian;
   complex ***DIAG, ***UPDIAG, ***LOWDIAG;
