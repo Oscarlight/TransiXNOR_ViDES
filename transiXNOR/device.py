@@ -9,9 +9,9 @@ rank = 0
 # from -2.0 to 0: mesh size from 1 to 0.05
 # from 0 to 2.0: mesh size from 0.05 to 1
 xg=nonuniformgrid(
-    array([-0.5,0.2,
+    array([-0.5,0.3,
               0,0.05,
-            0.5,0.2]))
+            0.5,0.3]))
 ## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
 # semi = {
 #     'me': 0.65,
