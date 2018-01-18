@@ -27,7 +27,7 @@ semi = {
     # 'mh': 0.124,
     'Eg': 0.252,
     'acc': 0.3,  # ?????????
-    'relative_EA' : 0.2
+    'relative_EA' : 0.1
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -76,7 +76,7 @@ VtgN=2;
 
 Vbgmax=0.0;
 Vbgmin=0.2;
-VbgN=1;
+VbgN=2;
 
 Vdsmax=0.2;
 Vdsmin=0.2;
