@@ -9,9 +9,9 @@ rank = 0
 # from -2.0 to 0: mesh size from 1 to 0.05
 # from 0 to 2.0: mesh size from 0.05 to 1
 xg=nonuniformgrid(
-    array([-0.5,0.3,
-              0,0.05,
-            0.5,0.3]))
+    array([-1.0,0.5,
+              0,0.1,
+            1.0,0.5]))
 ## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
 # semi = {
 #     'me': 0.65,
@@ -47,10 +47,10 @@ savetxt("gridy.out",grid.gridy)
 
 # I take care of the solid
 Oxide1=region("hex",grid.xmin,0,grid.ymin,grid.ymax)
-Oxide1.eps=3.9;
+Oxide1.eps=3.9*2;
 
 Oxide2=region("hex",0,grid.xmax,grid.ymin,grid.ymax)
-Oxide2.eps=3.9;
+Oxide2.eps=3.9*2;
 
 top_gate=gate("hex",grid.xmax,grid.xmax,10.0,20.0);
 bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
