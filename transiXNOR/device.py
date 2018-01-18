@@ -9,9 +9,9 @@ rank = 0
 # from -2.0 to 0: mesh size from 1 to 0.05
 # from 0 to 2.0: mesh size from 0.05 to 1
 xg=nonuniformgrid(
-    array([-0.5,0.2,
+    array([-1.0,0.5,
               0,0.1,
-            0.5,0.2]))
+            1.0,0.5]))
 ## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
 # semi = {
 #     'me': 0.65,
@@ -58,8 +58,8 @@ bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
 # molar fraction
-fraction_source=0.005 # p-doped
-fraction_drain=-0.005 # n-doped
+fraction_source=0.002 # p-doped
+fraction_drain=-0.002 # n-doped
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
