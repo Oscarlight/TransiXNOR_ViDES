@@ -41,10 +41,10 @@ $(OBJECTS) :
 
 ifeq ($(GOTOBLAS),1)
 NanoTCAD_ViDESmod   : $(OBJECTS) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) NanoTCAD_ViDESmod.o
-	$(FF) $(CFLAGS) -shared -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) -lm -lgoto2 -lgfortran -lpthread
+	$(FF) $(CFLAGS) -shared -g -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) -lm -lgoto2 -lgfortran -lpthread
 else
 NanoTCAD_ViDESmod   : $(OBJECTS) $(OBJECTS_BLAS_LAPACK) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4)  NanoTCAD_ViDESmod.o
-	$(FF) $(CFLAGS) -shared -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_BLAS_LAPACK) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) -lm 
+	$(FF) $(CFLAGS) -shared -g -o NanoTCAD_ViDESmod.so $(OBJECTS) $(OBJECTS_BLAS_LAPACK) $(OBJECTS_REL_1.1) $(OBJECTS_REL_1.2) $(OBJECTS_REL_1.4) -lm $(NOMAIN) -lm 
 endif
 
 comp  :
