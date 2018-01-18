@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-PLOT_FIXED_CHARGE = True
+PLOT_FIXED_CHARGE = False
 PLOT_BAND = True
-PLOT_TRAN = False
+PLOT_TRAN = True
 PLOT_CHARGE = True
 Eg = 0.252
 gridx = np.genfromtxt('gridx.out')
