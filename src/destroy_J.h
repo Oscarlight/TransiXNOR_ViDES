@@ -6,6 +6,7 @@
 //  redistribution of this file, and for a DISCLAIMER OF ALL WARRANTIES.
 // ====================================================================== 
 #include "nrutil.h"
+#include <stdlib.h>
 #ifndef NR_END
 #define NR_END 1
 #endif
