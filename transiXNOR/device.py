@@ -27,7 +27,7 @@ semi = {
     # 'mh': 0.124,
     'Eg': 0.252,
     'acc': 0.3,  # ?????????
-    'relative_EA' : 0.08
+    'relative_EA' : 0.08 # !!
 }
 FLAKE=TMD(semi,30.0,"n");
 
@@ -47,7 +47,7 @@ savetxt("gridy.out",grid.gridy)
 
 # I take care of the solid
 Oxide1=region("hex",grid.xmin,0,grid.ymin,grid.ymax)
-Oxide1.eps=3.9*1/0.4;
+Oxide1.eps=3.9*1/0.4; # !!
 
 Oxide2=region("hex",0,grid.xmax,grid.ymin,grid.ymax)
 Oxide2.eps=3.9*1/0.4;
@@ -59,8 +59,8 @@ bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 
 # molar fraction
-fraction_source=0.002 # p-doped
-fraction_drain=-0.002 # n-doped
+fraction_source=0.005 # p-doped
+fraction_drain=-0.005 # n-doped
 dope_reservoir(grid,p,FLAKE,fraction_source,array([-1,1,grid.ymin,10.0]));
 dope_reservoir(grid,p,FLAKE,fraction_drain,array([-1,1,20.0,grid.ymax]));
 
