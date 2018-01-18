@@ -47,10 +47,10 @@ savetxt("gridy.out",grid.gridy)
 
 # I take care of the solid
 Oxide1=region("hex",grid.xmin,0,grid.ymin,grid.ymax)
-Oxide1.eps=3.9*2;
+Oxide1.eps=3.9*1/0.4;
 
 Oxide2=region("hex",0,grid.xmax,grid.ymin,grid.ymax)
-Oxide2.eps=3.9*2;
+Oxide2.eps=3.9*1/0.4;
 
 top_gate=gate("hex",grid.xmax,grid.xmax,10.0,20.0);
 bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
