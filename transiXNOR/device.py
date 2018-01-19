@@ -128,7 +128,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
             top_gate.Ef=vtg; 
             set_gate(p,top_gate)
             p.normpoisson=1e-1;
-            p.normd=2e-3; # 5e-3;
+            p.normd=1e-3; # 5e-3;
             solve_self_consistent(grid,p,FLAKE);
             vtg_cur.append(FLAKE.current());
             # I save the output files
