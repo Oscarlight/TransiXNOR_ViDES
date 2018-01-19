@@ -402,7 +402,7 @@ def solve_self_consistent(grid,interface,channel):
 #        a=[channel.E,channel.T];
 #        savetxt("T.temp",transpose(a));
 
-        if (rank==0):
+        if (rank==0 and VERBAL):
             writeout("--------------------------------------------")
             string="            CURRENT = %s A/m" %(channel.current());
             writeout(string);
@@ -412,7 +412,7 @@ def solve_self_consistent(grid,interface,channel):
         # the 3D domain
         interface.free_charge[grid.swap]=channel.charge
         
-        if (rank==0): 
+        if (rank==0 and VERBAL): 
             savetxt("ncar.ini",interface.free_charge);
             savetxt("Phi.ini",interface.Phi);
 
@@ -427,10 +427,10 @@ def solve_self_consistent(grid,interface,channel):
 #        Phiold=1.0*interface.Phi;
         interface.Phiold=interface.Phi.copy();
         
-        if (rank==0): print()
-        string="Iteration # %s; ||Phi-Phiold||2 = %s" %(counter,normad)
-        if (rank==0): writeout(string) 
-        if (rank==0): print() 
+        if (rank==0 and VERBAL):
+            string="Iteration # %s; ||Phi-Phiold||2 = %s" %(counter,normad)
+            writeout(string) 
+
         counter=counter+1;
         if (counter>600):
             return;
