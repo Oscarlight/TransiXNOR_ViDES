@@ -28,9 +28,9 @@ if (T_WINDOW or PLOT_BAND):
 	fn_band_diag = model_path + '/data/phi_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
 	band_diag = np.load(fn_band_diag)
 	band_diag = np.reshape(band_diag, (-1, Nx))
-	print('D_Ec: %s' % band_diag[0, Nx/2] - 0)
-	print('D_Ev: %s' % -Vds - band_diag[-1,Nx/2])
-	print('Tunneling Window - Band Gap: %s' % band_diag[0, Nx/2] - band_diag[-1,Nx/2])
+	print('D_Ec: %s' % (band_diag[0, Nx/2] - 0))
+	print('D_Ev: %s' % (-Vds - band_diag[-1,Nx/2]))
+	print('Tunneling Window - Band Gap: %s' % (band_diag[0, Nx/2] - band_diag[-1,Nx/2]))
 	# print(band_diag.shape)
 	if (PLOT_BAND):
 		plt.plot(gridy, band_diag[:,Nx/2]+Eg/2)
