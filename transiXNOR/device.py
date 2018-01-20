@@ -22,7 +22,7 @@ parser.add_argument("--vdsN",   default=1,   type=int)
 parser.add_argument("model_path", type=str)
 args = parser.parse_args()
 
-model_path = parser.model_path
+model_path = args.model_path
 
 if not os.path.exists(model_path):
     os.makedirs(model_path)
