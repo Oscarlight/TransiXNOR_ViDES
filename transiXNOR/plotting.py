@@ -12,7 +12,7 @@ Eg = 0.252
 gridx = np.genfromtxt(model_path + '/gridx.out')
 Nx = gridx.shape[0]
 gridy = np.genfromtxt(model_path + '/gridy.out')
-Ny = gridx.shape[0]
+Ny = gridy.shape[0]
 
 Vds=0.2; Vbg=0.0; Vtg=0.0
 ## fixed charge
