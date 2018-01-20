@@ -32,7 +32,7 @@ if (T_WINDOW or PLOT_BAND):
 	Ev = band_diag[:,Nx/2]-Eg/2
 	print('D_Ev: %s' % (Ev[0] - 0))
 	print('D_Ec: %s' % (-Vds - Ec[-1]))
-	print('Tunneling Window: %s' % (Ec[0] - Ev[-1]))
+	print('Tunneling Window: %s' % (Ev[0] - Ec[-1]))
 	# print(band_diag.shape)
 	if (PLOT_BAND):
 		plt.plot(gridy, Ec)
