@@ -57,5 +57,5 @@ if (PLOT_CHARGE):
 	plt.show()
 
 if (PLOT_CURRENT):
-	cur = np.load(model_path + '/current_*.npy')
+	cur = np.load(model_path + '/current_20.npy')
 	print(cur)
