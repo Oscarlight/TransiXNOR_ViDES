@@ -8,7 +8,6 @@ import argparse
 
 rank = 0
 OVERWRITE=True
-model_path = './D3'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--vtgmin", default=0.0, type=float)
@@ -20,7 +19,10 @@ parser.add_argument("--vbgN",   default=21,   type=int)
 parser.add_argument("--vdsmin", default=0.2, type=float)
 parser.add_argument("--vdsmax", default=0.2, type=float)
 parser.add_argument("--vdsN",   default=1,   type=int)
+parser.add_argument("model_path", type=str)
 args = parser.parse_args()
+
+model_path = parser.model_path
 
 if not os.path.exists(model_path):
     os.makedirs(model_path)
