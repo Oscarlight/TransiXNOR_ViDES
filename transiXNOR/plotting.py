@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 PLOT_FIXED_CHARGE = False
-PLOT_BAND = True
-PLOT_TRAN = True
-PLOT_CHARGE = True
+T_WINDOW = True
+PLOT_BAND = False
+PLOT_TRAN = False
+PLOT_CHARGE = False
 model_path = './D3'
 
 Eg = 0.252
@@ -22,16 +23,20 @@ if (PLOT_FIXED_CHARGE):
 	plt.show()
 	
 ## band diagram
-if (PLOT_BAND):
+if (T_WINDOW or PLOT_BAND):
 	fn_band_diag = model_path + '/data/phi_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
 	band_diag = np.load(fn_band_diag)
 	band_diag = np.reshape(band_diag, (-1, Nx))
+	print('D_Ec: %s' % band_diag[0, Nx/2] - 0)
+	print('D_Ev: %s' % -Vds - band_diag[-1,Nx/2])
+	print('Tunneling Window - Band Gap: %s' % band_diag[0, Nx/2] - band_diag[-1,Nx/2])
 	# print(band_diag.shape)
-	plt.plot(gridy, band_diag[:,Nx/2]+Eg/2)
-	plt.plot(gridy, band_diag[:,Nx/2]-Eg/2)
-	plt.plot(gridy, -np.ones_like(gridy)*Vds, 'r--')
-	plt.plot(gridy, np.zeros_like(gridy), 'r--')
-	plt.show()
+	if (PLOT_BAND):
+		plt.plot(gridy, band_diag[:,Nx/2]+Eg/2)
+		plt.plot(gridy, band_diag[:,Nx/2]-Eg/2)
+		plt.plot(gridy, -np.ones_like(gridy)*Vds, 'r--')
+		plt.plot(gridy, np.zeros_like(gridy), 'r--')
+		plt.show()
 
 if (PLOT_TRAN):
 	fn_tran = model_path + '/data/T_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
