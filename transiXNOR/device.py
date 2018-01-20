@@ -57,7 +57,7 @@ semi = {
      # Mo and S, the lattice constant = acc * sqrt(3)
     'relative_EA': 0.09,      # relative to workfunction of Gr, 
                               # e.g. 0.2 for MoS2
-    'fraction_source': 0.004, # p-dope
+    'fraction_source': 0.006, # p-dope 0.004
     'fraction_drain': -0.0015, # n-dope
 }
 FLAKE=TMD(semi,30.0,"n");
