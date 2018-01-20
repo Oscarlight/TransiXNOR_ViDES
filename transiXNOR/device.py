@@ -11,6 +11,12 @@ OVERWRITE=True
 model_path = './D3'
 
 parser = argparse.ArgumentParser()
+parser.add_argument("--vtgmin", default=0.0, type=float)
+parser.add_argument("--vtgmax", default=0.2, type=float)
+parser.add_argument("--vtgN",   default=21,   type=int)
+parser.add_argument("--vbgmin", default=0.0, type=float)
+parser.add_argument("--vbgmax", default=0.2, type=float)
+parser.add_argument("--vbgN",   default=21,   type=int)
 parser.add_argument("--vdsmin", default=0.2, type=float)
 parser.add_argument("--vdsmax", default=0.2, type=float)
 parser.add_argument("--vdsN",   default=1,   type=int)
@@ -102,13 +108,13 @@ savetxt(model_path+"/fixed_charge.out", p.fixed_charge)
 # ------------------------------------------#
 p.underel=0.01; # ?????????
 
-Vtgmax=0.2;
-Vtgmin=0.0;
-VtgN=21;
+Vtgmax=args.vtgmax;
+Vtgmin=args.vtgmin;
+VtgN=args.vtgN;
 
-Vbgmax=0.2;
-Vbgmin=0.0;
-VbgN=21;
+Vbgmax=args.vbgmax;
+Vbgmin=args.vbgmin;
+VbgN=args.vbgN;
 
 Vdsmax=args.vdsmax;
 Vdsmin=args.vdsmin;
