@@ -14,7 +14,7 @@ Nx = gridx.shape[0]
 gridy = np.genfromtxt(model_path + '/gridy.out')
 Ny = gridy.shape[0]
 
-Vds=0.2; Vbg=0.0; Vtg=0.0
+Vds=0.2; Vbg=0.2; Vtg=0.0
 ## fixed charge
 if (PLOT_FIXED_CHARGE):
 	fn_fixed_charge = model_path + '/fixed_charge.npy'
@@ -34,7 +34,6 @@ if (T_WINDOW or PLOT_BAND):
 	print('D_Ev: %s' % (Ev[0] - 0))
 	print('D_Ec: %s' % (-Vds - Ec[-1]))
 	print('Tunneling Window: %s' % (Ev[0] - Ec[-1]))
-	print(Ec[Ny-1], Ec[-1])
 	print('Source-size barrier: %s' % (Ec[Ny/2] - Ev[0]))
 	print('Drain-size barrier:  %s' % (Ec[-1] - Ev[Ny/2]))
 	# print(band_diag.shape)
