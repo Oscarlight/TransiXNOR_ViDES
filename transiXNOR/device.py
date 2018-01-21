@@ -70,7 +70,10 @@ else:
         semi = pickle.load(f)
 
 print(semi)
-FLAKE=TMD(semi,30.0,"n");
+L_SOURCE=10.0
+L_GATE=20.0
+L_DRAIN=10.0
+FLAKE=TMD(semi,L_SOURCE+L_GATE+L_DRAIN,"n");
 
 acc=FLAKE.acc;
 kF=2*pi/(3*sqrt(3)*acc);
@@ -99,8 +102,10 @@ Oxide1.eps=er_equ; # !!!
 Oxide2=region("hex",0,grid.xmax,grid.ymin,grid.ymax)
 Oxide2.eps=er_equ; # !!!
 
-top_gate=gate("hex",grid.xmax,grid.xmax,10.0,20.0);
-bottom_gate=gate("hex",grid.xmin,grid.xmin,10.0,20.0);
+top_gate=gate("hex", grid.xmax, grid.xmax,
+    L_SOURCE, L_SOURCE+L_GATE);
+bottom_gate=gate("hex", grid.xmin, grid.xmin,
+    L_SOURCE, L_SOURCE+L_GATE);
 
 
 p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
@@ -108,10 +113,10 @@ p=interface2D(grid,Oxide1,Oxide2,top_gate,bottom_gate);
 # molar fraction
 dope_reservoir(grid,p,FLAKE,
     semi['fraction_source'],
-    array([-1,1,grid.ymin,10.0]));
+    array([-1,1, grid.ymin, L_SOURCE]));
 dope_reservoir(grid,p,FLAKE,
     semi['fraction_drain'],
-    array([-1,1,20.0,grid.ymax]));
+    array([-1,1, L_SOURCE+L_GATE, grid.ymax]));
 
 savetxt(model_path+"/er.out", p.eps)
 savetxt(model_path+"/fixed_charge.out", p.fixed_charge)
