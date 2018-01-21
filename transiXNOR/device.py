@@ -60,7 +60,7 @@ if not os.path.exists(model_path+"/material.p"):
         'relative_EA': 0.09,      # relative to workfunction of Gr, 
                                    # e.g. 0.2 for MoS2
         'fraction_source': 0.004, # p-dope
-        'fraction_drain': -0.0015, # n-dope
+        'fraction_drain': -0.0018, # n-dope
     }
     with open(model_path+"/material.p", "wb") as f:
         pickle.dump(semi,f)
@@ -71,7 +71,7 @@ else:
 
 print(semi)
 L_SOURCE=10.0
-L_GATE=15.0
+L_GATE=12.0
 L_DRAIN=10.0
 FLAKE=TMD(semi,L_SOURCE+L_GATE+L_DRAIN,"n");
 
