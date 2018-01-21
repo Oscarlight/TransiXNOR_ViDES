@@ -1,12 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
-PLOT_FIXED_CHARGE = False
-T_WINDOW = True
-PLOT_BAND = False
-PLOT_TRAN = False
-PLOT_CHARGE = False
-PLOT_CURRENT = True
-model_path = './D4'
+import glob
+from NanoTCAD_ViDES import *
+
+COMPUTE_CURRENT_FROM_T = True
+PLOT_FIXED_CHARGE      = False
+T_WINDOW               = True
+PLOT_BAND              = False
+PLOT_TRAN              = False
+PLOT_CHARGE            = False
+PLOT_CURRENT           = False
+model_path             = './D3'
 
 Eg = 0.252
 gridx = np.genfromtxt(model_path + '/gridx.out')
@@ -44,13 +48,20 @@ if (T_WINDOW or PLOT_BAND):
 		plt.plot(gridy, np.zeros_like(gridy), 'r--')
 		plt.show()
 
-if (PLOT_TRAN):
+if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	fn_tran = model_path + '/data/T_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
 	energy_tran = np.load(fn_tran,delimiter=' ')
 	energy_tran = energy_tran[energy_tran[:,1] > 0.0, :]
-	print(energy_tran.shape)
-	plt.semilogy(energy_tran[:,0], energy_tran[:,1])
-	plt.show()
+	E = energy_tran[:, 0]
+	T = energy_tran[:, 1]
+	if (PLOT_CURRENT_SPECTRUM):
+		jE = 2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt))
+		plot.semilogy(E, jE)
+		plot.show()
+	if (PLOT_TRAN):
+		print(energy_tran.shape)
+		plt.semilogy(energy_tran[:,0], energy_tran[:,1])
+		plt.show()
 
 if (PLOT_CHARGE):
 	fn_charge = model_path + '/data/ncar_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
@@ -62,3 +73,26 @@ if (PLOT_CHARGE):
 if (PLOT_CURRENT):
 	cur = np.load(model_path + '/current_20.npy')
 	print(cur)
+
+if (COMPUTE_CURRENT_FROM_T):
+	vdsmin=0.0; vdsmax=0.2; vdsN=21;
+	vbgmin=0.0; vbgmax=0.2; vbgN=21;
+	vtgmin=0.0; vtgmax=0.2; vtgN=21;
+	vds_cur = []
+	for vds in np.linspace(vdsmin, vdsmax, vdsN):
+		vbg_cur = []
+		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
+			vtg_cur = []
+			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
+				tran = np.load(model_path + '/data/T_%s_%s_%s.npy'%(vds, vbg, vtg))
+				E = tran[:, 0]
+				T = tran[:, 1]
+				dE = 1e-3
+				vtg_cur.append(
+					sum(2*q*q/(2*pi*hbar)*T*(Fermi((E)/vt)-Fermi((E-vds)/vt))*dE)
+				)
+			print('length of vtg_cur = %s' % len(vtg_cur))
+			vbg_cur.append(vtg_cur)
+		vds_cur.append(vbg_cur)
+	np.save(model_path+'/current', np.array(vds_cur))
+

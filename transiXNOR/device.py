@@ -48,18 +48,28 @@ xg=nonuniformgrid(
 #     'relative_EA' : 0.2
 # }
 ## Bi2Se3 (Qin's Paper)
-semi = {
-    'me': 0.124,
-    'mh': 2.23,
-    'Eg': 0.252,
-    'acc': 0.414/sqrt(3), # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
-     # e.g. 0.2 in MoS2: the distance between
-     # Mo and S, the lattice constant = acc * sqrt(3)
-    'relative_EA': 0.094,      # relative to workfunction of Gr, 
-                               # e.g. 0.2 for MoS2
-    'fraction_source': 0.0062, # p-dope
-    'fraction_drain': -0.0015, # n-dope
-}
+if not os.path.exists(model_path+"/material.p"):
+    print('<<< Creating new material parameters:')
+    semi = {
+        'me': 0.124,
+        'mh': 2.23,
+        'Eg': 0.252,
+        'acc': 0.414/sqrt(3), # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
+         # e.g. 0.2 in MoS2: the distance between
+         # Mo and S, the lattice constant = acc * sqrt(3)
+        'relative_EA': 0.09,      # relative to workfunction of Gr, 
+                                   # e.g. 0.2 for MoS2
+        'fraction_source': 0.004, # p-dope
+        'fraction_drain': -0.001, # n-dope
+    }
+    with open(model_path+"/material.p", "wb") as f:
+        pickle.dump(semi,f)
+else:
+    print('<<< Reuse exists new material parameters:')
+    with open(model_path+"/material.p", "r") as f:
+        semi = pickle.load(f)
+
+print(semi)
 FLAKE=TMD(semi,30.0,"n");
 
 acc=FLAKE.acc;
@@ -74,8 +84,7 @@ FLAKE.dk=dk;
 FLAKE.dE=0.001
 grid=grid2D(xg,FLAKE.y,FLAKE.x,FLAKE.y);
 
-with open(model_path+"/material.p", "wb") as f:
-    pickle.dump(semi,f)
+
 
 savetxt(model_path+"/gridx.out",grid.gridx)
 savetxt(model_path+"/gridy.out",grid.gridy)
@@ -130,6 +139,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
     for vbg in np.linspace(Vbgmin, Vbgmax, VbgN):
         vtg_cur = []
         for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
+            # TODO: change %s to %.2f in the future.
             print('>>> Vds=%s, Vbg=%s, Vtg=%s' % (vds, vbg, vtg))
             bottom_gate.Ef=vbg 
             set_gate(p,bottom_gate)
