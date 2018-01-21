@@ -140,7 +140,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
         vtg_cur = []
         for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
             # TODO: change %s to %.2f in the future.
-            print('>>> Vds=%s, Vbg=%s, Vtg=%s' % (vds, vbg, vtg))
+            print('>>> Vds=%.2f, Vbg=%.2f, Vtg=%.2f' % (vds, vbg, vtg))
             bottom_gate.Ef=vbg 
             set_gate(p,bottom_gate)
             top_gate.Ef=vtg; 
@@ -151,11 +151,11 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
             vtg_cur.append(FLAKE.current());
             # I save the output files
             if (rank==0):
-                np.save(model_path+"/data/phi_%s_%s_%s" % (vds, vbg, vtg),
+                np.save(model_path+"/data/phi_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
                     p.Phi)
-                np.save(model_path+"/data/ncar_%s_%s_%s" % (vds, vbg, vtg),
+                np.save(model_path+"/data/ncar_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
                     p.free_charge);
-                np.save(model_path+"/data/T_%s_%s_%s" % (vds, vbg, vtg),
+                np.save(model_path+"/data/T_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
                     transpose([FLAKE.E,FLAKE.T]));
         vbg_cur.append(vtg_cur)
     vds_cur.append(vbg_cur)

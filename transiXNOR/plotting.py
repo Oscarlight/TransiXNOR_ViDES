@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 import glob
 from NanoTCAD_ViDES import *
 
-COMPUTE_CURRENT_FROM_T = True
+COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = True
 PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
-PLOT_CURRENT           = False
+PLOT_CURRENT           = True
 model_path             = './D3'
 
 Eg = 0.252
