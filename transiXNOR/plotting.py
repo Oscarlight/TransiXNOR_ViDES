@@ -51,7 +51,7 @@ if (T_WINDOW or PLOT_BAND):
 
 if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	fn_tran = model_path + '/data/T_%.2f_%.2f_%.2f.npy'%(Vds, Vbg, Vtg)
-	energy_tran = np.load(fn_tran,delimiter=' ')
+	energy_tran = np.load(fn_tran)
 	energy_tran = energy_tran[energy_tran[:,1] > 0.0, :]
 	E = energy_tran[:, 0]
 	T = energy_tran[:, 1]
