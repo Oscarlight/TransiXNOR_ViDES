@@ -17,3 +17,5 @@ python device.py D6 --vdsmin 0.15 --vdsmax 0.15 --vdsN 1
 python device.py D6 --vdsmin 0.16 --vdsmax 0.16 --vdsN 1 & 
 python device.py D6 --vdsmin 0.17 --vdsmax 0.17 --vdsN 1 &
 python device.py D6 --vdsmin 0.18 --vdsmax 0.18 --vdsN 1 &
+python device.py D6 --vdsmin 0.19 --vdsmax 0.19 --vdsN 1
+python device.py D6 --vdsmin 0.00 --vdsmax 0.00 --vdsN 1

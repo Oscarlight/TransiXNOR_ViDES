@@ -10,7 +10,7 @@ PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = True
-PLOT_CURRENT_SPECTRUM  = False
+PLOT_CURRENT_SPECTRUM  = True
 model_path             = './D5'
 
 Eg = 0.252
@@ -58,7 +58,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	if (PLOT_CURRENT_SPECTRUM):
 		jE = 2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt))
 		plot.semilogy(E, jE)
-		plot.show()
+		plot.savefig('current_spectrum.png')
 	if (PLOT_TRAN):
 		print(energy_tran.shape)
 		plt.semilogy(energy_tran[:,0], energy_tran[:,1])
