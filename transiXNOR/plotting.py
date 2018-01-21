@@ -2,8 +2,18 @@ import numpy as np
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
+from pylab import rcParams
+from matplotlib.ticker import AutoMinorLocator
 import glob
 from NanoTCAD_ViDES import *
+
+FIGURE_SIZE = (5, 9)
+# FONT_SIZE = 26
+LINE_WIDTH = 1
+MAJOR_LABEL_SIZE = 22
+MINOR_LABEL_SIZE = 0
+rcParams['figure.figsize'] = FIGURE_SIZE
+rcParams['axes.linewidth'] = LINE_WIDTH
 
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
@@ -60,7 +70,10 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	T = energy_tran[:, 1]
 	if (PLOT_CURRENT_SPECTRUM):
 		jE = np.abs(2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt)))
-		plt.semilogy(E, jE)
+		plt.semilogy(E, jE, linewidth=2, color='k')
+		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+		ax.xaxis.set_minor_locator(AutoMinorLocator())
 		plt.savefig('current_spectrum.png')
 	if (PLOT_TRAN):
 		print(energy_tran.shape)
