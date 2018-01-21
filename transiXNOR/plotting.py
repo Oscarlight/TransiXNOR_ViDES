@@ -57,10 +57,8 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	E = energy_tran[:, 0]
 	T = energy_tran[:, 1]
 	if (PLOT_CURRENT_SPECTRUM):
-		jE = 2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt))
-		print(jE.shape)
-		print(E.shape)
-		# plt.semilogy(E, jE)
+		jE = abs(2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt)))
+		plt.semilogy(E, jE)
 		# plt.savefig('current_spectrum.png')
 	if (PLOT_TRAN):
 		print(energy_tran.shape)
