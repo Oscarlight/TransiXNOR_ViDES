@@ -14,6 +14,7 @@ PLOT_CURRENT_SPECTRUM  = True
 model_path             = './D5'
 
 Eg = 0.252
+vt=kboltz*300/q;
 gridx = np.genfromtxt(model_path + '/gridx.out')
 Nx = gridx.shape[0]
 gridy = np.genfromtxt(model_path + '/gridy.out')
