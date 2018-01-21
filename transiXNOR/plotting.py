@@ -10,7 +10,8 @@ PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = True
-model_path             = './D3'
+PLOT_CURRENT_SPECTRUM  = False
+model_path             = './D5'
 
 Eg = 0.252
 gridx = np.genfromtxt(model_path + '/gridx.out')
