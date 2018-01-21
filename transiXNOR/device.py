@@ -59,7 +59,7 @@ if not os.path.exists(model_path+"/material.p"):
          # Mo and S, the lattice constant = acc * sqrt(3)
         'relative_EA': 0.09,      # relative to workfunction of Gr, 
                                    # e.g. 0.2 for MoS2
-        'fraction_source': 0.004, # p-dope
+        'fraction_source': 0.005, # p-dope
         'fraction_drain': -0.001, # n-dope
     }
     with open(model_path+"/material.p", "wb") as f:
