@@ -14,6 +14,7 @@ MAJOR_LABEL_SIZE = 22
 MINOR_LABEL_SIZE = 0
 rcParams['figure.figsize'] = FIGURE_SIZE
 rcParams['axes.linewidth'] = LINE_WIDTH
+fig, ax = plt.subplots()
 
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
