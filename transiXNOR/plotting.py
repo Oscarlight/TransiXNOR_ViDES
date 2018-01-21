@@ -31,7 +31,7 @@ if (PLOT_FIXED_CHARGE):
 	
 ## band diagram
 if (T_WINDOW or PLOT_BAND):
-	fn_band_diag = model_path + '/data/phi_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
+	fn_band_diag = model_path + '/data/phi_%.2f_%.2f_%.2f.npy'%(Vds, Vbg, Vtg)
 	band_diag = np.load(fn_band_diag)
 	band_diag = np.reshape(band_diag, (-1, Nx))
 	Ec = band_diag[:,Nx/2]+Eg/2
@@ -50,7 +50,7 @@ if (T_WINDOW or PLOT_BAND):
 		plt.show()
 
 if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
-	fn_tran = model_path + '/data/T_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
+	fn_tran = model_path + '/data/T_%.2f_%.2f_%.2f.npy'%(Vds, Vbg, Vtg)
 	energy_tran = np.load(fn_tran,delimiter=' ')
 	energy_tran = energy_tran[energy_tran[:,1] > 0.0, :]
 	E = energy_tran[:, 0]
@@ -65,7 +65,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 		plt.show()
 
 if (PLOT_CHARGE):
-	fn_charge = model_path + '/data/ncar_%s_%s_%s.npy'%(Vds, Vbg, Vtg)
+	fn_charge = model_path + '/data/ncar_%.2f_%.2f_%.2f.npy'%(Vds, Vbg, Vtg)
 	charge_density = np.load(fn_charge)
 	charge_density = np.reshape(charge_density, (-1, Nx))
 	plt.semilogy(gridy, np.abs(charge_density[:,Nx/2]))
@@ -85,7 +85,7 @@ if (COMPUTE_CURRENT_FROM_T):
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
 			vtg_cur = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				tran = np.load(model_path + '/data/T_%s_%s_%s.npy'%(vds, vbg, vtg))
+				tran = np.load(model_path + '/data/T_%.2f_%.2f_%.2f.npy'%(vds, vbg, vtg))
 				E = tran[:, 0]
 				T = tran[:, 1]
 				dE = 1e-3
