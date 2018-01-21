@@ -25,7 +25,7 @@ PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = True
 PLOT_CURRENT_SPECTRUM  = True
-model_path             = './D5'
+model_path             = './D6'
 
 Eg = 0.252
 vt=kboltz*300/q;
