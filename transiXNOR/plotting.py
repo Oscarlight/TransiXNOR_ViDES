@@ -94,7 +94,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
 		plt.ylim([-0.6, 0.4])
-		plt.xlim([1e-3, 1e1])
+		plt.xlim([1e-3, 1e2])
 		plt.savefig(model_path+'/plots/current_spectrum_' + voltage + '.pdf', 
 			bbox_inches='tight', transparent=True)
 		plt.clf()
