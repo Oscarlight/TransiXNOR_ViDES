@@ -6,26 +6,33 @@ from pylab import rcParams
 from matplotlib.ticker import AutoMinorLocator
 import glob
 from NanoTCAD_ViDES import *
+import argparse
 
-FIGURE_SIZE = (5, 9)
+parser = argparse.ArgumentParser()
+parser.add_argument("--vtg", default=0.0, type=float)
+parser.add_argument("--vbg", default=0.2, type=float)
+parser.add_argument("--vds", default=0.2, type=float)
+args = parser.parse_args()
+
+FIGURE_SIZE = (5, 8)
 # FONT_SIZE = 26
 LINE_WIDTH = 1
 MAJOR_LABEL_SIZE = 22
 MINOR_LABEL_SIZE = 0
 rcParams['figure.figsize'] = FIGURE_SIZE
 rcParams['axes.linewidth'] = LINE_WIDTH
-rcParams['figure.autolayout'] = True
+# rcParams['figure.autolayout'] = True
 fig, ax = plt.subplots()
 
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
-T_WINDOW               = True
-PLOT_BAND              = False
+T_WINDOW               = False
+PLOT_BAND              = True
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = True
 PLOT_CURRENT_SPECTRUM  = True
-model_path             = './D5'
+model_path             = './D6'
 
 Eg = 0.252
 vt=kboltz*300/q;
@@ -34,7 +41,8 @@ Nx = gridx.shape[0]
 gridy = np.genfromtxt(model_path + '/gridy.out')
 Ny = gridy.shape[0]
 
-Vds=0.2; Vbg=0.2; Vtg=0.0
+Vds=args.vds; Vbg=args.vbg; Vtg=args.vtg
+voltage = '%.2f_%.2f_%.2f' % (Vds, Vbg, Vtg)
 ## fixed charge
 if (PLOT_FIXED_CHARGE):
 	fn_fixed_charge = model_path + '/fixed_charge.npy'
@@ -46,7 +54,7 @@ if (PLOT_FIXED_CHARGE):
 	
 ## band diagram
 if (T_WINDOW or PLOT_BAND):
-	fn_band_diag = model_path + '/data/phi_%.2f_%.2f_%.2f.npy'%(Vds, Vbg, Vtg)
+	fn_band_diag = model_path + '/data/phi_' + voltage + '.npy'
 	band_diag = np.load(fn_band_diag)
 	band_diag = np.reshape(band_diag, (-1, Nx))
 	Ec = band_diag[:,Nx/2]+Eg/2
@@ -58,40 +66,61 @@ if (T_WINDOW or PLOT_BAND):
 	print('Drain-size barrier:  %s' % (Ec[-1] - Ev[Ny/2]))
 	# print(band_diag.shape)
 	if (PLOT_BAND):
-		plt.plot(gridy, Ec)
-		plt.plot(gridy, Ev)
-		plt.plot(gridy, -np.ones_like(gridy)*Vds, 'r--')
-		plt.plot(gridy, np.zeros_like(gridy), 'r--')
-		plt.show()
+		plt.plot(gridy, Ec, linewidth=2, color='k')
+		plt.plot(gridy, Ev, linewidth=2, color='k')
+		plt.plot(gridy[0:5], -np.ones_like(gridy)*Vds,
+			linewidth=2, color='#e74c3c', linestyle='--')
+		plt.plot(gridy[-5:-1], np.zeros_like(gridy),
+			linewidth=2, color='#3498db', linestyle='--')
+		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+		ax.xaxis.set_minor_locator(AutoMinorLocator())
+		plt.savefig(model_path+'/plots/band_' + voltage + '.pdf')
+		plt.clf()
 
 if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
-	fn_tran = model_path + '/data/T_%.2f_%.2f_%.2f.npy'%(Vds, Vbg, Vtg)
+	fn_tran = model_path + '/data/T_' + voltage + '.npy'
 	energy_tran = np.load(fn_tran)
 	energy_tran = energy_tran[energy_tran[:,1] > 0.0, :]
 	E = energy_tran[:, 0]
 	T = energy_tran[:, 1]
 	if (PLOT_CURRENT_SPECTRUM):
+		# Fig. 1
 		jE = np.abs(2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt)))
-		plt.semilogy(E, jE, linewidth=2, color='k')
+		plt.semilogy(E, jE, linewidth=2, color='k', bbox_inches='tight')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
-		plt.savefig('current_spectrum.png')
+		plt.savefig(model_path+'/plots/current_spectrum_' + voltage + '.pdf')
+		plt.clf()
 	if (PLOT_TRAN):
 		print(energy_tran.shape)
 		plt.semilogy(energy_tran[:,0], energy_tran[:,1])
 		plt.show()
 
 if (PLOT_CHARGE):
-	fn_charge = model_path + '/data/ncar_%.2f_%.2f_%.2f.npy'%(Vds, Vbg, Vtg)
+	fn_charge = model_path + '/data/ncar_' + voltage + '.npy'
 	charge_density = np.load(fn_charge)
 	charge_density = np.reshape(charge_density, (-1, Nx))
 	plt.semilogy(gridy, np.abs(charge_density[:,Nx/2]))
 	plt.show()
 
 if (PLOT_CURRENT):
+	# Fig. 1
 	cur = np.load(model_path + '/current_20.npy')
-	print(cur)
+	vtg_array = np.linspace(0.0, 0.2, 21)
+	plt.semilogy(vtg_array, cur[20,0,:], linewidth=2, color='k', bbox_inches='tight')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.0.pdf')
+	plt.clf()
+	plt.semilogy(vtg_array, cur[20,10,:], linewidth=2, color='k', bbox_inches='tight')
+	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.1.pdf')
+	plt.clf()
+	plt.semilogy(vtg_array, cur[20,20,:], linewidth=2, color='k', bbox_inches='tight')
+	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.2.pdf')
+	plt.clf()	
 
 if (COMPUTE_CURRENT_FROM_T):
 	vdsmin=0.0; vdsmax=0.2; vdsN=21;
@@ -103,7 +132,7 @@ if (COMPUTE_CURRENT_FROM_T):
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
 			vtg_cur = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				tran = np.load(model_path + '/data/T_%.2f_%.2f_%.2f.npy'%(vds, vbg, vtg))
+				tran = np.load(model_path + '/data/T_' + voltage + '.npy')
 				E = tran[:, 0]
 				T = tran[:, 1]
 				dE = 1e-3
