@@ -112,7 +112,7 @@ if (PLOT_CURRENT):
 	# Fig. 1
 	cur = np.load(model_path + '/current_20.npy')
 	vtg_array = np.linspace(0.0, 0.2, 21)
-	plt.plot(vtg_array, cur[0,0,:], linewidth=2, color='k', bbox_inches='tight')
+	plt.plot(vtg_array, cur[0,0,:], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.set_yscale('log')
@@ -120,12 +120,12 @@ if (PLOT_CURRENT):
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	plt.plot(vtg_array, cur[0,10,:], linewidth=2, color='k', bbox_inches='tight')
+	plt.plot(vtg_array, cur[0,10,:], linewidth=2, color='k')
 	ax.set_yscale('log')
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	plt.plot(vtg_array, cur[0,20,:], linewidth=2, color='k', bbox_inches='tight')
+	plt.plot(vtg_array, cur[0,20,:], linewidth=2, color='k')
 	ax.set_yscale('log')
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.2.pdf',
 		bbox_inches='tight', transparent=True)
