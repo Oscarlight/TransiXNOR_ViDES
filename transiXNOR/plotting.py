@@ -88,7 +88,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	if (PLOT_CURRENT_SPECTRUM):
 		# Fig. 1
 		jE = np.abs(2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt)))
-		plt.semilogy(jE, E, linewidth=2, color='k')
+		plt.semilogx(jE, E, linewidth=2, color='k')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
