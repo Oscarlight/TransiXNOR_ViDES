@@ -14,7 +14,7 @@ parser.add_argument("--vbg", default=0.2, type=float)
 parser.add_argument("--vds", default=0.2, type=float)
 args = parser.parse_args()
 
-FIGURE_SIZE = (5, 8)
+FIGURE_SIZE = (5, 6)
 # FONT_SIZE = 26
 LINE_WIDTH = 1
 MAJOR_LABEL_SIZE = 22
