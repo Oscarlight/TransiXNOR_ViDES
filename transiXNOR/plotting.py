@@ -24,14 +24,14 @@ rcParams['axes.linewidth'] = LINE_WIDTH
 # rcParams['figure.autolayout'] = True
 fig, ax = plt.subplots()
 
-COMPUTE_CURRENT_FROM_T = False
+COMPUTE_CURRENT_FROM_T = True
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
-PLOT_BAND              = True
+PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
-PLOT_CURRENT           = True
-PLOT_CURRENT_SPECTRUM  = True
+PLOT_CURRENT           = False
+PLOT_CURRENT_SPECTRUM  = False
 model_path             = './D6'
 
 Eg = 0.252
@@ -142,7 +142,7 @@ if (PLOT_CURRENT):
 	plt.clf()	
 
 if (COMPUTE_CURRENT_FROM_T):
-	vdsmin=0.0; vdsmax=0.2; vdsN=21;
+	vdsmin=0.01; vdsmax=0.2; vdsN=20;
 	vbgmin=0.0; vbgmax=0.2; vbgN=21;
 	vtgmin=0.0; vtgmax=0.2; vtgN=21;
 	vds_cur = []
