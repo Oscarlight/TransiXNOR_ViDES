@@ -68,9 +68,9 @@ if (T_WINDOW or PLOT_BAND):
 	if (PLOT_BAND):
 		plt.plot(gridy, Ec, linewidth=2, color='k')
 		plt.plot(gridy, Ev, linewidth=2, color='k')
-		plt.plot(gridy[-20:], -np.ones_like(gridy[-10:])*Vds,
+		plt.plot(gridy[-20:], -np.ones_like(gridy[-20:])*Vds,
 			linewidth=2, color='#e74c3c', linestyle='-')
-		plt.plot(gridy[:20], np.zeros_like(gridy[:10]),
+		plt.plot(gridy[:20], np.zeros_like(gridy[:20]),
 			linewidth=2, color='#3498db', linestyle='-')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
