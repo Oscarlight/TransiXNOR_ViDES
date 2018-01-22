@@ -146,6 +146,7 @@ if (COMPUTE_CURRENT_FROM_T):
 	vbgmin=0.0; vbgmax=0.2; vbgN=21;
 	vtgmin=0.0; vtgmax=0.2; vtgN=21;
 	vds_cur = []
+	print('Start computing the current from the T files...')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
 		vbg_cur = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
