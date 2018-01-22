@@ -152,7 +152,8 @@ if (COMPUTE_CURRENT_FROM_T):
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
 			vtg_cur = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				tran = np.load(model_path + '/data/T_' + voltage + '.npy')
+				tmp_volt = '%.2f_%.2f_%.2f' % (vds, vbg, vtg)
+				tran = np.load(model_path + '/data/T_' + tmp_volt + '.npy')
 				E = tran[:, 0]
 				T = tran[:, 1]
 				dE = 1e-3
