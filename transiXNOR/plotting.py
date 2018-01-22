@@ -68,10 +68,10 @@ if (T_WINDOW or PLOT_BAND):
 	if (PLOT_BAND):
 		plt.plot(gridy, Ec, linewidth=2, color='k')
 		plt.plot(gridy, Ev, linewidth=2, color='k')
-		plt.plot(gridy[-10:], -np.ones_like(gridy[-10:])*Vds,
-			linewidth=2, color='#e74c3c', linestyle='--')
-		plt.plot(gridy[:10], np.zeros_like(gridy[:10]),
-			linewidth=2, color='#3498db', linestyle='--')
+		plt.plot(gridy[-20:], -np.ones_like(gridy[-10:])*Vds,
+			linewidth=2, color='#e74c3c', linestyle='-')
+		plt.plot(gridy[:20], np.zeros_like(gridy[:10]),
+			linewidth=2, color='#3498db', linestyle='-')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
@@ -88,10 +88,9 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	if (PLOT_CURRENT_SPECTRUM):
 		# Fig. 1
 		jE = np.abs(2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt)))
-		plt.plot(E, jE, linewidth=2, color='k')
+		plt.semilogy(E, jE, linewidth=2, color='k')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
-		ax.set_yscale('log')
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
 		plt.savefig(model_path+'/plots/current_spectrum_' + voltage + '.pdf', 
 			bbox_inches='tight', transparent=True)
@@ -110,23 +109,20 @@ if (PLOT_CHARGE):
 
 if (PLOT_CURRENT):
 	# Fig. 1
-	cur = np.load(model_path + '/current_20.npy')
+	cur = np.array(np.load(model_path + '/current_20.npy'))
 	vtg_array = np.linspace(0.0, 0.2, 21)
-	plt.plot(vtg_array, cur[0,0,:], linewidth=2, color='k')
+	plt.semilogy(vtg_array, cur[0,0,:], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
-	ax.set_yscale('log')
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	plt.plot(vtg_array, cur[0,10,:], linewidth=2, color='k')
-	ax.set_yscale('log')
+	plt.semilogy(vtg_array, cur[0,10,:], linewidth=2, color='k')
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	plt.plot(vtg_array, cur[0,20,:], linewidth=2, color='k')
-	ax.set_yscale('log')
+	plt.semilogy(vtg_array, cur[0,20,:], linewidth=2, color='k')
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.2.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()	
