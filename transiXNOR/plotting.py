@@ -75,7 +75,8 @@ if (T_WINDOW or PLOT_BAND):
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
-		plt.savefig(model_path+'/plots/band_' + voltage + '.pdf')
+		plt.savefig(model_path+'/plots/band_' + voltage + '.pdf',
+			bbox_inches='tight', transparent=True)
 		plt.clf()
 
 if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
@@ -87,12 +88,13 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 	if (PLOT_CURRENT_SPECTRUM):
 		# Fig. 1
 		jE = np.abs(2*q*q/(2*pi*hbar)*T*(Fermi((E-0)/vt)-Fermi((E-Vds)/vt)))
-		plt.plot(E, jE, linewidth=2, color='k', bbox_inches='tight')
+		plt.plot(E, jE, linewidth=2, color='k')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 		ax.set_yscale('log')
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
-		plt.savefig(model_path+'/plots/current_spectrum_' + voltage + '.pdf')
+		plt.savefig(model_path+'/plots/current_spectrum_' + voltage + '.pdf', 
+			bbox_inches='tight', transparent=True)
 		plt.clf()
 	if (PLOT_TRAN):
 		print(energy_tran.shape)
@@ -115,15 +117,18 @@ if (PLOT_CURRENT):
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.set_yscale('log')
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
-	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.0.pdf')
+	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.0.pdf',
+		bbox_inches='tight', transparent=True)
 	plt.clf()
 	plt.plot(vtg_array, cur[20,10,:], linewidth=2, color='k', bbox_inches='tight')
 	ax.set_yscale('log')
-	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.1.pdf')
+	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.1.pdf',
+		bbox_inches='tight', transparent=True)
 	plt.clf()
 	plt.plot(vtg_array, cur[20,20,:], linewidth=2, color='k', bbox_inches='tight')
 	ax.set_yscale('log')
-	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.2.pdf')
+	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.2.pdf',
+		bbox_inches='tight', transparent=True)
 	plt.clf()	
 
 if (COMPUTE_CURRENT_FROM_T):
