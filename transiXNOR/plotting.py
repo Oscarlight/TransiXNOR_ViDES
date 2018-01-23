@@ -24,7 +24,7 @@ rcParams['axes.linewidth'] = LINE_WIDTH
 # rcParams['figure.autolayout'] = True
 fig, ax = plt.subplots()
 
-COMPUTE_CURRENT_FROM_T = True
+COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
 PLOT_BAND              = False
@@ -32,6 +32,7 @@ PLOT_TRAN              = True
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
+PLOT_FAMILY_CURVES     = True
 model_path             = './D6'
 
 Eg = 0.252
@@ -190,7 +191,7 @@ if (COMPUTE_CURRENT_FROM_T):
 				vtg_cur.append(
 					sum(2*q*q/(2*pi*hbar)*T*(Fermi((E)/vt)-Fermi((E-vds)/vt))*dE)
 				)
-			print('length of vtg_cur = %s' % len(vtg_cur))
+			# print('length of vtg_cur = %s' % len(vtg_cur))
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
 	np.save(model_path+'/current', np.array(vds_cur))
