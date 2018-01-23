@@ -13,10 +13,10 @@ mpl.rcParams['figure.figsize'] = 12, 12
 model_path = './D6'
 
 def sqResize(image, outwidth):
-    if np.sum(image) > 0:
+    if np.sum(np.abs(image)) > 0:
         log_image = np.log10(np.abs(image))
     else:
-        log_image = np.zeros_like(image)
+        log_image = np.ones_like(image)*10**-10
     abs_image = np.abs(image)
     out_image = resize(log_image, [outwidth, outwidth])
     return out_image
