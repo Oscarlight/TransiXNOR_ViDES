@@ -32,7 +32,7 @@ PLOT_TRAN              = True
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
-PLOT_FAMILY_CURVES     = True
+PLOT_FAMILY_CURVES     = False
 model_path             = './D6'
 
 Eg = 0.252
@@ -95,7 +95,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 		plt.semilogx(jE, -E, linewidth=2, color='k')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
-		ax.xaxis.set_minor_locator(AutoMinorLocator())
+		# ax.xaxis.set_minor_locator(AutoMinorLocator())
 		ax.yaxis.set_minor_locator(AutoMinorLocator())
 		plt.ylim([-0.6, 0.4])
 		plt.xlim([1e-3, 1e3])
