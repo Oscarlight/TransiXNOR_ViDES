@@ -32,7 +32,7 @@ PLOT_TRAN              = True
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
-PLOT_FAMILY_CURVES     = False
+PLOT_FAMILY_CURVES     = True
 model_path             = './D6'
 
 Eg = 0.252
