@@ -28,7 +28,7 @@ COMPUTE_CURRENT_FROM_T = True
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
 PLOT_BAND              = False
-PLOT_TRAN              = False
+PLOT_TRAN              = True
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
@@ -94,6 +94,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 		plt.semilogx(jE, -E, linewidth=2, color='k')
 		plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 		plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+		ax.xaxis.set_minor_locator(AutoMinorLocator())
 		ax.yaxis.set_minor_locator(AutoMinorLocator())
 		plt.ylim([-0.6, 0.4])
 		plt.xlim([1e-3, 1e3])
@@ -140,6 +141,35 @@ if (PLOT_CURRENT):
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.2.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()	
+
+if (PLOT_FAMILY_CURVES):
+	cur = np.abs(np.load(model_path + '/current.npy'))
+	vtg_list = [0.0, 0.05, 0.1, 0.15, 0.2]
+	vds_array = np.linspace(0, 0.2, 21)
+
+	for vtg in vtg_list:
+		plt.plot(vds_array, cur[:, 0, int(vtg*100)], 
+			linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	ax.yaxis.set_minor_locator(AutoMinorLocator())
+	plt.ylim([-10, 1e2])
+	plt.savefig(model_path+'/plots/family_curve_vbg_0.pdf',
+		bbox_inches='tight', transparent=True)
+	plt.clf()	
+
+	for vtg in vtg_list:
+		plt.plot(vds_array, cur[:, 20, int(vtg*100)], 
+			linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	ax.yaxis.set_minor_locator(AutoMinorLocator())
+	plt.ylim([-10, 1e2])
+	plt.savefig(model_path+'/plots/family_curve_vbg_1.pdf',
+		bbox_inches='tight', transparent=True)
+	plt.clf()
 
 if (COMPUTE_CURRENT_FROM_T):
 	vdsmin=0.01; vdsmax=0.2; vdsN=20;
