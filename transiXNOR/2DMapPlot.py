@@ -13,7 +13,10 @@ mpl.rcParams['figure.figsize'] = 12, 12
 model_path = './D6'
 
 def sqResize(image, outwidth):
-    log_image = np.log10(np.abs(image))
+    try:
+        log_image = np.log10(np.abs(image))
+    except:
+        log_image = np.zeros_like(image)
     abs_image = np.abs(image)
     out_image = resize(log_image, [outwidth, outwidth])
     return out_image
@@ -30,7 +33,7 @@ for index, vds in zip(index, voltage):
     ax = plt.subplot(4, 3, i+1)
     i += 1
     img = sqResize(data[index, :, :], 41)
-    cax = plt.imshow(img, vmin = -13, vmax = -9, origin='lower', interpolation = 'gaussian')
+    cax = plt.imshow(img, vmin = -3, vmax = 2, origin='lower', interpolation = 'gaussian')
     plt.title(r'$V_{DS}$' + ' = {0:.2f} V'.format(vds), fontsize = label_size)
     plt.ylabel(r'$V_{BG}$ (V)', fontsize = label_size)
     plt.xlabel(r'$V_{TG}$ (V)', fontsize = label_size)
