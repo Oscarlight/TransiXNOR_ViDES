@@ -16,7 +16,7 @@ def sqResize(image, outwidth):
     if np.sum(np.abs(image)) > 0:
         log_image = np.log10(np.abs(image))
     else:
-        log_image = np.ones_like(image)*10**-10
+        log_image = np.ones_like(image)*(-10)
     abs_image = np.abs(image)
     out_image = resize(log_image, [outwidth, outwidth])
     return out_image
