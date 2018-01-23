@@ -27,12 +27,12 @@ fig, ax = plt.subplots()
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
-PLOT_BAND              = False
+PLOT_BAND              = True
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
-PLOT_CURRENT_SPECTRUM  = False
-PLOT_FAMILY_CURVES     = True
+PLOT_CURRENT_SPECTRUM  = True
+PLOT_FAMILY_CURVES     = False
 model_path             = './D6'
 
 Eg = 0.252
