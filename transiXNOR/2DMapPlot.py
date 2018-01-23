@@ -21,7 +21,7 @@ def sqResize(image, outwidth):
 data = np.load(model_path + '/current.npy')
 numVds, numVbg, numVtg = data.shape
 nRow = 3; nCol = 3; figsize = 8
-fontsize = label_size)
+fontsize = label_size
 
 index = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 19, 20]
 voltage = [0.00, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12, 0.14, 0.16, 0.18, 0.19, 0.20]
