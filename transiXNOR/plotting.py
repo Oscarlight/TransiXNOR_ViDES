@@ -147,7 +147,7 @@ if (PLOT_FAMILY_CURVES):
 	cur = np.abs(np.load(model_path + '/current.npy'))
 	vtg_list = [0.0, 0.05, 0.1, 0.15, 0.2]
 	vds_array = np.linspace(0, 0.2, 21)
-
+	plt.clf()
 	for vtg in vtg_list:
 		plt.plot(vds_array, cur[:, 0, int(vtg*100)], 
 			linewidth=2, color='k')
