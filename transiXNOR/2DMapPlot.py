@@ -13,9 +13,9 @@ mpl.rcParams['figure.figsize'] = 12, 12
 model_path = './D6'
 
 def sqResize(image, outwidth):
-    try:
+    if np.sum(image) > 0:
         log_image = np.log10(np.abs(image))
-    except:
+    else:
         log_image = np.zeros_like(image)
     abs_image = np.abs(image)
     out_image = resize(log_image, [outwidth, outwidth])
@@ -33,12 +33,12 @@ for index, vds in zip(index, voltage):
     ax = plt.subplot(4, 3, i+1)
     i += 1
     img = sqResize(data[index, :, :], 41)
-    cax = plt.imshow(img, vmin = -3, vmax = 2, origin='lower', interpolation = 'gaussian')
+    cax = plt.imshow(img, vmin = -2, vmax = 1, origin='lower', interpolation = 'gaussian')
     plt.title(r'$V_{DS}$' + ' = {0:.2f} V'.format(vds), fontsize = label_size)
     plt.ylabel(r'$V_{BG}$ (V)', fontsize = label_size)
     plt.xlabel(r'$V_{TG}$ (V)', fontsize = label_size)
-    cbar = plt.colorbar(cax, ticks=[-2.0, -1.0, 0.0, 1.0, 2.0])
-    cbar.ax.set_yticklabels([r'$10^{-2}$', r'$10^{-1}$', r'$1$', r'$10$', r'$10^{2}$'], fontsize = label_size)
+    cbar = plt.colorbar(cax, ticks=[-2.0, -1.0, 0.0, 1.0])
+    cbar.ax.set_yticklabels([r'$10^{-2}$', r'$10^{-1}$', r'$1$', r'$10$'], fontsize = label_size)
     plt.subplots_adjust(wspace = 0.3, hspace = 0.55)
     ax.set_xticklabels([0.0, 0.0, 0.1, 0.2])
     ax.set_yticklabels([0.0, 0.0, 0.1, 0.2])
