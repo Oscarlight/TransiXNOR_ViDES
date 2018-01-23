@@ -28,7 +28,7 @@ COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
 PLOT_BAND              = False
-PLOT_TRAN              = True
+PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
@@ -49,7 +49,6 @@ if (PLOT_FIXED_CHARGE):
 	fn_fixed_charge = model_path + '/fixed_charge.npy'
 	fixed_charge = np.load(fn_fixed_charge)
 	fixed_charge = np.reshape(fixed_charge, (-1, Nx))
-	print(fixed_charge.shape)
 	plt.plot(gridy, fixed_charge[:,Nx/2])
 	plt.show()
 	
@@ -155,7 +154,7 @@ if (PLOT_FAMILY_CURVES):
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	ax.yaxis.set_minor_locator(AutoMinorLocator())
-	plt.ylim([-10, 1e2])
+	plt.ylim([-1, 45])
 	plt.savefig(model_path+'/plots/family_curve_vbg_0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()	
@@ -167,7 +166,7 @@ if (PLOT_FAMILY_CURVES):
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	ax.yaxis.set_minor_locator(AutoMinorLocator())
-	plt.ylim([-10, 1e2])
+	plt.ylim([-1, 45])
 	plt.savefig(model_path+'/plots/family_curve_vbg_1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
