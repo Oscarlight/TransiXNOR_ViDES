@@ -52,6 +52,7 @@ if not os.path.exists(model_path+"/material.p"):
     print('<<< Creating new material parameters:')
     semi = {
         'me': 0.124,
+        # 'mh': 0.124,
         'mh': 2.23,
         'Eg': 0.252,
         'acc': 0.414/sqrt(3), # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
@@ -73,7 +74,7 @@ print(semi)
 L_SOURCE=10.0
 L_GATE=15.0
 L_DRAIN=10.0
-FLAKE=TMD(semi,L_SOURCE+L_GATE+L_DRAIN,"n");
+FLAKE=TMD(semi,L_SOURCE+L_GATE+L_DRAIN);
 
 acc=FLAKE.acc;
 kF=2*pi/(3*sqrt(3)*acc);

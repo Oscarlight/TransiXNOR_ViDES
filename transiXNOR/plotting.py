@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--vtg", default=0.0, type=float)
 parser.add_argument("--vbg", default=0.2, type=float)
 parser.add_argument("--vds", default=0.2, type=float)
+parser.add_argument("model", default='./D6', type=str)
 args = parser.parse_args()
 
 FIGURE_SIZE = (5, 6)
@@ -33,7 +34,8 @@ PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = True
 PLOT_FAMILY_CURVES     = False
-model_path             = './D6'
+PRINT_CURRENT_ONLY     = True
+model_path             = args.model
 
 Eg = 0.252
 vt=kboltz*300/q;
@@ -113,9 +115,11 @@ if (PLOT_CHARGE):
 	plt.semilogy(gridy, np.abs(charge_density[:,Nx/2]))
 	plt.show()
 
-if (PLOT_CURRENT):
+if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	# Fig. 1
 	cur = np.abs(np.load(model_path + '/current_20.npy'))
+	if (PRINT_CURRENT_ONLY):
+		print(cur); quit()
 	vtg_array = np.linspace(0.0, 0.2, 21)
 	plt.semilogy(vtg_array, cur[0,0,:], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)

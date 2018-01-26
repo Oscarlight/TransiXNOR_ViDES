@@ -1,40 +1,12 @@
 #Copyright (c) 2004-2015, G. Fiori, G. Iannaccone, University of Pisa.
 #All rights reserved.
-#
-#Redistribution and use in source and binary forms, with or without
-#modification, are permitted provided that the following conditions are met:
-#
-#    - Redistributions of source code must retain the above copyright
-#        notice, this list of conditions and the following disclaimer.
-#    - Redistributions in binary form must reproduce the above copyright
-#        notice, this list of conditions and the following disclaimer in the
-#        documentation and/or other materials provided with the distribution.
-#    - All advertising materials mentioning features or use of this software
-#        must display the following acknowledgement:
-#        This product includes software developed by G.Fiori and G.Iannaccone at
-#        University of Pisa.
-#    - Neither the name of the University of Pisa nor the
-#        names of its contributors may be used to endorse or promote products
-#        derived from this software without specific prior written permission.
-#
-#THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY
-#EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-#WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#DISCLAIMED. IN NO EVENT SHALL THE AUTHORS
-#BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-#CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-#                       SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-#                       INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-#CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-#ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-#THE POSSIBILITY OF SUCH DAMAGE.
-
+# Modified by Mingda Li 1/25/2018
 
 from NanoTCAD_ViDES import *
-VERBAL=False
+VERBAL=True
 
 class TMD: 
-    def __init__(self,semi,L,n_or_p):
+    def __init__(self,semi,L):
         #degeneracy of 2 is already taken into account
         #in the Hamiltonian, since the minimum is in Kf,
         #so by itself degeneracy is 2 as in graphene
@@ -58,11 +30,9 @@ class TMD:
         self.kmin=0;
         self.dk=0.1;
         self.dE=1e-3;
-        self.thop=-2.59;
-        if (n_or_p=="n"):
-            self.thopBN=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.me))*hbar/q;
-        else:
-            self.thopBN=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mh))*hbar/q;
+        self.thop=-2.59; # Assuming the contact is graphene
+        self.thop_elec=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.me))*hbar/q;
+        self.thop_hole=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mh))*hbar/q;
         self.eta=1e-5;
         self.mu1=0.0;
         self.mu2=0.0;
@@ -110,11 +80,12 @@ class TMD:
                 h[ii][0]=kk;
                 h[ii][1]=kk+1;
                 if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                    h[ii][2]=self.thopBN;
+                    h[ii][2]=self.thop_elec;
                 else:
                     h[ii][2]=self.thop; 
             kk=kk+1;
         
+
         # I then compute the charge and the T for each energy and k and perform the integral
         i=0;
         k=self.kmin;
@@ -130,26 +101,27 @@ class TMD:
                 print(("    kx range: [%s,%s] ") %(self.kmin,self.kmax));
                 print(("    iteration %s ") %i);
                 print("----------------------------------")
+
+            # I fill the Hamiltonian for the actual wavevector k in the cycle
             flaggo=0;
             kk=1;
-            # I fill the Hamiltonian for the actual wavevector k in the cycle
             for ii in range(slices+1,2*slices):
                 if ((ii%2)==0):
                     h[ii][0]=kk;
                     h[ii][1]=kk+1;
                     if ((flaggo%2)==0):
                         if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                            h[ii][2]=self.thopBN+self.thopBN*exp(k*self.delta*1j);
+                            h[ii][2]=self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
                         else:
                             h[ii][2]=self.thop+self.thop*exp(k*self.delta*1j);
                     else:
                         if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                            h[ii][2]=self.thopBN+self.thopBN*exp(-k*self.delta*1j);
+                            h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
                         else:
                             h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
                     flaggo=flaggo+1;
                 kk=kk+1;
-                
+
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;
             H.rank=self.rank;
@@ -162,10 +134,9 @@ class TMD:
             H.mu2=self.mu2;
             H.Egap=self.gap();
             
-            
             # I then compute T and the charge for the actual kx
             H.charge_T()
-            
+
             # I sum up all the contribution
             if (i==0):
                 self.E=H.E;
