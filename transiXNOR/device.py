@@ -55,7 +55,7 @@ if not os.path.exists(model_path+"/material.p"):
         # 'mh': 0.124,
         'mh': 2.23,
         'Eg': 0.252,
-        'acc': 9,
+        'acc': 8,
         # 'acc': 0.414/sqrt(3), # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
          # e.g. 0.2 in MoS2: the distance between
          # Mo and S, the lattice constant = acc * sqrt(3)
