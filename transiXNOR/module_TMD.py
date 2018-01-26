@@ -3,7 +3,7 @@
 # Modified by Mingda Li 1/25/2018
 
 from NanoTCAD_ViDES import *
-VERBAL=True
+VERBAL=False
 
 class TMD: 
     def __init__(self,semi,L):

@@ -27,7 +27,7 @@ static PyObject* py_H_charge_T(PyObject* self, PyObject* args)
   //  complex ccc;
   
   setvbuf(stdout,(char *) NULL,_IONBF,1);
-  print_Hamiltonian=0;
+  print_Hamiltonian=1;
   
 /*  
   Reads the data from python class.
