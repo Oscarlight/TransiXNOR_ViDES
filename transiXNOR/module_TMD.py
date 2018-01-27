@@ -80,9 +80,11 @@ class TMD:
                 h[ii][0]=kk;
                 h[ii][1]=kk+1;
                 if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                    h[ii][2]=self.thop_elec;
+                    # h[ii][2]=self.thop_elec;
+                    h[ii][2]=10;
                 else:
-                    h[ii][2]=self.thop; 
+                    # h[ii][2]=self.thop; 
+                    h[ii][2]=20;
             kk=kk+1;
         
 
@@ -111,14 +113,19 @@ class TMD:
                     h[ii][1]=kk+1;
                     if ((flaggo%2)==0):
                         if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                            h[ii][2]=self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
+                            # h[ii][2]=self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
+                            h[ii][2]=1
                         else:
-                            h[ii][2]=self.thop+self.thop*exp(k*self.delta*1j);
+                            # h[ii][2]=self.thop+self.thop*exp(k*self.delta*1j);
+                            h[ii][2]=2
                     else:
                         if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                            h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
+                            # h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
+                            h[ii][2]=1
                         else:
-                            h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
+                            # h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
+                            h[ii][2]=2
+
                     flaggo=flaggo+1;
                 kk=kk+1;
 
