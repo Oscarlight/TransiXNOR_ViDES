@@ -121,7 +121,7 @@ class TMD:
                     else:
                         if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
                             # h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
-                            h[ii][2]=1
+                            h[ii][2]=3
                         else:
                             # h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
                             h[ii][2]=2
