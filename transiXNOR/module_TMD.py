@@ -75,21 +75,21 @@ class TMD:
         for i in range(1,slices+1):
             h[i][0]=i
             h[i][1]=i
-            if ((self.y[i-1]>=self.ymin)&(self.y[i-1]<=self.ymax)):
-                if ((i%2)==0):
-                    h[i][2]=self.BC_MX2;
-                else:
-                    h[i][2]=self.BV_MX2;
+            # if ((self.y[i-1]>=self.ymin)&(self.y[i-1]<=self.ymax)):
+            #     if ((i%2)==0):
+            #         h[i][2]=self.BC_MX2;
+            #     else:
+            #         h[i][2]=self.BV_MX2;
 
         kk=1;
         for ii in range(slices+1,2*slices):
             if ((ii%2)==1):
                 h[ii][0]=kk;
                 h[ii][1]=kk+1;
-                if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                    h[ii][2]=self.thop_elec;
-                else:
-                    h[ii][2]=self.thop; 
+                # if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
+                #     h[ii][2]=self.thop_elec;
+                # else:
+                #     h[ii][2]=self.thop; 
             kk=kk+1;
         
 
