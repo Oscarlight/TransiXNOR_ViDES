@@ -22,7 +22,7 @@ vf = 6.21e5        # m/s
 def bands(k):
 	a = E0 - D*k*k    # eV
 	b = Eg/2 - B*k*k  # eV
-	c = np.sqrt(hbar**2*vf*k*k/q + b*b)
+	c = np.sqrt(hbar**2*vf*k*k/(q*q) + b*b)
 	return (a + c, a - c)
 
 kmax = 3.14/0.414

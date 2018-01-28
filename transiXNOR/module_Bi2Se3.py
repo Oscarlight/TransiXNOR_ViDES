@@ -96,9 +96,13 @@ class Bi2Se3:
                 print("----------------------------------")
 
             # I fill the Hamiltonian for the actual wavevector k in the cycle
+            # k [1/m]
+            # E0, Egap [eV]
+            # coeff_Ec [eV*m^2] <-- hbar [ m^2*kg/s], me [kg]
+            # vf: [m/s]
             h[:slices+1:2,2]  = self.E0 + self.Egap/2 + self.coeff_Ec * k * k;
             h[1:slices+1:2,2] = self.E0 - self.Egap/2 - self.coeff_Ev * k * k;
-            h[slices+1::2,2]  = 1j * hbar * self.vf * k;
+            h[slices+1::2,2]  = 1j * hbar * self.vf * k / q;
 
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;
