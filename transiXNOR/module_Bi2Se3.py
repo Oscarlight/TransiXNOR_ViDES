@@ -16,8 +16,8 @@ class Bi2Se3:
                               # e.g. 0.2 for MoS2
         self.BV_MX2=self.BC_MX2-self.Egap;
         # Derived parameters:
-        self.coeff_Ec = hbar**2 /(2*mc*q)
-        self.coeff_Ev = hbar**2 /(2*mv*q)
+        self.coeff_Ec = hbar**2 /(2*self.mc*q)
+        self.coeff_Ev = hbar**2 /(2*self.mv*q)
         self.vf = 6.21e5                    # m/s (2nm Bi2Se3)
         self.E0 = (self.BC_MX2 + self.BV_MX2)/2
 
