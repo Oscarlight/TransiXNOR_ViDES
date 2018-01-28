@@ -75,21 +75,21 @@ class TMD:
         for i in range(1,slices+1):
             h[i][0]=i
             h[i][1]=i
-            # if ((self.y[i-1]>=self.ymin)&(self.y[i-1]<=self.ymax)):
-            #     if ((i%2)==0):
-            #         h[i][2]=self.BC_MX2;
-            #     else:
-            #         h[i][2]=self.BV_MX2;
+            if ((self.y[i-1]>=self.ymin)&(self.y[i-1]<=self.ymax)):
+                if ((i%2)==0):
+                    h[i][2]=self.BC_MX2;
+                else:
+                    h[i][2]=self.BV_MX2;
 
         kk=1;
         for ii in range(slices+1,2*slices):
-            # if ((ii%2)==1):
-            h[ii][0]=kk;
-            h[ii][1]=kk+1;
-                # if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                #     h[ii][2]=self.thop_elec;
-                # else:
-                #     h[ii][2]=self.thop; 
+            if ((ii%2)==1):
+                h[ii][0]=kk;
+                h[ii][1]=kk+1;
+                if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
+                    h[ii][2]=self.thop_elec;
+                else:
+                    h[ii][2]=self.thop; 
             kk=kk+1;
         
 
@@ -110,31 +110,25 @@ class TMD:
                 print("----------------------------------")
 
             # I fill the Hamiltonian for the actual wavevector k in the cycle
-            h[:slices+1:2,2]  = self.BC_MX2 # + self.coeff_Ec * k * k;
-            h[0][2] = 0
-            h[1:slices+1:2,2] = self.BV_MX2 # - self.coeff_Ev * k * k;
-            h[slices+1::2,2]  = self.thop_elec;
-            h[slices+2::4,2]  = self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
-            h[slices+4::4,2]  = self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
-            # flaggo=0;
-            # kk=1;
-            # for ii in range(slices+1,2*slices):
-            #     if ((ii%2)==0):
-            #         h[ii][0]=kk;
-            #         h[ii][1]=kk+1;
-                    # if ((flaggo%2)==0):
-                    #     if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                    #         h[ii][2]=self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
-                    #     else:
-                    #         h[ii][2]=self.thop+self.thop*exp(k*self.delta*1j);
-                    # else:
-                    #     if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                    #         h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
-                    #     else:
-                    #         h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
+            flaggo=0;
+            kk=1;
+            for ii in range(slices+1,2*slices):
+                if ((ii%2)==0):
+                    h[ii][0]=kk;
+                    h[ii][1]=kk+1;
+                    if ((flaggo%2)==0):
+                        if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
+                            h[ii][2]=self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
+                        else:
+                            h[ii][2]=self.thop+self.thop*exp(k*self.delta*1j);
+                    else:
+                        if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
+                            h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
+                        else:
+                            h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
 
-                    # flaggo=flaggo+1;
-                # kk=kk+1;
+                    flaggo=flaggo+1;
+                kk=kk+1;
 
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;

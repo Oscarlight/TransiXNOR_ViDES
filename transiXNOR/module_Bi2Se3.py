@@ -24,7 +24,7 @@ class Bi2Se3:
         self.n=1;
         ymin=-20;
         ymax=L+20;
-        self.Nc=int(L/self.delta);
+        self.Nc=int(4*(floor((floor(L/self.acc)-1)/3)));
         self.Phi=zeros(self.Nc); # electrostatic potential 
         self.Ei=zeros(self.Nc);  # mid-gap potential
         self.Eupper=1000.0;  # upper limit for the energy
