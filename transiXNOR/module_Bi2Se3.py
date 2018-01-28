@@ -11,8 +11,6 @@ class Bi2Se3:
         self.Egap=semi['Eg']; # bandgap
         self.delta=semi['lattice_constant'];
                               # the lattice constant
-        self.acc=self.delta/sqrt(3); 
-                              # used in GNR_atoms_coordinates
         self.BC_MX2=semi['relative_EA'];
                               # relative to workfunction of Gr, 
                               # e.g. 0.2 for MoS2
@@ -21,7 +19,6 @@ class Bi2Se3:
         self.coeff_Ec = hbar**2 /(2*self.me*m0*q)
         self.coeff_Ev = hbar**2 /(2*self.mh*m0*q)
         self.vf = 6.21e5                    # m/s (2nm Bi2Se3)
-        self.E0 = (self.BC_MX2 + self.BV_MX2)/2
         #
         self.deg=1;
         self.n=1;
@@ -32,6 +29,7 @@ class Bi2Se3:
         self.Ei=zeros(self.Nc);  # mid-gap potential
         self.Eupper=1000.0;  # upper limit for the energy
         self.Elower=-1000.0; # lower limit for the energy
+        self.acc=self.delta/sqrt(3); # used in GNR_atoms_coordinates
         self.kmax=pi/self.delta;
         self.kmin=0;
         self.dk=0.1;
@@ -68,7 +66,6 @@ class Bi2Se3:
         atoms=1;
         # I define the vector of the k-wave vector
         kvect=arange(self.kmin,self.kmax,self.dk)
-
         # I start defining the Hamiltonian for the graphene flake
         h=zeros((2*slices,3),dtype=complex);
         h[0][0]=1;
@@ -107,7 +104,7 @@ class Bi2Se3:
             h[0][2] = 0
             h[1:slices+1:2,2] = self.BV_MX2 - self.coeff_Ev * k * k;
             # h[slices+1::2,2]  = 1j * hbar * self.vf * k / q;
-            # h[slices+1::2,2]  = self.thop_elec;
+            h[slices+1::2,2]  = self.thop_elec;
             h[slices+2::4,2]  = self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
             h[slices+4::4,2]  = self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
 
