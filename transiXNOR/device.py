@@ -38,7 +38,7 @@ elif(not OVERWRITE):
 # TODO: It seems certain grid can lead to segmentation faults.
 xg=nonuniformgrid(
     array([-1.0,0.5,
-              0,0.1,
+              0,0.2,
             1.0,0.5]))
 ## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
 # semi = {
@@ -55,7 +55,7 @@ if not os.path.exists(model_path+"/material.p"):
         'me': 0.124,
         'mh': 2.23,
         'Eg': 0.252,
-        'lattice_constant': 0.414,
+        'lattice_constant': 0.414 * 2,
         'acc': 0.414/sqrt(3), 
         # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
         'relative_EA': 0.125, 
