@@ -42,7 +42,7 @@ class Bi2Se3:
         self.T=zeros(NEmax);
         self.charge=zeros(self.Nc);
         self.rank=0;
-        self.atoms_coordinates();
+        # self.atoms_coordinates();
         self.T2D="no"
         self.ymin=ymin;
         self.ymax=ymax;
