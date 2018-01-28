@@ -55,7 +55,7 @@ if not os.path.exists(model_path+"/material.p"):
         'me': 2.23,
         'mh': 2.23,
         'Eg': 0.252,
-        'lattice_constant': 1,
+        'lattice_constant': 0.414,
         'acc': 0.414/sqrt(3), 
         # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
         'relative_EA': 0.125, 
