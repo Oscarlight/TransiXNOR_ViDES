@@ -2,6 +2,7 @@ from NanoTCAD_ViDES import *
 import sys
 import os
 from module_Bi2Se3 import *
+from module_TMD import *
 import pickle
 from math import sqrt
 import argparse
@@ -72,7 +73,7 @@ print(semi)
 L_SOURCE=10.0
 L_GATE=15.0
 L_DRAIN=10.0
-FLAKE=Bi2Se3(semi,L_SOURCE+L_GATE+L_DRAIN);
+FLAKE=TMD(semi,L_SOURCE+L_GATE+L_DRAIN);
 
 kymax=pi/FLAKE.delta;
 Nky=32.0;

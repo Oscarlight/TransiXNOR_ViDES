@@ -15,12 +15,12 @@ class Bi2Se3:
                               # relative to workfunction of Gr, 
                               # e.g. 0.2 for MoS2
         self.BV_MX2=self.BC_MX2-self.Egap;
-        # Derived parameters:
+        # Derived material parameters:
         self.coeff_Ec = hbar**2 /(2*self.me*q)
         self.coeff_Ev = hbar**2 /(2*self.mh*q)
         self.vf = 6.21e5                    # m/s (2nm Bi2Se3)
         self.E0 = (self.BC_MX2 + self.BV_MX2)/2
-
+        #
         self.deg=1;
         self.n=1;
         ymin=-20;
@@ -43,16 +43,16 @@ class Bi2Se3:
         self.charge=zeros(self.Nc);
         self.rank=0;
         self.atoms_coordinates();
-        self.gap();
         self.T2D="no"
         self.ymin=ymin;
         self.ymax=ymax;
-        self.atoms_coordinates();
+
     def atoms_coordinates(self):
         GNR_atoms_coordinates(self);
         self.y=array(self.z);
         self.x=zeros(size(self.y));
         return;
+
     def gap(self):
         return self.Egap;
     def charge_T(self):

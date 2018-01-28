@@ -22,6 +22,7 @@ class TMD:
         self.BC_MX2=semi['relative_EA'];
                               # relative to workfunction of Gr, 
                               # e.g. 0.2 for MoS2
+        self.BV_MX2=self.BC_MX2-self.Egap;
         self.deg=1;
         self.n=1;
         ymin=-20;
@@ -52,9 +53,7 @@ class TMD:
         self.T2D="no"
         self.ymin=ymin;
         self.ymax=ymax;
-        # Related to electron affinity
-        self.BV_MX2=self.BC_MX2-self.Egap;
-        self.atoms_coordinates();
+
     def atoms_coordinates(self):
         GNR_atoms_coordinates(self);
         self.y=array(self.z);
