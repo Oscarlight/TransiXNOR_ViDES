@@ -17,9 +17,9 @@ class Bi2Se3:
         self.BV_MX2=self.BC_MX2-self.Egap;
         # Derived parameters:
         self.coeff_Ec = hbar**2 /(2*mc*q)
-		self.coeff_Ev = hbar**2 /(2*mv*q)
-		self.vf = 6.21e5        			# m/s (2nm Bi2Se3)
-		self.E0 = (self.BC_MX2 + self.BV_MX2)/2
+        self.coeff_Ev = hbar**2 /(2*mv*q)
+        self.vf = 6.21e5                    # m/s (2nm Bi2Se3)
+        self.E0 = (self.BC_MX2 + self.BV_MX2)/2
 
         self.deg=1;
         self.n=1;
@@ -95,8 +95,8 @@ class Bi2Se3:
 
             # I fill the Hamiltonian for the actual wavevector k in the cycle
             h[:slices+1:2,2]  = self.E0 + self.Eg/2 + self.coeff_Ec * k * k;
-			h[1:slices+1:2,2] = self.E0 - self.Eg/2 - self.coeff_Ev * k * k;
-			h[slices+1::2,2]  = 1j * hbar * vf * k;
+            h[1:slices+1:2,2] = self.E0 - self.Eg/2 - self.coeff_Ev * k * k;
+            h[slices+1::2,2]  = 1j * hbar * vf * k;
 
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;
