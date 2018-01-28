@@ -53,12 +53,14 @@ class TMD:
         self.T2D="no"
         self.ymin=ymin;
         self.ymax=ymax;
+        self.atoms_coordinates();
 
     def atoms_coordinates(self):
         GNR_atoms_coordinates(self);
         self.y=array(self.z);
         self.x=zeros(size(self.y));
         return;
+        
     def gap(self):
         return self.Egap;
     def charge_T(self):
