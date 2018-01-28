@@ -29,7 +29,7 @@ class Bi2Se3:
         self.Ei=zeros(self.Nc);  # mid-gap potential
         self.Eupper=1000.0;  # upper limit for the energy
         self.Elower=-1000.0; # lower limit for the energy
-        self.acc=self.delta/sqrt(3); # used in GNR_atoms_coordinates
+        self.delta=self.acc*sqrt(3); # used in GNR_atoms_coordinates
         self.kmax=pi/self.delta;
         self.kmin=0;
         self.dk=0.1;
