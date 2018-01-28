@@ -6,8 +6,8 @@ VERBAL=False
 
 class Bi2Se3: 
     def __init__(self,semi,L):
-        self.me=semi['me']*m0;   # electron effective mass
-        self.mh=semi['mh']*m0;   # hole effective mass
+        self.me=semi['me'];   # electron effective mass
+        self.mh=semi['mh'];   # hole effective mass
         self.Egap=semi['Eg']; # bandgap
         self.delta=semi['lattice_constant'];
                               # the lattice constant
@@ -18,8 +18,8 @@ class Bi2Se3:
                               # e.g. 0.2 for MoS2
         self.BV_MX2=self.BC_MX2-self.Egap;
         # Derived material parameters:
-        self.coeff_Ec = hbar**2 /(2*self.me*q)
-        self.coeff_Ev = hbar**2 /(2*self.mh*q)
+        self.coeff_Ec = hbar**2 /(2*self.me*m0*q)
+        self.coeff_Ev = hbar**2 /(2*self.mh*m0*q)
         self.vf = 6.21e5                    # m/s (2nm Bi2Se3)
         self.E0 = (self.BC_MX2 + self.BV_MX2)/2
         #
