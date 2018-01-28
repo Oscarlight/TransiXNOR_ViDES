@@ -98,7 +98,7 @@ class Bi2Se3:
             # I fill the Hamiltonian for the actual wavevector k in the cycle
             h[:slices+1:2,2]  = self.E0 + self.Egap/2 + self.coeff_Ec * k * k;
             h[1:slices+1:2,2] = self.E0 - self.Egap/2 - self.coeff_Ev * k * k;
-            h[slices+1::2,2]  = 1j * hbar * vf * k;
+            h[slices+1::2,2]  = 1j * hbar * self.vf * k;
 
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;
