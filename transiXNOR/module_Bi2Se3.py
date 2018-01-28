@@ -11,6 +11,8 @@ class Bi2Se3:
         self.Egap=semi['Eg']; # bandgap
         self.delta=semi['lattice_constant'];
                               # the lattice constant
+        self.acc=self.delta/sqrt(3); 
+                              # also used in GNR_atoms_coordinates
         self.BC_MX2=semi['relative_EA'];
                               # relative to workfunction of Gr, 
                               # e.g. 0.2 for MoS2
@@ -29,7 +31,6 @@ class Bi2Se3:
         self.Ei=zeros(self.Nc);  # mid-gap potential
         self.Eupper=1000.0;  # upper limit for the energy
         self.Elower=-1000.0; # lower limit for the energy
-        self.delta=self.acc*sqrt(3); # used in GNR_atoms_coordinates
         self.kmax=pi/self.delta;
         self.kmin=0;
         self.dk=0.1;
