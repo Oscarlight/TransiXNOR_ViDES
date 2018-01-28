@@ -47,9 +47,11 @@ class Bi2Se3:
         self.charge=zeros(self.Nc);
         self.rank=0;
         self.atoms_coordinates();
+        self.gap()
         self.T2D="no"
         self.ymin=ymin;
         self.ymax=ymax;
+        self.atoms_coordinates();
 
     def atoms_coordinates(self):
         GNR_atoms_coordinates(self);

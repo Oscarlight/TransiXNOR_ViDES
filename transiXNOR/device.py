@@ -73,7 +73,7 @@ print(semi)
 L_SOURCE=10.0
 L_GATE=15.0
 L_DRAIN=10.0
-FLAKE=TMD(semi,L_SOURCE+L_GATE+L_DRAIN);
+FLAKE=Bi2Se3(semi,L_SOURCE+L_GATE+L_DRAIN);
 
 kymax=pi/FLAKE.delta;
 Nky=32.0;
