@@ -104,11 +104,11 @@ class Bi2Se3:
             # E0, Egap [eV]
             # coeff_Ec [eV*m^2] <-- hbar [ m^2*kg/s], me [kg]
             # vf: [m/s]
-            h[:slices+1:2,2]  = self.BC_MX2 + self.coeff_Ec * k * k * 1e18;
+            h[:slices+1:2,2]  = self.BC_MX2 - self.coeff_Ec * k * k * 1e18;
             h[0][2] = 0
-            h[1:slices+1:2,2] = self.BV_MX2 - self.coeff_Ev * k * k * 1e18;
+            h[1:slices+1:2,2] = self.BV_MX2 + self.coeff_Ev * k * k * 1e18;
             # self.thop_elec = hbar * self.vf * (1j*k + self.kmax) * 1e9 / q;
-            self.thop_elec = hbar * self.vf * (k) * 1e9 / q;
+            self.thop_elec = - hbar * self.vf * (ij*k) * 1e9 / q;
             h[slices+1::2,2]  = self.thop_elec;
             h[slices+2::4,2]  = self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
             h[slices+4::4,2]  = self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
