@@ -10,8 +10,9 @@ class Bi2Se3:
         self.mh=semi['mh']*m0;   # hole effective mass
         self.Egap=semi['Eg']; # bandgap
         self.delta=semi['lattice_constant'];
-        self.acc=self.delta/sqrt(3);  
                               # the lattice constant
+        self.acc=self.delta/sqrt(3); 
+                              # used in GNR_atoms_coordinates
         self.BC_MX2=semi['relative_EA'];
                               # relative to workfunction of Gr, 
                               # e.g. 0.2 for MoS2
@@ -95,8 +96,8 @@ class Bi2Se3:
                 print("----------------------------------")
 
             # I fill the Hamiltonian for the actual wavevector k in the cycle
-            h[:slices+1:2,2]  = self.E0 + self.Eg/2 + self.coeff_Ec * k * k;
-            h[1:slices+1:2,2] = self.E0 - self.Eg/2 - self.coeff_Ev * k * k;
+            h[:slices+1:2,2]  = self.E0 + self.Egap/2 + self.coeff_Ec * k * k;
+            h[1:slices+1:2,2] = self.E0 - self.Egap/2 - self.coeff_Ev * k * k;
             h[slices+1::2,2]  = 1j * hbar * vf * k;
 
             H.Eupper = self.Eupper;
