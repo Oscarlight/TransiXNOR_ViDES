@@ -37,7 +37,8 @@ class Bi2Se3:
         self.dk=0.1;
         self.dE=1e-3;
         self.thop=-2.59; # Assuming the contact is graphene
-        self.thop_elec=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.me))*hbar/q;
+        self.mt = self.me * self.mv / (self.me + self.mv)
+        self.thop_elec=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mt))*hbar/q;
         self.eta=1e-5;
         self.mu1=0.0;
         self.mu2=0.0;
@@ -106,7 +107,7 @@ class Bi2Se3:
             h[0][2] = 0
             h[1:slices+1:2,2] = self.BV_MX2 - self.coeff_Ev * k * k;
             # h[slices+1::2,2]  = 1j * hbar * self.vf * k / q;
-            h[slices+1::2,2]  = self.thop_elec;
+            # h[slices+1::2,2]  = self.thop_elec;
             h[slices+2::4,2]  = self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
             h[slices+4::4,2]  = self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
 
