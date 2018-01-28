@@ -9,7 +9,8 @@ class Bi2Se3:
         self.me=semi['me']*m0;   # electron effective mass
         self.mh=semi['mh']*m0;   # hole effective mass
         self.Egap=semi['Eg']; # bandgap
-        self.delta=semi['lattice_constant'];  
+        self.delta=semi['lattice_constant'];
+        self.acc=self.delta/sqrt(3);  
                               # the lattice constant
         self.BC_MX2=semi['relative_EA'];
                               # relative to workfunction of Gr, 
@@ -42,7 +43,7 @@ class Bi2Se3:
         self.T=zeros(NEmax);
         self.charge=zeros(self.Nc);
         self.rank=0;
-        # self.atoms_coordinates();
+        self.atoms_coordinates();
         self.T2D="no"
         self.ymin=ymin;
         self.ymax=ymax;
