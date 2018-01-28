@@ -11,11 +11,17 @@ class TMD:
         #in the Hamiltonian, since the minimum is in Kf,
         #so by itself degeneracy is 2 as in graphene
         #if you specify deg=2, then total degeneracy is 4
-        self.me=semi['me']; # electron effective mass
-        self.mh=semi['mh']; # hole effective mass
+        self.me=semi['me'];   # electron effective mass
+        # self.mh=semi['mh']; # hole effective mass
+                              # CAUTION: In the model, two bands
+                              # has the SAME effective mass
         self.Egap=semi['Eg']; # bandgap
-        self.acc=semi['acc']; # 0.2
+        self.acc=semi['acc']; # distance two C atoms in Gr
+                              # the distance between Mo and S, 
+                              # the lattice constant = acc * sqrt(3)
         self.BC_MX2=semi['relative_EA'];
+                              # relative to workfunction of Gr, 
+                              # e.g. 0.2 for MoS2
         self.deg=1;
         self.n=1;
         ymin=-20;
@@ -32,7 +38,7 @@ class TMD:
         self.dE=1e-3;
         self.thop=-2.59; # Assuming the contact is graphene
         self.thop_elec=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.me))*hbar/q;
-        self.thop_hole=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mh))*hbar/q;
+        # self.thop_hole=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mh))*hbar/q;
         self.eta=1e-5;
         self.mu1=0.0;
         self.mu2=0.0;
@@ -80,11 +86,9 @@ class TMD:
                 h[ii][0]=kk;
                 h[ii][1]=kk+1;
                 if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                    # h[ii][2]=self.thop_elec;
-                    h[ii][2]=10;
+                    h[ii][2]=self.thop_elec;
                 else:
-                    # h[ii][2]=self.thop; 
-                    h[ii][2]=20;
+                    h[ii][2]=self.thop; 
             kk=kk+1;
         
 
@@ -113,18 +117,14 @@ class TMD:
                     h[ii][1]=kk+1;
                     if ((flaggo%2)==0):
                         if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                            # h[ii][2]=self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
-                            h[ii][2]=1
+                            h[ii][2]=self.thop_elec+self.thop_elec*exp(k*self.delta*1j);
                         else:
-                            # h[ii][2]=self.thop+self.thop*exp(k*self.delta*1j);
-                            h[ii][2]=2
+                            h[ii][2]=self.thop+self.thop*exp(k*self.delta*1j);
                     else:
                         if ((self.y[kk-1]>=self.ymin)&(self.y[kk-1]<=self.ymax)):
-                            # h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
-                            h[ii][2]=3
+                            h[ii][2]=self.thop_elec+self.thop_elec*exp(-k*self.delta*1j);
                         else:
-                            # h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
-                            h[ii][2]=2
+                            h[ii][2]=self.thop+self.thop*exp(-k*self.delta*1j);
 
                     flaggo=flaggo+1;
                 kk=kk+1;

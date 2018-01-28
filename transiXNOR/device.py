@@ -1,7 +1,7 @@
 from NanoTCAD_ViDES import * 
 import sys
 import os
-from module_TMD import *
+from module_Bi2Se3 import *
 import pickle
 from math import sqrt
 import argparse
@@ -52,15 +52,12 @@ if not os.path.exists(model_path+"/material.p"):
     print('<<< Creating new material parameters:')
     semi = {
         'me': 2.23,
-        # 'mh': 0.124,
         'mh': 2.23,
         'Eg': 0.252,
-        'acc': 5,
-        # 'acc': 0.414/sqrt(3), # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
-         # e.g. 0.2 in MoS2: the distance between
-         # Mo and S, the lattice constant = acc * sqrt(3)
-        'relative_EA': 0.125,     # relative to workfunction of Gr, 
-                                  # e.g. 0.2 for MoS2
+        'lattice_constant': 1,
+        # 'acc': 0.414/sqrt(3), 
+        # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
+        'relative_EA': 0.125, 
         'fraction_source': 0.003, # p-dope
         'fraction_drain': -0.003, # n-dope
     }
@@ -75,10 +72,8 @@ print(semi)
 L_SOURCE=10.0
 L_GATE=15.0
 L_DRAIN=10.0
-FLAKE=TMD(semi,L_SOURCE+L_GATE+L_DRAIN);
+FLAKE=Bi2Se3(semi,L_SOURCE+L_GATE+L_DRAIN);
 
-acc=FLAKE.acc;
-kF=2*pi/(3*sqrt(3)*acc);
 kymax=pi/FLAKE.delta;
 Nky=32.0;
 dk=kymax/Nky;
