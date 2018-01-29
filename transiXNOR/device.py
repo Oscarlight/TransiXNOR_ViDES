@@ -9,6 +9,7 @@ import argparse
 
 rank = 0
 OVERWRITE=True
+USE_SYMMETRY=True
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--vtgmin", default=0.0, type=float)
@@ -59,8 +60,8 @@ if not os.path.exists(model_path+"/material.p"):
         'acc': 0.414/sqrt(3), 
         # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
         'relative_EA': 0.125, 
-        'fraction_source': 0.02, # p-dope
-        'fraction_drain': -0.002, # n-dope
+        'fraction_source': 0.003, # p-dope
+        'fraction_drain': -0.003, # n-dope
     }
     with open(model_path+"/material.p", "wb") as f:
         pickle.dump(semi,f)
@@ -139,11 +140,19 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
     FLAKE.mu1=0.0
     FLAKE.mu2=vds
     vbg_cur = []
+    if USE_SYMMETRY:
+        finished = []
     for vbg in np.linspace(Vbgmin, Vbgmax, VbgN):
         vtg_cur = []
         for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
-            # TODO: change %s to %.2f in the future.
             print('>>> Vds=%.2f, Vbg=%.2f, Vtg=%.2f' % (vds, vbg, vtg))
+            if USE_SYMMETRY:
+                key = '%.2f' % (vtg + vbg)
+                if key in finished:
+                    print('    ~~~ Skip due to symmetry')
+                    break:
+                else
+                    finished.append(key)
             bottom_gate.Ef=vbg 
             set_gate(p,bottom_gate)
             top_gate.Ef=vtg; 
