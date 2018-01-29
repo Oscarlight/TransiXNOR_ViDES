@@ -78,7 +78,7 @@ FLAKE=Bi2Se3(semi,L_SOURCE+L_GATE+L_DRAIN);
 kymax=0.01*pi/FLAKE.delta;
 Nky=32.0;
 dk=kymax/Nky;
-FLAKE.kmax=pi/FLAKE.delta;
+FLAKE.kmax=kymax;
 FLAKE.kmin=0;
 FLAKE.dk=dk;
 
