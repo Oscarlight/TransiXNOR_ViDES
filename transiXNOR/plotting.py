@@ -32,16 +32,16 @@ rcParams['axes.linewidth'] = LINE_WIDTH
 # rcParams['figure.autolayout'] = True
 fig, ax = plt.subplots()
 
-COMBINE_CURRENT_VIA_SYMMETRY = True
+COMBINE_CURRENT_VIA_SYMMETRY = False
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
-PLOT_BAND              = False
+PLOT_BAND              = True
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
-PLOT_CURRENT_SPECTRUM  = False
-PLOT_FAMILY_CURVES     = True
+PLOT_CURRENT_SPECTRUM  = True
+PLOT_FAMILY_CURVES     = False
 PRINT_CURRENT_ONLY     = False
 model_path             = args.model
 
@@ -197,7 +197,7 @@ if (PLOT_FAMILY_CURVES):
 	plt.clf()	
 	# Vbg = 0.2
 	for vtg in vtg_list:
-		cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
+		# cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
 		plt.plot(vds_array, cur[:, 20, int(vtg*100)], 
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
