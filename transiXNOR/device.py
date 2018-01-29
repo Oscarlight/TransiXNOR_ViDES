@@ -150,7 +150,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
                 key = '%.2f' % (vtg + vbg)
                 if key in finished:
                     print('    ~~~ Skip due to symmetry')
-                    break:
+                    break
                 else
                     finished.append(key)
             bottom_gate.Ef=vbg 
