@@ -62,7 +62,7 @@ if not os.path.exists(model_path+"/material.p"):
         # 'relative_EA': 0.118,     # larger -> band is lower
         # 'fraction_source': 0.008, # p-dope
         # 'fraction_drain': -0.0018, # n-dope
-        'relative_EA': 0.09,     # larger -> band is lower
+        'relative_EA': 0.13,     # larger -> band is lower
         'fraction_source': 0.006, # p-dope
         'fraction_drain': -0.0025, # n-dope
     }
