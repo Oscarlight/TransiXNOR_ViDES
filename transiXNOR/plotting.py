@@ -31,10 +31,10 @@ T_WINDOW               = False
 PLOT_BAND              = True
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
-PLOT_CURRENT           = False
+PLOT_CURRENT           = True
 PLOT_CURRENT_SPECTRUM  = True
 PLOT_FAMILY_CURVES     = False
-PRINT_CURRENT_ONLY     = True
+PRINT_CURRENT_ONLY     = False
 model_path             = args.model
 
 Eg = 0.252
@@ -121,7 +121,8 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	if (PRINT_CURRENT_ONLY):
 		print(cur); quit()
 	vtg_array = np.linspace(0.0, 0.2, 21)
-	plt.semilogy(vtg_array, cur[0,0,:], linewidth=2, color='k')
+	# vbg = 0. and vtg from 0 to 0.2 <--> vbg = 0 and vtg from 0. to 0.2
+	plt.semilogy(vtg_array, cur[0,0,:21], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
@@ -129,7 +130,8 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	plt.semilogy(vtg_array, cur[0,10,:], linewidth=2, color='k')
+	# vbg = 0.1 and vtg from 0 to 0.2 <--> vbg = 0 and vtg from 0.1 to 0.3
+	plt.semilogy(vtg_array, cur[0,0,10:31], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
@@ -137,7 +139,8 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	plt.semilogy(vtg_array, cur[0,20,:], linewidth=2, color='k')
+	# vbg = 0.2 and vtg from 0 to 0.2 <--> vbg = 0 and vtg from 0.2 to 0.4
+	plt.semilogy(vtg_array, cur[0,0,20:41], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
