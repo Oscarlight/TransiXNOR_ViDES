@@ -32,6 +32,7 @@ rcParams['axes.linewidth'] = LINE_WIDTH
 # rcParams['figure.autolayout'] = True
 fig, ax = plt.subplots()
 
+COMBINE_CURRENT_VIA_SYMMETRY = True
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
@@ -156,6 +157,24 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 		bbox_inches='tight', transparent=True)
 	plt.clf()	
 
+if (COMBINE_CURRENT_VIA_SYMMETRY):
+	vdsmin=0.0; vdsmax=0.2; vdsN=21;
+	vbgmin=0.0; vbgmax=0.2; vbgN=21;
+	vtgmin=0.0; vtgmax=0.2; vtgN=21;
+	vds_cur = []
+	print('Start combine all current together via symmetry from current_*.npy')
+	for vds in np.linspace(vdsmin, vdsmax, vdsN):
+		cur_array = np.abs(np.load(model_path + '/current_' + str(int(vds*100)) + '.npy'))
+		vbg_cur = []
+		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
+			vtg_cur = []
+			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
+				cur = cur_array[0, 0, int(vbg*100) + int(vtg*100)]
+				vtg_cur.append(cur)
+			vbg_cur.append(vtg_cur)
+		vds_cur.append(vbg_cur)
+	np.save(model_path+'/current', np.array(vds_cur))
+	
 if (PLOT_FAMILY_CURVES):
 	cur = np.abs(np.load(model_path + '/current.npy'))
 	vtg_list = [0.0, 0.05, 0.1, 0.15, 0.2]
@@ -210,22 +229,6 @@ if (COMPUTE_CURRENT_FROM_T):
 		vds_cur.append(vbg_cur)
 	np.save(model_path+'/current', np.array(vds_cur))
 
-if (COMBINE_CURRENT_VIA_SYMMETRY):
-	vdsmin=0.0; vdsmax=0.2; vdsN=21;
-	vbgmin=0.0; vbgmax=0.2; vbgN=21;
-	vtgmin=0.0; vtgmax=0.2; vtgN=21;
-	vds_cur = []
-	print('Start combine all current together via symmetry from current_*.npy')
-	for vds in np.linspace(vdsmin, vdsmax, vdsN):
-		cur_array = np.abs(np.load(model_path + '/current_' + str(int(vds*100)) + '.npy'))
-		vbg_cur = []
-		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
-			vtg_cur = []
-			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				cur = cur_array[0, 0, int(vbg*100) + int(vtg*100)]
-				vtg_cur.append(cur)
-			vbg_cur.append(vtg_cur)
-		vds_cur.append(vbg_cur)
-	np.save(model_path+'/current', np.array(vds_cur))
+
 
 
