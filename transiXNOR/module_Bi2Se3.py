@@ -110,8 +110,8 @@ class Bi2Se3:
             # self.thop_elec = hbar * self.vf * (1j*k + self.kmax) * 1e9 / q;
             # self.thop_elec = hbar * self.vf * k * 1e9  / q;
             h[slices+1::2,2]  = self.thop_elec;
-            h[slices+2::4,2]  = self.thop_elec + self.thop_elec*exp(k*self.delta*1j);
-            h[slices+4::4,2]  = self.thop_elec + self.thop_elec*exp(-k*self.delta*1j);
+            h[slices+2::4,2]  = self.thop_elec #+ self.thop_elec*exp(k*self.delta*1j);
+            h[slices+4::4,2]  = self.thop_elec #+ self.thop_elec*exp(-k*self.delta*1j);
 
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;
