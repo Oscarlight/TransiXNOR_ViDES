@@ -106,9 +106,9 @@ class Bi2Se3:
             # vf: [m/s]
             # print(self.BC_MX2)
             # print(self.coeff_Ec * k * k * 1e18)
-            h[:slices+1:2,2]  = -self.BC_MX2 - self.coeff_Ec * k * k * 1e18;
+            h[:slices+1:2,2]  = self.BC_MX2 #+ self.coeff_Ec * k * k * 1e18;
             h[0][2] = 0
-            h[1:slices+1:2,2] = -self.BV_MX2 + self.coeff_Ev * k * k * 1e18;
+            h[1:slices+1:2,2] = self.BV_MX2 #- self.coeff_Ev * k * k * 1e18;
             # self.thop_elec = hbar * self.vf * (1j*k + self.kmax) * 1e9 / q;
             self.thop_elec = hbar * self.vf * k * 1e9  / q;
             h[slices+1::2,2]  = self.thop_elec;
