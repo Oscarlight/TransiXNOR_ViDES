@@ -53,7 +53,7 @@ if not os.path.exists(model_path+"/material.p"):
     print('<<< Creating new material parameters:')
     semi = {
         'me': 0.124,
-        'mh': 0.124,
+        'mh': 2.23,
         'Eg': 0.252,
         'lattice_constant': 0.414,
         'acc': 0.414/sqrt(3), 
