@@ -99,7 +99,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 		# ax.xaxis.set_minor_locator(AutoMinorLocator())
 		ax.yaxis.set_minor_locator(AutoMinorLocator())
 		plt.ylim([-0.6, 0.4])
-		plt.xlim([2e-3, 2e3])
+		plt.xlim([1e-3, 5e3])
 		plt.savefig(model_path+'/plots/current_spectrum_' + voltage + '.pdf', 
 			bbox_inches='tight', transparent=True)
 		plt.clf()
