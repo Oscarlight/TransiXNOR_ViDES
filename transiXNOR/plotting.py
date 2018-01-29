@@ -28,11 +28,11 @@ fig, ax = plt.subplots()
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
-PLOT_BAND              = True
+PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = True
-PLOT_CURRENT_SPECTRUM  = True
+PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = False
 PRINT_CURRENT_ONLY     = False
 model_path             = args.model
@@ -99,7 +99,7 @@ if (PLOT_TRAN or PLOT_CURRENT_SPECTRUM):
 		# ax.xaxis.set_minor_locator(AutoMinorLocator())
 		ax.yaxis.set_minor_locator(AutoMinorLocator())
 		plt.ylim([-0.6, 0.4])
-		plt.xlim([1e-3, 1e3])
+		plt.xlim([2e-3, 2e3])
 		plt.savefig(model_path+'/plots/current_spectrum_' + voltage + '.pdf', 
 			bbox_inches='tight', transparent=True)
 		plt.clf()
