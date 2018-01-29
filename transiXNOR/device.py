@@ -59,9 +59,12 @@ if not os.path.exists(model_path+"/material.p"):
         'lattice_constant': 0.414,
         'acc': 0.414/sqrt(3), 
         # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
+        # 'relative_EA': 0.118,     # larger -> band is lower
+        # 'fraction_source': 0.008, # p-dope
+        # 'fraction_drain': -0.0018, # n-dope
         'relative_EA': 0.118,     # larger -> band is lower
         'fraction_source': 0.008, # p-dope
-        'fraction_drain': -0.0018, # n-dope
+        'fraction_drain': -0.005, # n-dope
     }
     with open(model_path+"/material.p", "wb") as f:
         pickle.dump(semi,f)
