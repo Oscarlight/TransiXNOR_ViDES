@@ -53,7 +53,7 @@ if not os.path.exists(model_path+"/material.p"):
     print('<<< Creating new material parameters:')
     semi = {
         'me': 0.124,
-        'mh': 2.23,
+        'mh': 0.124,
         'Eg': 0.252,
         'lattice_constant': 0.414,
         'acc': 0.414/sqrt(3), 
@@ -75,7 +75,7 @@ L_GATE=15.0
 L_DRAIN=10.0
 FLAKE=Bi2Se3(semi,L_SOURCE+L_GATE+L_DRAIN);
 
-kymax=0.1*pi/FLAKE.delta;
+kymax=pi/FLAKE.delta;
 Nky=32.0;
 dk=kymax/Nky;
 FLAKE.kmax=kymax;
