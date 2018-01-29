@@ -174,7 +174,7 @@ if (COMBINE_CURRENT_VIA_SYMMETRY):
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
 	cur_map = np.array(vds_cur)
-	cur_map = np.concatenate((np.zeros_like(cur_map[0,:,:]), cur_map), axis=0)
+	cur_map = np.concatenate((np.zeros_like(cur_map[0:1,:,:]), cur_map), axis=0)
 	print(cur_map.shape)
 	np.save(model_path+'/current', cur_map)
 
