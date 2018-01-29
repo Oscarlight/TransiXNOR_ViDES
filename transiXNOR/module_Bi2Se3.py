@@ -39,7 +39,7 @@ class Bi2Se3:
         self.mt = self.me * self.mh / (self.me + self.mh)
         self.thop_elec=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mt))*hbar/q;
         print('hopping1: ' + str(self.thop_elec))
-        print('hopping2: ' + str(hbar * self.vf * self.kmax * 1e9  / q))
+        # print('hopping2: ' + str(hbar * self.vf * self.kmax * 1e9  / q))
         self.eta=1e-5;
         self.mu1=0.0;
         self.mu2=0.0;
@@ -82,6 +82,10 @@ class Bi2Se3:
             h[ii][1]=kk+1;
             kk=kk+1;
 
+        # hopping within/between unit cells
+        h[slices+1::2,2]  = self.thop_elec
+        h[slices+2::4,2]  = self.thop_elec
+        h[slices+4::4,2]  = self.thop_elec
         # I then compute the charge and the T for each energy and k and perform the integral
         i=0;
         k=self.kmin;
@@ -99,18 +103,10 @@ class Bi2Se3:
                 print("----------------------------------")
 
             # I fill the Hamiltonian for the actual wavevector k in the cycle
-            # k [1/m]
-            # E0, Egap [eV]
-            # coeff_Ec [eV*m^2] <-- hbar [ m^2*kg/s], me [kg]
-            # vf: [m/s]
+            # k [1/m], coeff_Ec [eV*m^2] <-- hbar [ m^2*kg/s], me [kg]
             h[:slices+1:2,2]  = self.BC_MX2 + self.coeff_Ev * k * k * 1e18;
             h[0][2] = 0
             h[1:slices+1:2,2] = self.BV_MX2 - self.coeff_Ec * k * k * 1e18;
-            # self.thop_elec = hbar * self.vf * (1j*k + self.kmax) * 1e9 / q;
-            # self.thop_elec = hbar * self.vf * k * 1e9  / q;
-            h[slices+1::2,2]  = self.thop_elec;
-            h[slices+2::4,2]  = self.thop_elec #+ self.thop_elec*exp(k*self.delta*1j);
-            h[slices+4::4,2]  = self.thop_elec #+ self.thop_elec*exp(-k*self.delta*1j);
 
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;

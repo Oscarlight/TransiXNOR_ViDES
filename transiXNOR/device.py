@@ -59,8 +59,8 @@ if not os.path.exists(model_path+"/material.p"):
         'acc': 0.414/sqrt(3), 
         # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
         'relative_EA': 0.125, 
-        'fraction_source': 0.003, # p-dope
-        'fraction_drain': -0.003, # n-dope
+        'fraction_source': 0.2, # p-dope
+        'fraction_drain': -0.002, # n-dope
     }
     with open(model_path+"/material.p", "wb") as f:
         pickle.dump(semi,f)
