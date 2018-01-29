@@ -60,8 +60,8 @@ if not os.path.exists(model_path+"/material.p"):
         'acc': 0.414/sqrt(3), 
         # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
         'relative_EA': 0.125, 
-        'fraction_source': 0.005, # p-dope
-        'fraction_drain': -0.002, # n-dope
+        'fraction_source': 0.008, # p-dope
+        'fraction_drain': -0.0015, # n-dope
     }
     with open(model_path+"/material.p", "wb") as f:
         pickle.dump(semi,f)
@@ -84,6 +84,7 @@ FLAKE.kmin=0;
 FLAKE.dk=dk;
 
 FLAKE.dE=0.001
+vt=kboltz*FLAKE.Temp/q;
 grid=grid2D(xg,FLAKE.y,FLAKE.x,FLAKE.y);
 
 
@@ -150,7 +151,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
                 key = '%.2f' % (vtg + vbg)
                 if key in finished:
                     print('    ~~~ Skip due to symmetry')
-                    tmp_volt = '%.2f_%.2f_%.2f' % (vds, vtg, vbg) # if symmetry must exist
+                    tmp_volt = '%.2f_%.2f_%.2f' % (vds, vtg, vbg) # it's symmetry must exist
                     tran = np.load(model_path + '/data/T_' + tmp_volt + '.npy')
                     E = tran[:, 0]
                     T = tran[:, 1]
