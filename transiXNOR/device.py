@@ -38,7 +38,7 @@ elif(not OVERWRITE):
 # TODO: It seems certain grid can lead to segmentation faults.
 xg=nonuniformgrid(
     array([-1.0,0.5,
-              0,0.5,
+              0,0.1,
             1.0,0.5]))
 ## MoTe2 (http://pubs.acs.org/doi/pdf/10.1021/acs.jpcc.5b02950)
 # semi = {
