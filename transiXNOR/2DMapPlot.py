@@ -10,7 +10,7 @@ mpl.rcParams['xtick.labelsize'] = label_size
 mpl.rcParams['ytick.labelsize'] = label_size 
 mpl.rcParams['figure.figsize'] = 12, 12
 
-model_path = './D6'
+model_path = './D8'
 
 def sqResize(image, outwidth):
     if np.sum(np.abs(image)) > 0:
