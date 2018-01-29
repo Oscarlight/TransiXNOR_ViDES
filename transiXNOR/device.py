@@ -9,15 +9,15 @@ import argparse
 
 rank = 0
 OVERWRITE=True
-USE_SYMMETRY=True
+USE_SYMMETRY=False
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--vtgmin", default=0.0, type=float)
-parser.add_argument("--vtgmax", default=0.2, type=float)
-parser.add_argument("--vtgN",   default=21,   type=int)
+parser.add_argument("--vtgmax", default=0.4, type=float)
+parser.add_argument("--vtgN",   default=41,   type=int)
 parser.add_argument("--vbgmin", default=0.0, type=float)
-parser.add_argument("--vbgmax", default=0.2, type=float)
-parser.add_argument("--vbgN",   default=21,   type=int)
+parser.add_argument("--vbgmax", default=0.0, type=float)
+parser.add_argument("--vbgN",   default=1,   type=int)
 parser.add_argument("--vdsmin", default=0.2, type=float)
 parser.add_argument("--vdsmax", default=0.2, type=float)
 parser.add_argument("--vdsN",   default=1,   type=int)
@@ -144,17 +144,15 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
     FLAKE.mu1=0.0
     FLAKE.mu2=vds
     vbg_cur = []
-    if USE_SYMMETRY:
-        finished = []
     for vbg in np.linspace(Vbgmin, Vbgmax, VbgN):
         vtg_cur = []
         for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
             print('>>> Vds=%.2f, Vbg=%.2f, Vtg=%.2f' % (vds, vbg, vtg))
-            if USE_SYMMETRY:
-                key = '%.2f' % (vtg + vbg)
-                if key in finished:
+            if USE_SYMMETRY: 
+                # its symmetry point
+                tmp_volt = '%.2f_%.2f_%.2f' % (vds, vtg, vbg)
+                if os.path.exists(model_path + '/data/T_' + tmp_volt + '.npy'):
                     print('    ~~~ Skip due to symmetry')
-                    tmp_volt = '%.2f_%.2f_%.2f' % (vds, vtg, vbg) # it's symmetry must exist
                     tran = np.load(model_path + '/data/T_' + tmp_volt + '.npy')
                     E = tran[:, 0]
                     T = tran[:, 1]
@@ -162,14 +160,13 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
                         sum(2*q*q/(2*pi*hbar)*T*(Fermi((E)/vt)-Fermi((E-vds)/vt))*FLAKE.dE)
                     )
                     continue
-                else:
-                    finished.append(key)
+
             bottom_gate.Ef=vbg 
             set_gate(p,bottom_gate)
             top_gate.Ef=vtg; 
             set_gate(p,top_gate)
             p.normpoisson=1e-1;
-            p.normd=5e-3; # 5e-3;
+            p.normd=1e-3; # 5e-3;
             solve_self_consistent(grid,p,FLAKE);
             vtg_cur.append(FLAKE.current());
             # I save the output files
