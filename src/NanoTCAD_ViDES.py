@@ -21,7 +21,7 @@ writeout("                     Copyright (C) 2004-2016      \n")
 writeout("-------------------------------------------------------------------\n")
 writeout("\n")
 
-VERBAL=True
+VERBAL=False
 NEmax=int(5e3);
 DIGIT_PRECISION=20;
 max_number_of_cores_on_a_server=8;
