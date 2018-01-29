@@ -158,7 +158,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	plt.clf()	
 
 if (COMBINE_CURRENT_VIA_SYMMETRY):
-	vdsmin=0.0; vdsmax=0.2; vdsN=21;
+	vdsmin=0.01; vdsmax=0.2; vdsN=20;
 	vbgmin=0.0; vbgmax=0.2; vbgN=21;
 	vtgmin=0.0; vtgmax=0.2; vtgN=21;
 	vds_cur = []
@@ -173,8 +173,11 @@ if (COMBINE_CURRENT_VIA_SYMMETRY):
 				vtg_cur.append(cur)
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
-	np.save(model_path+'/current', np.array(vds_cur))
-	
+	cur_map = np.array(vds_cur)
+	cur_map = np.concatenate((np.zeros_like(cur_map[0,:,:]), cur_map), axis=0)
+	print(cur_map.shape)
+	np.save(model_path+'/current', cur_map)
+
 if (PLOT_FAMILY_CURVES):
 	cur = np.abs(np.load(model_path + '/current.npy'))
 	vtg_list = [0.0, 0.05, 0.1, 0.15, 0.2]
