@@ -64,7 +64,7 @@ if not os.path.exists(model_path+"/material.p"):
         # 'fraction_drain': -0.0018, # n-dope
         'relative_EA': 0.118,     # larger -> band is lower
         'fraction_source': 0.008, # p-dope
-        'fraction_drain': -0.005, # n-dope
+        'fraction_drain': -0.0025, # n-dope
     }
     with open(model_path+"/material.p", "wb") as f:
         pickle.dump(semi,f)
