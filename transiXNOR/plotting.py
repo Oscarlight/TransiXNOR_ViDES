@@ -197,6 +197,7 @@ if (PLOT_FAMILY_CURVES):
 	plt.clf()	
 	# Vbg = 0.2
 	for vtg in vtg_list:
+		cur[8, 20, int(vtg*100)] = None
 		plt.plot(vds_array, cur[:, 20, int(vtg*100)], 
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
