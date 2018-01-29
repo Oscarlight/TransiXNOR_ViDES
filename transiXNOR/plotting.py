@@ -79,7 +79,7 @@ if (T_WINDOW or PLOT_BAND):
 		ax.xaxis.set_minor_locator(AutoMinorLocator())
 		ax.yaxis.set_minor_locator(AutoMinorLocator())
 		plt.ylim([-0.6, 0.4])
-		plt.xlim([-2, 37])
+		plt.xlim([-2, 40])
 		plt.savefig(model_path+'/plots/band_' + voltage + '.pdf',
 			bbox_inches='tight', transparent=True)
 		plt.clf()
