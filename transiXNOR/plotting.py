@@ -8,6 +8,12 @@ import glob
 from NanoTCAD_ViDES import *
 import argparse
 
+# -------------------------------------------------
+# Because the 0-thickness 2D material, apply the 
+# following assumption:
+# 	  (Vds, Vbg, Vtg) <--> (Vds, 0, Vtg + Vbg) 
+# -------------------------------------------------
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--vtg", default=0.0, type=float)
 parser.add_argument("--vbg", default=0.2, type=float)
@@ -16,7 +22,6 @@ parser.add_argument("model", default='./D6', type=str)
 args = parser.parse_args()
 
 FIGURE_SIZE = (5, 6)
-# FONT_SIZE = 26
 LINE_WIDTH = 1
 MAJOR_LABEL_SIZE = 22
 MINOR_LABEL_SIZE = 0
@@ -32,8 +37,8 @@ PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
-PLOT_CURRENT_SPECTRUM  = True
-PLOT_FAMILY_CURVES     = False
+PLOT_CURRENT_SPECTRUM  = False
+PLOT_FAMILY_CURVES     = True
 PRINT_CURRENT_ONLY     = False
 model_path             = args.model
 
@@ -154,6 +159,7 @@ if (PLOT_FAMILY_CURVES):
 	vtg_list = [0.0, 0.05, 0.1, 0.15, 0.2]
 	vds_array = np.linspace(0, 0.2, 21)
 	plt.clf()
+	# Vbg = 0
 	for vtg in vtg_list:
 		plt.plot(vds_array, cur[:, 0, int(vtg*100)], 
 			linewidth=2, color='k')
@@ -161,19 +167,19 @@ if (PLOT_FAMILY_CURVES):
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	ax.yaxis.set_minor_locator(AutoMinorLocator())
-	plt.ylim([-1, 45])
+	plt.ylim([-1, 85])
 	plt.savefig(model_path+'/plots/family_curve_vbg_0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()	
-
+	# Vbg = 0.2
 	for vtg in vtg_list:
-		plt.plot(vds_array, cur[:, 20, int(vtg*100)], 
+		plt.plot(vds_array, cur[:, 0, int(20 + vtg*100)], 
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	ax.yaxis.set_minor_locator(AutoMinorLocator())
-	plt.ylim([-1, 45])
+	plt.ylim([-1, 85])
 	plt.savefig(model_path+'/plots/family_curve_vbg_1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
