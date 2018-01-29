@@ -59,7 +59,7 @@ if not os.path.exists(model_path+"/material.p"):
         'lattice_constant': 0.414,
         'acc': 0.414/sqrt(3), 
         # ref: http://iopscience.iop.org/article/10.1088/1367-2630/12/6/065013/meta 
-        'relative_EA': 0.125, 
+        'relative_EA': 0.128, 
         'fraction_source': 0.008, # p-dope
         'fraction_drain': -0.0018, # n-dope
     }
