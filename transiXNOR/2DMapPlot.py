@@ -33,7 +33,7 @@ for index, vds in zip(index, voltage):
     ax = plt.subplot(4, 3, i+1)
     i += 1
     img = sqResize(data[index, :, :], 41)
-    cax = plt.imshow(img, vmin = -2, vmax = 1.5, origin='lower', interpolation = 'gaussian')
+    cax = plt.imshow(img, vmin = -2, vmax = 2, origin='lower', interpolation = 'gaussian')
     plt.title(r'$V_{DS}$' + ' = {0:.2f} V'.format(vds), fontsize = label_size)
     plt.ylabel(r'$V_{BG}$ (V)', fontsize = label_size)
     plt.xlabel(r'$V_{TG}$ (V)', fontsize = label_size)
