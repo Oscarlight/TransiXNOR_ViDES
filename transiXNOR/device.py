@@ -8,7 +8,7 @@ from math import sqrt
 import argparse
 
 rank = 0
-OVERWRITE=False
+OVERWRITE=True
 USE_SYMMETRY=True
 
 parser = argparse.ArgumentParser()
