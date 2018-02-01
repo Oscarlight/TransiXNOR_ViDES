@@ -83,9 +83,10 @@ class Bi2Se3:
             kk=kk+1;
 
         # hopping within/between unit cells
-        h[slices+1::2,2]  = self.thop_elec
-        h[slices+2::4,2]  = self.thop_elec
-        h[slices+4::4,2]  = self.thop_elec
+        # h[slices+1::2,2]  = self.thop_elec
+        # h[slices+2::4,2]  = self.thop_elec
+        # h[slices+4::4,2]  = self.thop_elec
+
         # I then compute the charge and the T for each energy and k and perform the integral
         i=0;
         k=self.kmin;
@@ -107,6 +108,7 @@ class Bi2Se3:
             h[:slices+1:2,2]  = self.BC_MX2 + self.coeff_Ev * k * k * 1e18;
             h[0][2] = 0
             h[1:slices+1:2,2] = self.BV_MX2 - self.coeff_Ec * k * k * 1e18;
+            h[slices+1::1,2]  = h_bar * self.vf * k * 1e9 / q;
 
             H.Eupper = self.Eupper;
             H.Elower = self.Elower;
