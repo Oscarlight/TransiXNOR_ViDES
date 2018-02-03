@@ -39,7 +39,7 @@ class Bi2Se3:
         self.mt = self.me * self.mh / (self.me + self.mh)
         self.thop_elec=-sqrt(2*q*self.Egap/(3*(self.acc*1e-9*sqrt(3))**2*m0*self.mt))*hbar/q;
         print('hopping1: ' + str(self.thop_elec))
-        # print('hopping2: ' + str(hbar * self.vf * self.kmax * 1e9  / q))
+        print('hopping2: ' + str(hbar * self.vf * self.kmax/10 * 1e9  / q))
         self.eta=1e-5;
         self.mu1=0.0;
         self.mu2=0.0;
