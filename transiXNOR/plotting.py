@@ -42,7 +42,7 @@ PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = False
-PRINT_CURRENT_ONLY     = False
+PRINT_CURRENT_ONLY     = True
 model_path             = args.model
 
 Eg = 0.252
