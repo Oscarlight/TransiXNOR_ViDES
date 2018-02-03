@@ -12,9 +12,9 @@ OVERWRITE=True
 USE_SYMMETRY=False
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--vtgmin", default=0.0, type=float)
-parser.add_argument("--vtgmax", default=0.4, type=float)
-parser.add_argument("--vtgN",   default=41,   type=int)
+parser.add_argument("--vtgmin", default=-0.2, type=float) # 50% +/- working range (0, 0.2)
+parser.add_argument("--vtgmax", default=0.6, type=float)
+parser.add_argument("--vtgN",   default=81,   type=int)
 parser.add_argument("--vbgmin", default=0.0, type=float)
 parser.add_argument("--vbgmax", default=0.0, type=float)
 parser.add_argument("--vbgN",   default=1,   type=int)
