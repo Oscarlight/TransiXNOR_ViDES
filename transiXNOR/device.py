@@ -125,7 +125,7 @@ savetxt(model_path+"/er.out", p.eps)
 savetxt(model_path+"/fixed_charge.out", p.fixed_charge)
 
 # ------------------------------------------#
-p.underel=0.01; # Related to convergence, default 0.1
+p.underel=0.1 # 0.01; # Related to convergence, default 0.1
 
 Vtgmax=args.vtgmax;
 Vtgmin=args.vtgmin;
