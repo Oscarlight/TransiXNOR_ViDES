@@ -32,11 +32,11 @@ version=D9
 # python device.py $version --vdsmin 0.00 --vdsmax 0.00 --vdsN 1 &
 # python device.py $version --vdsmin -0.01 --vdsmax -0.01 --vdsN 1
 python device.py $version --vdsmin -0.02 --vdsmax -0.02 --vdsN 1 &
-python device.py $version --vdsmin -0.03 --vdsmax -0.03 --vdsN 1 &
-python device.py $version --vdsmin -0.04 --vdsmax -0.04 --vdsN 1 &
-python device.py $version --vdsmin -0.05 --vdsmax -0.05 --vdsN 1
-python device.py $version --vdsmin -0.06 --vdsmax -0.06 --vdsN 1 &
+# python device.py $version --vdsmin -0.03 --vdsmax -0.03 --vdsN 1 &
+python device.py $version --vdsmin -0.04 --vdsmax -0.04 --vdsN 1 
+python device.py $version --vdsmin -0.05 --vdsmax -0.05 --vdsN 1 &
+python device.py $version --vdsmin -0.06 --vdsmax -0.06 --vdsN 1 
 python device.py $version --vdsmin -0.07 --vdsmax -0.07 --vdsN 1 &
-python device.py $version --vdsmin -0.08 --vdsmax -0.08 --vdsN 1 &
-python device.py $version --vdsmin -0.09 --vdsmax -0.09 --vdsN 1
-python device.py $version --vdsmin -0.10 --vdsmax -0.10 --vdsN 1
+python device.py $version --vdsmin -0.08 --vdsmax -0.08 --vdsN 1 
+python device.py $version --vdsmin -0.09 --vdsmax -0.09 --vdsN 1 &
+python device.py $version --vdsmin -0.10 --vdsmax -0.10 --vdsN 1 
