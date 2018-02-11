@@ -125,42 +125,69 @@ if (PLOT_CHARGE):
 
 if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	# Fig. 1
-	cur = np.abs(np.load(model_path + '/current_20.npy'))
+	cur = np.abs(np.load(model_path + '/current_10.npy'))
 	if (PRINT_CURRENT_ONLY):
+		# print(cur.shape)
+		# print('cur [0:21]', cur[0,0,:21])
+		# print('cur [10:31', cur[0,0,10:31])
+		# print('cur [20:41', cur[0,0,20:41])
 		print(cur); quit()
-	vtg_array = np.linspace(0.0, 0.2, 21)
-	# vbg = 0. and vtg from 0 to 0.2 <--> vbg = 0 and vtg from 0. to 0.2
-	plt.semilogy(vtg_array, cur[0,0,:21], linewidth=2, color='k')
+	vtg_array = np.linspace(-0.1, 0.3, 41)
+	# vbg = -0.1. and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from -0.2 to 0.2
+	plt.semilogy(vtg_array, cur[0, 0, :41], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
-	plt.ylim([1e-2, 1e2])
-	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.0.pdf',
+	# plt.xlim([-0.1,0.3])
+	plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path+'/plots/current_vds_0.1_vbg_-0.1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	# vbg = 0.1 and vtg from 0 to 0.2 <--> vbg = 0 and vtg from 0.1 to 0.3
-	plt.semilogy(vtg_array, cur[0,0,10:31], linewidth=2, color='k')
+	# vbg = 0.0 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from -0.1 to 0.3
+	plt.semilogy(vtg_array, cur[0, 0, 10:51], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
-	plt.ylim([1e-2, 1e2])
-	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.1.pdf',
+	# plt.xlim([-0.1, 0.3])
+	plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path+'/plots/current_vds_0.1_vbg_0.0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
-	# vbg = 0.2 and vtg from 0 to 0.2 <--> vbg = 0 and vtg from 0.2 to 0.4
-	plt.semilogy(vtg_array, cur[0,0,20:41], linewidth=2, color='k')
+	# vbg = 0.1 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.0 to 0.4
+	plt.semilogy(vtg_array, cur[0, 0, 20:61], linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
-	plt.ylim([1e-2, 1e2])
-	plt.savefig(model_path+'/plots/current_vds_0.2_vbg_0.2.pdf',
+	# plt.xlim([-0.1, 0.3])
+	plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/current_vds_0.1_vbg_0.1.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+	# vbg = 0.2 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.1 to 0.5
+	plt.semilogy(vtg_array, cur[0, 0, 30:71], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path+'/plots/current_vds_0.1_vbg_0.2.pdf',
 		bbox_inches='tight', transparent=True)
-	plt.clf()	
+	plt.clf()
+	# vbg = 0.3 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.2 to 0.6
+	plt.semilogy(vtg_array, cur[0, 0, 40:81], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	plt.ylim([1e-3, 1e3])
+	plt.savefig(model_path + '/plots/current_vds_0.1_vbg_0.3.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
 
 if (COMBINE_CURRENT_VIA_SYMMETRY):
-	vdsmin=0.01; vdsmax=0.2; vdsN=20;
-	vbgmin=0.0; vbgmax=0.2; vbgN=21;
-	vtgmin=0.0; vtgmax=0.2; vtgN=21;
+	vdsmin=-0.09; vdsmax=0.3; vdsN=40;
+	vbgmin=0.0; vbgmax=0.4; vbgN=41;
+	vtgmin=0.0; vtgmax=0.4; vtgN=41;
 	vds_cur = []
 	print('Start combine all current together via symmetry from current_*.npy')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
@@ -183,9 +210,10 @@ if (PLOT_FAMILY_CURVES):
 	vtg_list = [0.0, 0.05, 0.1, 0.15, 0.2]
 	vds_array = np.linspace(0, 0.2, 21)
 	plt.clf()
+	# print(cur)
 	# Vbg = 0
 	for vtg in vtg_list:
-		plt.plot(vds_array, cur[:, 0, int(vtg*100)], 
+		plt.plot(vds_array, cur[10:31, 10, int(vtg*100)+10],
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
@@ -198,7 +226,7 @@ if (PLOT_FAMILY_CURVES):
 	# Vbg = 0.2
 	for vtg in vtg_list:
 		# cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
-		plt.plot(vds_array, cur[:, 20, int(vtg*100)], 
+		plt.plot(vds_array, cur[10:31, 30, int(vtg*100)+10],
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
