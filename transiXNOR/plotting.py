@@ -126,12 +126,14 @@ if (PLOT_CHARGE):
 
 if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	# Fig. 1
-	cur = np.abs(np.load(model_path + '/current_10.npy'))
+	current_file_Vds = model_path + '/current_'+ str(int(Vds*100)) + '.npy'
+	cur = np.abs(np.load(current_file_Vds))
 	if (PRINT_CURRENT_ONLY):
 		# print(cur.shape)
 		# print('cur [0:21]', cur[0,0,:21])
 		# print('cur [10:31', cur[0,0,10:31])
 		# print('cur [20:41', cur[0,0,20:41])
+		print('Vds=', Vds)
 		print(cur); quit()
 	vtg_array = np.linspace(-0.1, 0.3, 41)
 	# vbg = -0.1. and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from -0.2 to 0.2
@@ -141,7 +143,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1,0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path+'/plots/current_vds_0.1_vbg_-0.1.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_-0.1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.0 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from -0.1 to 0.3
@@ -151,7 +153,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path+'/plots/current_vds_0.1_vbg_0.0.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.1 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.0 to 0.4
@@ -161,7 +163,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path + '/plots/current_vds_0.1_vbg_0.1.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.1.pdf',
 				bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.2 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.1 to 0.5
@@ -171,7 +173,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path+'/plots/current_vds_0.1_vbg_0.2.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.2.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.3 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.2 to 0.6
@@ -181,28 +183,31 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e3])
-	plt.savefig(model_path + '/plots/current_vds_0.1_vbg_0.3.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.3.pdf',
 				bbox_inches='tight', transparent=True)
 	plt.clf()
 
 if (COMBINE_CURRENT_VIA_SYMMETRY):
-	vdsmin=-0.09; vdsmax=0.3; vdsN=40;
-	vbgmin=0.0; vbgmax=0.4; vbgN=41;
-	vtgmin=0.0; vtgmax=0.4; vtgN=41;
+	vdsmin=-0.10; vdsmax=0.3; vdsN=41;
+	vbgmin=-0.10; vbgmax=0.3; vbgN=41;
+	vtgmin=-0.10; vtgmax=0.3; vtgN=41;
 	vds_cur = []
 	print('Start combine all current together via symmetry from current_*.npy')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
+		# print('vds=', vds)
 		cur_array = np.abs(np.load(model_path + '/current_' + str(int(vds*100)) + '.npy'))
 		vbg_cur = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
+			# print('  vbg=', vbg)
 			vtg_cur = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				cur = cur_array[0, 0, int(vbg*100) + int(vtg*100)]
+				# print('    vtg=', vtg)
+				cur = cur_array[0, 0, int((vbg+0.1)*100) + int((vtg+0.1)*100)]
 				vtg_cur.append(cur)
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
 	cur_map = np.array(vds_cur)
-	cur_map = np.concatenate((np.zeros_like(cur_map[0:1,:,:]), cur_map), axis=0)
+	# cur_map = np.concatenate((np.zeros_like(cur_map[0:1,:,:]), cur_map), axis=0)
 	print(cur_map.shape)
 	np.save(model_path+'/current', cur_map)
 
