@@ -43,6 +43,7 @@ PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = False
 PRINT_CURRENT_ONLY     = True
+QV_CALCULATION         = True
 model_path             = args.model
 
 Eg = 0.252
@@ -261,6 +262,33 @@ if (COMPUTE_CURRENT_FROM_T):
 		vds_cur.append(vbg_cur)
 	np.save(model_path+'/current', np.array(vds_cur))
 
+if (QV_CALCULATION):
 
+	e0 = 8.854e-12  # (F/m)
+	er = 25  # for HfO2
+
+	fn_band_diag = './data/phi_' + voltage + '.npy'
+	band_diag = np.load(fn_band_diag)
+	# print(band_diag.shape)
+
+	band_diag = np.reshape(band_diag, (-1, Nx))
+	# print('band diagram after reshape:', band_diag)
+
+	Q_top = []
+	Q_bottom = []
+	for y in enumerate(gridy):
+		Q_top_x = er * e0 * (np.abs(band_diag[y[0], 0] - band_diag[y[0], Nx / 2])) / (
+		np.abs(gridx[0] - gridx[Nx / 2]) * 1e-9)  # C/m^2
+		Q_bottom_x = er * e0 * (np.abs(band_diag[y[0], Nx / 2] - band_diag[y[0], Nx - 1])) / (
+		np.abs(gridx[Nx / 2] - gridx[Nx - 1]) * 1e-9)  # C/m^2
+		# print(Q_top_x)
+		Q_top.append(Q_top_x)
+		Q_bottom.append(Q_bottom_x)
+	# print(Q_top)
+	# print(len(Q_top))
+	Q_top_total = np.sum(Q_top)  # C/m^2
+	Q_bottom_total = np.sum(Q_bottom)  # C/m^2
+	print(Q_top_total)
+	print(Q_bottom_total)
 
 
