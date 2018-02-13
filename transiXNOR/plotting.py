@@ -33,7 +33,7 @@ rcParams['axes.linewidth'] = LINE_WIDTH
 fig, ax = plt.subplots()
 
 COMBINE_CURRENT_VIA_SYMMETRY = False
-COMPUTE_CURRENT_FROM_T = True
+COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
 T_WINDOW               = False
 PLOT_BAND              = False
@@ -42,7 +42,7 @@ PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = False
-PRINT_CURRENT_ONLY     = False
+PRINT_CURRENT_ONLY     = True
 model_path             = args.model
 
 Eg = 0.252
