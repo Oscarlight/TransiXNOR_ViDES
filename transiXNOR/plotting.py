@@ -164,7 +164,7 @@ if (COMBINE_CURRENT_VIA_SYMMETRY):
 	vds_cur = []
 	print('Start combine all current together via symmetry from current_*.npy')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
-		cur_array = np.abs(np.load(model_path + '/current_' + str(int(vds*100)) + '.npy'))
+		cur_array = np.abs(np.load(model_path + '/current_%.0f'%(Vdsmin*100) + '.npy'))
 		vbg_cur = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
 			vtg_cur = []
@@ -211,8 +211,8 @@ if (PLOT_FAMILY_CURVES):
 
 if (COMPUTE_CURRENT_FROM_T):
 	vdsmin=-0.1; vdsmax=0.3; vdsN=41;
-	vbgmin=-0.1; vbgmax=0.3; vbgN=41;
-	vtgmin=-0.1; vtgmax=0.3; vtgN=41;
+	vbgmin=0.0; vbgmax=0.0; vbgN=1;
+	vtgmin=-0.2; vtgmax=0.6; vtgN=81;
 	vds_cur = []
 	print('Start computing the current from the T files...')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
@@ -231,7 +231,7 @@ if (COMPUTE_CURRENT_FROM_T):
 			# print('length of vtg_cur = %s' % len(vtg_cur))
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
-	np.save(model_path+'/current', np.array(vds_cur))
+		np.save(model_path+'/current_%.0f'%(Vdsmin*100), np.array([vbg_cur]))
 
 
 
