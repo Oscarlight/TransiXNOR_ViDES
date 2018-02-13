@@ -180,6 +180,6 @@ vds_cur = []
 #         vbg_cur.append(vtg_cur)
 #     vds_cur.append(vbg_cur)
 
-print('Output: ' + 'current_%.2f'%(Vdsmin*100))
+print('Output: ' + 'current_%.0f'%(Vdsmin*100))
 np.save(model_path+'/current_%s'%int(Vdsmin*100), 
     np.array(vds_cur))
