@@ -140,45 +140,46 @@ Vdsmin=args.vdsmin;
 VdsN=args.vdsN;
 
 vds_cur = []
-for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
-    FLAKE.mu1=0.0
-    FLAKE.mu2=vds
-    vbg_cur = []
-    for vbg in np.linspace(Vbgmin, Vbgmax, VbgN):
-        vtg_cur = []
-        for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
-            print('>>> Vds=%.2f, Vbg=%.2f, Vtg=%.2f' % (vds, vbg, vtg))
-            if USE_SYMMETRY: 
-                # its symmetry point
-                tmp_volt = '%.2f_%.2f_%.2f' % (vds, vtg, vbg)
-                if os.path.exists(model_path + '/data/T_' + tmp_volt + '.npy'):
-                    print('    ~~~ Skip due to symmetry')
-                    tran = np.load(model_path + '/data/T_' + tmp_volt + '.npy')
-                    E = tran[:, 0]
-                    T = tran[:, 1]
-                    vtg_cur.append(
-                        sum(2*q*q/(2*pi*hbar)*T*(Fermi((E)/vt)-Fermi((E-vds)/vt))*FLAKE.dE)
-                    )
-                    continue
+# for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
+#     FLAKE.mu1=0.0
+#     FLAKE.mu2=vds
+#     vbg_cur = []
+#     for vbg in np.linspace(Vbgmin, Vbgmax, VbgN):
+#         vtg_cur = []
+#         for vtg in np.linspace(Vtgmin, Vtgmax, VtgN):
+#             print('>>> Vds=%.2f, Vbg=%.2f, Vtg=%.2f' % (vds, vbg, vtg))
+#             if USE_SYMMETRY: 
+#                 # its symmetry point
+#                 tmp_volt = '%.2f_%.2f_%.2f' % (vds, vtg, vbg)
+#                 if os.path.exists(model_path + '/data/T_' + tmp_volt + '.npy'):
+#                     print('    ~~~ Skip due to symmetry')
+#                     tran = np.load(model_path + '/data/T_' + tmp_volt + '.npy')
+#                     E = tran[:, 0]
+#                     T = tran[:, 1]
+#                     vtg_cur.append(
+#                         sum(2*q*q/(2*pi*hbar)*T*(Fermi((E)/vt)-Fermi((E-vds)/vt))*FLAKE.dE)
+#                     )
+#                     continue
 
-            bottom_gate.Ef=vbg 
-            set_gate(p,bottom_gate)
-            top_gate.Ef=vtg; 
-            set_gate(p,top_gate)
-            p.normpoisson=1e-1;
-            p.normd=1e-3; # 1e-3 for Vds > 0;
-            solve_self_consistent(grid,p,FLAKE);
-            vtg_cur.append(FLAKE.current());
-            # I save the output files
-            if (rank==0):
-                np.save(model_path+"/data/phi_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
-                    p.Phi)
-                np.save(model_path+"/data/ncar_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
-                    p.free_charge);
-                np.save(model_path+"/data/T_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
-                    transpose([FLAKE.E,FLAKE.T]));
-        vbg_cur.append(vtg_cur)
-    vds_cur.append(vbg_cur)
+#             bottom_gate.Ef=vbg 
+#             set_gate(p,bottom_gate)
+#             top_gate.Ef=vtg; 
+#             set_gate(p,top_gate)
+#             p.normpoisson=1e-1;
+#             p.normd=1e-3; # 1e-3 for Vds > 0;
+#             solve_self_consistent(grid,p,FLAKE);
+#             vtg_cur.append(FLAKE.current());
+#             # I save the output files
+#             if (rank==0):
+#                 np.save(model_path+"/data/phi_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
+#                     p.Phi)
+#                 np.save(model_path+"/data/ncar_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
+#                     p.free_charge);
+#                 np.save(model_path+"/data/T_%.2f_%.2f_%.2f" % (vds, vbg, vtg),
+#                     transpose([FLAKE.E,FLAKE.T]));
+#         vbg_cur.append(vtg_cur)
+#     vds_cur.append(vbg_cur)
 
+print('Output: ' + 'current_%s'%int(Vdsmin*100))
 np.save(model_path+'/current_%s'%int(Vdsmin*100), 
     np.array(vds_cur))
