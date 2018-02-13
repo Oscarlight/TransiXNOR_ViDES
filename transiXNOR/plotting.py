@@ -33,16 +33,16 @@ rcParams['axes.linewidth'] = LINE_WIDTH
 fig, ax = plt.subplots()
 
 COMBINE_CURRENT_VIA_SYMMETRY = False
-COMPUTE_CURRENT_FROM_T = False
+COMPUTE_CURRENT_FROM_T = True
 PLOT_FIXED_CHARGE      = False
-T_WINDOW               = True
+T_WINDOW               = False
 PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = False
-PRINT_CURRENT_ONLY     = True
+PRINT_CURRENT_ONLY     = False
 model_path             = args.model
 
 Eg = 0.252
@@ -210,9 +210,9 @@ if (PLOT_FAMILY_CURVES):
 	plt.clf()
 
 if (COMPUTE_CURRENT_FROM_T):
-	vdsmin=0.01; vdsmax=0.2; vdsN=20;
-	vbgmin=0.0; vbgmax=0.2; vbgN=21;
-	vtgmin=0.0; vtgmax=0.2; vtgN=21;
+	vdsmin=-0.1; vdsmax=0.3; vdsN=41;
+	vbgmin=-0.1; vbgmax=0.3; vbgN=41;
+	vtgmin=-0.1; vtgmax=0.3; vtgN=41;
 	vds_cur = []
 	print('Start computing the current from the T files...')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
