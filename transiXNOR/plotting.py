@@ -32,18 +32,20 @@ rcParams['axes.linewidth'] = LINE_WIDTH
 # rcParams['figure.autolayout'] = True
 fig, ax = plt.subplots()
 
-COMBINE_CURRENT_VIA_SYMMETRY = False
+COMBINE_CURRENT_VIA_SYMMETRY = True
 COMPUTE_CURRENT_FROM_T = False
 PLOT_FIXED_CHARGE      = False
-T_WINDOW               = True
+T_WINDOW               = False
 PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
+PLOT_CURRENT_EXT	   = False
 PLOT_CURRENT_SPECTRUM  = False
-PLOT_FAMILY_CURVES     = False
-PRINT_CURRENT_ONLY     = True
-QV_CALCULATION         = True
+PLOT_FAMILY_CURVES     = True
+PLOT_FAMILY_CURVES_EXT = True
+PRINT_CURRENT_ONLY     = False
+QV_CALCULATION         = False
 model_path             = args.model
 
 Eg = 0.252
@@ -135,6 +137,42 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 		# print('cur [20:41', cur[0,0,20:41])
 		print('Vds=', Vds)
 		print(cur); quit()
+	vtg_array = np.linspace(0.0, 0.2, 21)
+	# vbg = 0.0 and vtg from 0. to 0.2 <--> vbg = 0 and vtg from 0.0 to 0.2
+	plt.semilogy(vtg_array, cur[0, 0, 20:41], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_0.0.pdf',
+		bbox_inches='tight', transparent=True)
+	plt.clf()
+	# vbg = 0.1 and vtg from 0.0 to 0.2 <--> vbg = 0 and vtg from 0.1 to 0.3
+	plt.semilogy(vtg_array, cur[0, 0, 30:51], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_0.1.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+	# vbg = 0.2 and vtg from 0.0 to 0.2 <--> vbg = 0 and vtg from 0.2 to 0.4
+	plt.semilogy(vtg_array, cur[0, 0, 40:61], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_0.2.pdf',
+		bbox_inches='tight', transparent=True)
+	plt.clf()
+
+if (PLOT_CURRENT_EXT):
+	# Fig. 1
+	current_file_Vds = model_path + '/current_'+ str(int(Vds*100)) + '.npy'
+	cur = np.abs(np.load(current_file_Vds))
 	vtg_array = np.linspace(-0.1, 0.3, 41)
 	# vbg = -0.1. and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from -0.2 to 0.2
 	plt.semilogy(vtg_array, cur[0, 0, :41], linewidth=2, color='k')
@@ -143,7 +181,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1,0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_-0.1.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_-0.1.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.0 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from -0.1 to 0.3
@@ -153,7 +191,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.0.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_0.0.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.1 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.0 to 0.4
@@ -163,7 +201,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.1.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_0.1.pdf',
 				bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.2 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.1 to 0.5
@@ -173,7 +211,7 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e2])
-	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.2.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_0.2.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
 	# vbg = 0.3 and vtg from -0.1 to 0.3 <--> vbg = 0 and vtg from 0.2 to 0.6
@@ -183,26 +221,23 @@ if (PLOT_CURRENT or PRINT_CURRENT_ONLY):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	# plt.xlim([-0.1, 0.3])
 	plt.ylim([1e-3, 1e3])
-	plt.savefig(model_path + '/plots/current_vds_' + Vds + '_vbg_0.3.pdf',
+	plt.savefig(model_path + '/plots/current_vds_' + '%.2f' % (Vds) + '_vbg_0.3.pdf',
 				bbox_inches='tight', transparent=True)
 	plt.clf()
 
 if (COMBINE_CURRENT_VIA_SYMMETRY):
-	vdsmin=-0.10; vdsmax=0.3; vdsN=41;
-	vbgmin=-0.10; vbgmax=0.3; vbgN=41;
-	vtgmin=-0.10; vtgmax=0.3; vtgN=41;
+	vdsmin=-10; vdsmax=30; vdsN=41;
+	vbgmin=-10; vbgmax=30; vbgN=41;
+	vtgmin=-10; vtgmax=30; vtgN=41;
 	vds_cur = []
 	print('Start combine all current together via symmetry from current_*.npy')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
-		# print('vds=', vds)
-		cur_array = np.abs(np.load(model_path + '/current_' + str(int(vds*100)) + '.npy'))
+		cur_array = np.abs(np.load(model_path + '/current_' + str(int(vds)) + '.npy'))
 		vbg_cur = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
-			# print('  vbg=', vbg)
 			vtg_cur = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				# print('    vtg=', vtg)
-				cur = cur_array[0, 0, int((vbg+0.1)*100) + int((vtg+0.1)*100)]
+				cur = cur_array[0, 0, int(vbg+10)+int(vtg+10)]
 				vtg_cur.append(cur)
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
@@ -226,9 +261,9 @@ if (PLOT_FAMILY_CURVES):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	ax.yaxis.set_minor_locator(AutoMinorLocator())
 	plt.ylim([-1, 85])
-	plt.savefig(model_path+'/plots/family_curve_vbg_0.pdf',
+	plt.savefig(model_path+'/plots/family_curve_vbg_0.0.pdf',
 		bbox_inches='tight', transparent=True)
-	plt.clf()	
+	plt.clf()
 	# Vbg = 0.2
 	for vtg in vtg_list:
 		# cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
@@ -239,7 +274,37 @@ if (PLOT_FAMILY_CURVES):
 	ax.xaxis.set_minor_locator(AutoMinorLocator())
 	ax.yaxis.set_minor_locator(AutoMinorLocator())
 	plt.ylim([-1, 85])
-	plt.savefig(model_path+'/plots/family_curve_vbg_1.pdf',
+	plt.savefig(model_path+'/plots/family_curve_vbg_0.2.pdf',
+		bbox_inches='tight', transparent=True)
+	plt.clf()
+
+if (PLOT_FAMILY_CURVES_EXT):
+	cur = np.abs(np.load(model_path + '/current.npy'))
+	vtg_list = [-0.1, -0.05, 0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.30]
+	vds_array = np.linspace(-0.1, 0.3, 41)
+	# Vbg = 0
+	for vtg in vtg_list:
+		plt.plot(vds_array, cur[:, 10, int(vtg*100)+10],
+			linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	ax.yaxis.set_minor_locator(AutoMinorLocator())
+	# plt.ylim([-1, 85])
+	plt.savefig(model_path+'/plots/family_curve_vbg_0.0_EXT.pdf',
+		bbox_inches='tight', transparent=True)
+	plt.clf()
+	# Vbg = 0.2
+	for vtg in vtg_list:
+		# cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
+		plt.plot(vds_array, cur[:, 30, int(vtg*100)+10],
+			linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	ax.yaxis.set_minor_locator(AutoMinorLocator())
+	# plt.ylim([-1, 85])
+	plt.savefig(model_path+'/plots/family_curve_vbg_0.2_EXT.pdf',
 		bbox_inches='tight', transparent=True)
 	plt.clf()
 
@@ -268,32 +333,80 @@ if (COMPUTE_CURRENT_FROM_T):
 	np.save(model_path+'/current', np.array(vds_cur))
 
 if (QV_CALCULATION):
+	# From device.py
+	Cox = 25 / 1.1;  # 1.1 nm HfO2 for er=25
+	Csemi = 100 / 0.7;
+	er_equ = Cox * Csemi / (Cox + Csemi)
 
-	e0 = 8.854e-12  # (F/m)
-	er = 25  # for HfO2
+	def gate_charges(Vds, Vbg, Vtg, er, model_path):
+		gridx = np.genfromtxt(model_path + '/gridx.out')
+		# print('gridx:', gridx)
+		Nx = gridx.shape[0]
+		# print('gridx shape', Nx)
+		gridy = np.genfromtxt(model_path + '/gridy.out')
+		# print('gridy:',gridy)
+		Ny = gridy.shape[0]
+		# print('gridy shape', Ny)
+		V = (Vtg + Vbg) / 100
+		# print(V)
+		voltage = '%.2f_%.2f_%.2f' % (Vds / 100, 0, V)
+		fn_band_diag = model_path + '/data/phi_' + voltage + '.npy'
+		# print(fn_band_diag)
+		band_diag = np.load(fn_band_diag)
+		# print(band_diag.shape)
+		band_diag = np.reshape(band_diag, (-1, Nx))
+		# print('band diagram after reshape:', band_diag)
+		# print('band_diag reshape', band_diag[0,:])
+		Q_top = []
+		Q_bottom = []
+		for y in enumerate(gridy):
+			if (y[1] >= 10 and y[1] <= 28):
+				# print(y)
+				Q_top_x = er * eps0 * (np.abs(band_diag[y[0], 0] - band_diag[y[0], Nx / 2])) / (
+					np.abs(gridx[0] - gridx[Nx / 2]) * 1e-9)  # C/m^2
+				Q_bottom_x = er * eps0 * (np.abs(band_diag[y[0], Nx / 2] - band_diag[y[0], Nx - 1])) / (
+					np.abs(gridx[Nx / 2] - gridx[Nx - 1]) * 1e-9)  # C/m^2
+				Q_top.append(Q_top_x)
+				Q_bottom.append(Q_bottom_x)
+			else:
+				continue
+		# print(Q_top)
+		# print(len(Q_top))
+		np.save(model_path + '/charges/TG_Q_' + voltage, Q_top)  # save top gate charges
+		np.save(model_path + '/charges/BG_Q_' + voltage, Q_bottom)  # save bottom gate charges
+		Q_top_total = np.sum(Q_top)  # C/m^2
+		Q_bottom_total = np.sum(Q_bottom)  # C/m^2
+		# print(Q_top_total)
+		# print(Q_bottom_total)
+		return Q_top_total, Q_bottom_total
 
-	fn_band_diag = './data/phi_' + voltage + '.npy'
-	band_diag = np.load(fn_band_diag)
-	# print(band_diag.shape)
 
-	band_diag = np.reshape(band_diag, (-1, Nx))
-	# print('band diagram after reshape:', band_diag)
-
-	Q_top = []
-	Q_bottom = []
-	for y in enumerate(gridy):
-		Q_top_x = er * e0 * (np.abs(band_diag[y[0], 0] - band_diag[y[0], Nx / 2])) / (
-		np.abs(gridx[0] - gridx[Nx / 2]) * 1e-9)  # C/m^2
-		Q_bottom_x = er * e0 * (np.abs(band_diag[y[0], Nx / 2] - band_diag[y[0], Nx - 1])) / (
-		np.abs(gridx[Nx / 2] - gridx[Nx - 1]) * 1e-9)  # C/m^2
-		# print(Q_top_x)
-		Q_top.append(Q_top_x)
-		Q_bottom.append(Q_bottom_x)
-	# print(Q_top)
-	# print(len(Q_top))
-	Q_top_total = np.sum(Q_top)  # C/m^2
-	Q_bottom_total = np.sum(Q_bottom)  # C/m^2
-	print(Q_top_total)
-	print(Q_bottom_total)
-
-
+	vdsmin = -10; vdsmax = 30; vdsN = 41;
+	vbgmin = -10; vbgmax = 30; vbgN = 41;
+	vtgmin = -10; vtgmax = 30; vtgN = 41;
+	vds_Q_top = []
+	vds_Q_bottom = []
+	# print('Start combine all charges together')
+	for vds in np.linspace(vdsmin, vdsmax, vdsN):
+		# print('vds=', vds)
+		vbg_Q_top = []
+		vbg_Q_bottom = []
+		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
+			# print('  vbg=', vbg)
+			vtg_Q_top = []
+			vtg_Q_bottom = []
+			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
+				# print('    vtg=', vtg)
+				Q_top, Q_bottom = gate_charges(vds, vbg, vtg, er_equ, model_path)
+				vtg_Q_top.append(Q_top)
+				vtg_Q_bottom.append(Q_bottom)
+			vbg_Q_top.append(vtg_Q_top)
+			vbg_Q_bottom.append(vtg_Q_bottom)
+		vds_Q_top.append(vbg_Q_top)
+		vds_Q_bottom.append(vbg_Q_bottom)
+	Q_map_top = np.array(vds_Q_top)
+	Q_map_bottom = np.array(vds_Q_bottom)
+	print(Q_map_top.shape)
+	print(Q_map_bottom.shape)
+	np.save(model_path + '/charges_top', Q_map_top)
+	np.save(model_path + '/charges_bottom', Q_map_bottom)
