@@ -226,18 +226,19 @@ if (PLOT_CURRENT_EXT):
 	plt.clf()
 
 if (COMBINE_CURRENT_VIA_SYMMETRY):
-	vdsmin=-10; vdsmax=30; vdsN=41;
-	vbgmin=-10; vbgmax=30; vbgN=41;
-	vtgmin=-10; vtgmax=30; vtgN=41;
+	vdsmin=-0.10; vdsmax=0.30; vdsN=41;
+	vbgmin=-0.10; vbgmax=0.30; vbgN=41;
+	vtgmin=-0.10; vtgmax=0.30; vtgN=41;
+
 	vds_cur = []
 	print('Start combine all current together via symmetry from current_*.npy')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
-		cur_array = np.abs(np.load(model_path + '/current_' + str(int(vds)) + '.npy'))
+		cur_array = np.abs(np.load(model_path + '/current_%.0f' % (vds*100) + '.npy'))
 		vbg_cur = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
 			vtg_cur = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				cur = cur_array[0, 0, int(vbg+10)+int(vtg+10)]
+				cur = cur_array[0, 0, int(vbg*100+10)+int(vtg*100+10)]
 				vtg_cur.append(cur)
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
@@ -338,65 +339,47 @@ if (QV_CALCULATION):
 	Csemi = 100 / 0.7;
 	er_equ = Cox * Csemi / (Cox + Csemi)
 
+	# Vds, Vbg, Vtg in gate_charges are scaled by 100 times. (To get rid of voltage=-0.00 when reading files)
 	def gate_charges(Vds, Vbg, Vtg, er, model_path):
 		gridx = np.genfromtxt(model_path + '/gridx.out')
-		# print('gridx:', gridx)
 		Nx = gridx.shape[0]
-		# print('gridx shape', Nx)
 		gridy = np.genfromtxt(model_path + '/gridy.out')
-		# print('gridy:',gridy)
 		Ny = gridy.shape[0]
-		# print('gridy shape', Ny)
 		V = (Vtg + Vbg) / 100
-		# print(V)
 		voltage = '%.2f_%.2f_%.2f' % (Vds / 100, 0, V)
 		fn_band_diag = model_path + '/data/phi_' + voltage + '.npy'
-		# print(fn_band_diag)
 		band_diag = np.load(fn_band_diag)
-		# print(band_diag.shape)
 		band_diag = np.reshape(band_diag, (-1, Nx))
-		# print('band diagram after reshape:', band_diag)
-		# print('band_diag reshape', band_diag[0,:])
 		Q_top = []
 		Q_bottom = []
 		for y in enumerate(gridy):
 			if (y[1] >= 10 and y[1] <= 28):
-				# print(y)
 				Q_top_x = er * eps0 * (np.abs(band_diag[y[0], 0] - band_diag[y[0], Nx / 2])) / (
 					np.abs(gridx[0] - gridx[Nx / 2]) * 1e-9)  # C/m^2
 				Q_bottom_x = er * eps0 * (np.abs(band_diag[y[0], Nx / 2] - band_diag[y[0], Nx - 1])) / (
 					np.abs(gridx[Nx / 2] - gridx[Nx - 1]) * 1e-9)  # C/m^2
 				Q_top.append(Q_top_x)
 				Q_bottom.append(Q_bottom_x)
-			else:
-				continue
-		# print(Q_top)
-		# print(len(Q_top))
 		np.save(model_path + '/charges/TG_Q_' + voltage, Q_top)  # save top gate charges
 		np.save(model_path + '/charges/BG_Q_' + voltage, Q_bottom)  # save bottom gate charges
 		Q_top_total = np.sum(Q_top)  # C/m^2
 		Q_bottom_total = np.sum(Q_bottom)  # C/m^2
-		# print(Q_top_total)
-		# print(Q_bottom_total)
 		return Q_top_total, Q_bottom_total
 
-
+	# Voltage are scaled by 100 times.
 	vdsmin = -10; vdsmax = 30; vdsN = 41;
 	vbgmin = -10; vbgmax = 30; vbgN = 41;
 	vtgmin = -10; vtgmax = 30; vtgN = 41;
 	vds_Q_top = []
 	vds_Q_bottom = []
-	# print('Start combine all charges together')
+	print('Start combine all charges together')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
-		# print('vds=', vds)
 		vbg_Q_top = []
 		vbg_Q_bottom = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
-			# print('  vbg=', vbg)
 			vtg_Q_top = []
 			vtg_Q_bottom = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
-				# print('    vtg=', vtg)
 				Q_top, Q_bottom = gate_charges(vds, vbg, vtg, er_equ, model_path)
 				vtg_Q_top.append(Q_top)
 				vtg_Q_bottom.append(Q_bottom)
