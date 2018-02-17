@@ -40,12 +40,13 @@ PLOT_BAND              = False
 PLOT_TRAN              = False
 PLOT_CHARGE            = False
 PLOT_CURRENT           = False
-PLOT_CURRENT_EXT	   = False
+PLOT_CURRENT_EXT       = False
 PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = True
 PLOT_FAMILY_CURVES_EXT = True
 PRINT_CURRENT_ONLY     = False
 QV_CALCULATION         = False
+PLOT_QV_CURVES	       = True
 model_path             = args.model
 
 Eg = 0.252
@@ -268,7 +269,7 @@ if (PLOT_FAMILY_CURVES):
 	# Vbg = 0.2
 	for vtg in vtg_list:
 		# cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
-		plt.plot(vds_array, cur[:, 20, int(vtg*100)], 
+		plt.plot(vds_array, cur[10:31, 30, int(vtg*100)+10], 
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
@@ -392,3 +393,130 @@ if (QV_CALCULATION):
 	print(Q_map_bottom.shape)
 	np.save(model_path + '/charges_top', Q_map_top)
 	np.save(model_path + '/charges_bottom', Q_map_bottom)
+
+if (PLOT_QV_CURVES):
+	Q_top = np.load(model_path + '/charges_top.npy')
+	Q_bottom = np.load(model_path + '/charges_bottom.npy')
+	# print(Q_top.shape)
+
+	vtg_array = np.linspace(0.0, 0.2, 21)
+	vds_array = np.linspace(0.0, 0.2, 21)
+
+	# vds = 0.0, vbg = 0.0 and vtg from 0. to 0.2
+	plt.plot(vtg_array, Q_top[10, 10, 10:31], linewidth=2, color='blue', label='Top gate Q')
+	plt.plot(vtg_array, Q_bottom[10, 10, 10:31], linewidth=2, color='red', label='Bottom gate Q')
+	plt.legend()
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/charges_vds_0.0_vbg_0.0.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vds = 0.0, vbg = 0.2 and vtg from 0.0 to 0.2
+	plt.plot(vtg_array, Q_top[10, 30, 10:31], linewidth=2, color='blue', label='Top gate Q')
+	plt.plot(vtg_array, Q_bottom[10, 30, 10:31], linewidth=2, color='red', label='Bottom gate Q')
+	plt.legend()
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/charges_vds_0.0_vbg_0.2.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vds = 0.2, vbg = 0.0 and vtg from 0.0 to 0.2
+	plt.plot(vtg_array, Q_top[30, 10, 10:31], linewidth=2, color='blue', label='Top gate Q')
+	plt.plot(vtg_array, Q_bottom[30, 10, 10:31], linewidth=2, color='red', label='Bottom gate Q')
+	plt.legend()
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/charges_vds_0.2_vbg_0.0.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vds = 0.2, vbg = 0.2 and vtg from 0.0 to 0.2
+	plt.plot(vtg_array, Q_top[30, 30, 10:31], linewidth=2, color='blue', label='Top gate Q')
+	plt.plot(vtg_array, Q_bottom[30, 30, 10:31], linewidth=2, color='red', label='Bottom gate Q')
+	plt.legend()
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/charges_vds_0.2_vbg_0.2.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vbg = 0.2, vtg = 0.0 and vds from 0.0 to 0.2
+	plt.plot(vds_array, Q_top[10:31, 30, 10], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/top_charges_vbg_0.2_vtg_0.0.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vbg = 0.2, vtg = 0.1 and vds from 0.0 to 0.2
+	plt.plot(vds_array, Q_top[10:31, 30, 20], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/top_charges_vbg_0.2_vtg_0.1.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vbg = 0.2, vtg = 0.2 and vds from 0.0 to 0.2
+	plt.plot(vds_array, Q_top[10:31, 30, 30], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/top_charges_vbg_0.2_vtg_0.2.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vtg = 0.2, vbg = 0.0 and vds from 0.0 to 0.2
+	plt.plot(vds_array, Q_bottom[10:31, 10, 30], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/bottom_charges_vtg_0.2_vbg_0.0.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vtg = 0.2, vbg = 0.1 and vds from 0.0 to 0.2
+	plt.plot(vds_array, Q_bottom[10:31, 20, 30], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/bottom_charges_vtg_0.2_vbg_0.1.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
+	# vtg = 0.2, vbg = 0.2 and vds from 0.0 to 0.2
+	plt.plot(vds_array, Q_bottom[10:31, 30, 30], linewidth=2, color='k')
+	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
+	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
+	ax.xaxis.set_minor_locator(AutoMinorLocator())
+	# plt.xlim([-0.1, 0.3])
+	# plt.ylim([1e-3, 1e2])
+	plt.savefig(model_path + '/plots/bottom_charges_vtg_0.2_vbg_0.2.pdf',
+				bbox_inches='tight', transparent=True)
+	plt.clf()
+
