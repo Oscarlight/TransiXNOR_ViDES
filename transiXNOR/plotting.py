@@ -352,15 +352,15 @@ if (QV_CALCULATION):
 		Q_top = []
 		Q_bottom = []
 		for y in enumerate(gridy):
-			if (y[1] >= 10 and y[1] <= 28):
+			if (y[1] >= 10 and y[1] <= 28): # 20 nm to 28 nm: gate region
 				Q_top_x = er * eps0 * (np.abs(band_diag[y[0], 0] - band_diag[y[0], Nx / 2])) / (
 					np.abs(gridx[0] - gridx[Nx / 2]) * 1e-9)  # C/m^2
 				Q_bottom_x = er * eps0 * (np.abs(band_diag[y[0], Nx / 2] - band_diag[y[0], Nx - 1])) / (
 					np.abs(gridx[Nx / 2] - gridx[Nx - 1]) * 1e-9)  # C/m^2
 				Q_top.append(Q_top_x)
 				Q_bottom.append(Q_bottom_x)
-		np.save(model_path + '/charges/TG_Q_' + voltage, Q_top)  # save top gate charges
-		np.save(model_path + '/charges/BG_Q_' + voltage, Q_bottom)  # save bottom gate charges
+		# np.save(model_path + '/charges/TG_Q_' + voltage, Q_top)  # save top gate charges
+		# np.save(model_path + '/charges/BG_Q_' + voltage, Q_bottom)  # save bottom gate charges
 		Q_top_total = np.sum(Q_top)  # C/m^2
 		Q_bottom_total = np.sum(Q_bottom)  # C/m^2
 		return Q_top_total, Q_bottom_total
