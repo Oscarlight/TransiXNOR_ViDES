@@ -233,7 +233,7 @@ if (COMBINE_CURRENT_VIA_SYMMETRY):
 	vds_cur = []
 	print('Start combine all current together via symmetry from current_*.npy')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
-		cur_array = np.abs(np.load(model_path + '/current_%.0f' % (vds*100) + '.npy'))
+		cur_array = np.abs(np.load(model_path + '/current_%.0f'%(vds*100) + '.npy'))
 		vbg_cur = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
 			vtg_cur = []
@@ -268,7 +268,7 @@ if (PLOT_FAMILY_CURVES):
 	# Vbg = 0.2
 	for vtg in vtg_list:
 		# cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
-		plt.plot(vds_array, cur[10:31, 30, int(vtg*100)+10],
+		plt.plot(vds_array, cur[:, 20, int(vtg*100)], 
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
 	plt.tick_params(axis='both', which='minor', length=5, labelsize=MINOR_LABEL_SIZE)
@@ -297,7 +297,6 @@ if (PLOT_FAMILY_CURVES_EXT):
 	plt.clf()
 	# Vbg = 0.2
 	for vtg in vtg_list:
-		# cur[7, 20, int(vtg*100)] = (cur[8, 20, int(vtg*100)] + cur[6, 20, int(vtg*100)])/2
 		plt.plot(vds_array, cur[:, 30, int(vtg*100)+10],
 			linewidth=2, color='k')
 	plt.tick_params(axis='both', which='major', length=10, labelsize=MAJOR_LABEL_SIZE)
@@ -310,9 +309,9 @@ if (PLOT_FAMILY_CURVES_EXT):
 	plt.clf()
 
 if (COMPUTE_CURRENT_FROM_T):
-	vdsmin=0.01; vdsmax=0.2; vdsN=20;
-	vbgmin=0.0; vbgmax=0.2; vbgN=21;
-	vtgmin=0.0; vtgmax=0.2; vtgN=21;
+	vdsmin=-0.1; vdsmax=0.3; vdsN=41;
+	vbgmin=0.0; vbgmax=0.0; vbgN=1;
+	vtgmin=-0.2; vtgmax=0.6; vtgN=81;
 	vds_cur = []
 	print('Start computing the current from the T files...')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
@@ -331,7 +330,7 @@ if (COMPUTE_CURRENT_FROM_T):
 			# print('length of vtg_cur = %s' % len(vtg_cur))
 			vbg_cur.append(vtg_cur)
 		vds_cur.append(vbg_cur)
-	np.save(model_path+'/current', np.array(vds_cur))
+		np.save(model_path+'/current_%.0f'%(vds*100), np.array([vbg_cur]))
 
 if (QV_CALCULATION):
 	# From device.py

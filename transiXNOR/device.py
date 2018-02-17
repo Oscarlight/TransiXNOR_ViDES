@@ -125,7 +125,7 @@ savetxt(model_path+"/er.out", p.eps)
 savetxt(model_path+"/fixed_charge.out", p.fixed_charge)
 
 # ------------------------------------------#
-p.underel=0.1; # Related to convergence, 0.01 for Vds > 0
+p.underel=0.01; # Related to convergence, 0.01 for Vds > 0
 
 Vtgmax=args.vtgmax;
 Vtgmin=args.vtgmin;
@@ -166,7 +166,7 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
             top_gate.Ef=vtg; 
             set_gate(p,top_gate)
             p.normpoisson=1e-1;
-            p.normd=5e-3; # 1e-3 for Vds > 0;
+            p.normd=1e-3; # 1e-3 for Vds > 0;
             solve_self_consistent(grid,p,FLAKE);
             vtg_cur.append(FLAKE.current());
             # I save the output files
@@ -180,5 +180,6 @@ for vds in np.linspace(Vdsmin, Vdsmax, VdsN):
         vbg_cur.append(vtg_cur)
     vds_cur.append(vbg_cur)
 
-np.save(model_path+'/current_%s'%int(Vdsmin*100), 
+print('Output: ' + 'current_%.0f'%(Vdsmin*100))
+np.save(model_path+'/current_%.0f'%(Vdsmin*100), 
     np.array(vds_cur))
