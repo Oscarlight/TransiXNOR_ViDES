@@ -353,23 +353,29 @@ if (QV_CALCULATION):
 		Q_top = []
 		Q_bottom = []
 		for y in enumerate(gridy):
-			if (y[1] >= 10 and y[1] <= 28): # 20 nm to 28 nm: gate region
-				Q_top_x = er * eps0 * (np.abs(band_diag[y[0], 0] - band_diag[y[0], Nx / 2])) / (
+			if (y[1] >= 10 and y[1] <= 28):
+				Q_bottom_x = er * eps0 * (band_diag[y[0], 0] - band_diag[y[0], Nx / 2]) / (
 					np.abs(gridx[0] - gridx[Nx / 2]) * 1e-9)  # C/m^2
-				Q_bottom_x = er * eps0 * (np.abs(band_diag[y[0], Nx / 2] - band_diag[y[0], Nx - 1])) / (
+				Q_top_x = er * eps0 * (band_diag[y[0], Nx / 2] - band_diag[y[0], Nx - 1]) / (
 					np.abs(gridx[Nx / 2] - gridx[Nx - 1]) * 1e-9)  # C/m^2
 				Q_top.append(Q_top_x)
 				Q_bottom.append(Q_bottom_x)
-		# np.save(model_path + '/charges/TG_Q_' + voltage, Q_top)  # save top gate charges
-		# np.save(model_path + '/charges/BG_Q_' + voltage, Q_bottom)  # save bottom gate charges
+		np.save(model_path + '/charges/TG_Q_' + voltage, Q_top)  # save top gate charges
+		np.save(model_path + '/charges/BG_Q_' + voltage, Q_bottom)  # save bottom gate charges
 		Q_top_total = np.sum(Q_top)  # C/m^2
 		Q_bottom_total = np.sum(Q_bottom)  # C/m^2
-		return Q_top_total, Q_bottom_total
+		if (V != 0.0):
+			C = (Q_top_total + Q_bottom_total) / (Vtg + Vbg)
+		else:
+			C = 0.175 # Because all calcualted C are close to 0.175
+		Q_top_real = C * Vtg - Q_bottom_total
+		Q_bottom_real = Q_bottom_total - C * Vbg
+		return Q_top_real, Q_bottom_real
 
 	# Voltage are scaled by 100 times.
-	vdsmin = -10; vdsmax = 30; vdsN = 41;
-	vbgmin = -10; vbgmax = 30; vbgN = 41;
-	vtgmin = -10; vtgmax = 30; vtgN = 41;
+	vdsmin = -10.0; vdsmax = 30.0; vdsN = 41;
+	vbgmin = -10.0; vbgmax = 30.0; vbgN = 41;
+	vtgmin = -10.0; vtgmax = 30.0; vtgN = 41;
 	vds_Q_top = []
 	vds_Q_bottom = []
 	print('Start combine all charges together')
@@ -381,16 +387,16 @@ if (QV_CALCULATION):
 			vtg_Q_bottom = []
 			for vtg in np.linspace(vtgmin, vtgmax, vtgN):
 				Q_top, Q_bottom = gate_charges(vds, vbg, vtg, er_equ, model_path)
-				vtg_Q_top.append(Q_top)
-				vtg_Q_bottom.append(Q_bottom)
+				vtg_Q_top.append(np.abs(Q_top))
+				vtg_Q_bottom.append(np.abs(Q_bottom))
 			vbg_Q_top.append(vtg_Q_top)
 			vbg_Q_bottom.append(vtg_Q_bottom)
 		vds_Q_top.append(vbg_Q_top)
 		vds_Q_bottom.append(vbg_Q_bottom)
 	Q_map_top = np.array(vds_Q_top)
 	Q_map_bottom = np.array(vds_Q_bottom)
-	print(Q_map_top.shape)
-	print(Q_map_bottom.shape)
+	# print(Q_map_top.shape)
+	# print(Q_map_bottom.shape)
 	np.save(model_path + '/charges_top', Q_map_top)
 	np.save(model_path + '/charges_bottom', Q_map_bottom)
 
