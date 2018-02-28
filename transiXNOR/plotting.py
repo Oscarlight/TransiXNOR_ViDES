@@ -364,7 +364,7 @@ if (QV_CALCULATION):
 		# np.save(model_path + '/charges/BG_Q_' + voltage, Q_bottom)  # save bottom gate charges
 		Q_top_total = np.sum(Q_top)  # C/m^2
 		Q_bottom_total = np.sum(Q_bottom)  # C/m^2
-		C = er*eps0/(1e-9)
+		C = er*eps0/(np.abs(gridx[Nx / 2] - gridx[Nx - 1]) * 1e-9)
 		Q_top_real = C * Vtg - Q_bottom_total
 		Q_bottom_real = Q_bottom_total - C * Vbg
 		return Q_top_real, Q_bottom_real
