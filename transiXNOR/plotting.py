@@ -20,7 +20,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--vtg", default=0.0, type=float)
 parser.add_argument("--vbg", default=0.2, type=float)
 parser.add_argument("--vds", default=0.2, type=float)
-parser.add_argument("model", default='./D6', type=str)
+parser.add_argument("model", default='./D9', type=str)
 args = parser.parse_args()
 
 FIGURE_SIZE = (5, 6)
@@ -45,7 +45,7 @@ PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = False
 PLOT_FAMILY_CURVES_EXT = True
 PRINT_CURRENT_ONLY     = False
-QV_CALCULATION         = False
+QV_CALCULATION         = True
 PLOT_QV_CURVES	       = False
 model_path             = args.model
 
@@ -338,7 +338,7 @@ if (QV_CALCULATION):
 	Cox = 25 / 1.1;  # 1.1 nm HfO2 for er=25
 	Csemi = 100 / 0.7;
 	er_equ = Cox * Csemi / (Cox + Csemi)
-
+	print('Start to calculate for Q_top and Q_bottom...')
 	# Vds, Vbg, Vtg in gate_charges are scaled by 100 times. (To get rid of voltage=-0.00 when reading files)
 	def gate_charges(Vds, Vbg, Vtg, er, model_path):
 		gridx = np.genfromtxt(model_path + '/gridx.out')
