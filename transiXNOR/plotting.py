@@ -43,9 +43,9 @@ PLOT_CURRENT           = False
 PLOT_CURRENT_EXT       = False
 PLOT_CURRENT_SPECTRUM  = False
 PLOT_FAMILY_CURVES     = False
-PLOT_FAMILY_CURVES_EXT = True
+PLOT_FAMILY_CURVES_EXT = False
 PRINT_CURRENT_ONLY     = False
-QV_CALCULATION         = True
+QV_CALCULATION         = False
 PLOT_QV_CURVES	       = False
 model_path             = args.model
 
