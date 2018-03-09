@@ -42,11 +42,11 @@ PLOT_CHARGE            = False
 PLOT_CURRENT           = False
 PLOT_CURRENT_EXT       = False
 PLOT_CURRENT_SPECTRUM  = False
-PLOT_FAMILY_CURVES     = True
+PLOT_FAMILY_CURVES     = False
 PLOT_FAMILY_CURVES_EXT = True
 PRINT_CURRENT_ONLY     = False
 QV_CALCULATION         = False
-PLOT_QV_CURVES	       = True
+PLOT_QV_CURVES	       = False
 model_path             = args.model
 
 Eg = 0.252
