@@ -234,7 +234,7 @@ if (COMBINE_CURRENT_VIA_SYMMETRY):
 	vds_cur = []
 	print('Start combine all current together via symmetry from current_*.npy')
 	for vds in np.linspace(vdsmin, vdsmax, vdsN):
-		cur_array = np.abs(np.load(model_path + '/current_%.0f'%(vds*100) + '.npy'))
+		cur_array = -(np.load(model_path + '/current_%.0f'%(vds*100) + '.npy'))
 		vbg_cur = []
 		for vbg in np.linspace(vbgmin, vbgmax, vbgN):
 			vtg_cur = []
